@@ -1,0 +1,2900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conic Sections — Formula Compendium</title>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    packages: {'[+]': ['ams']}
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #1a1f2e;
+    --surface: #10141c;
+    --surface2: #161b26;
+    --surface3: #1e2535;
+    --border: #252d3d;
+    --border2: #2e3a50;
+    --text: #e2e8f5;
+    --text-dim: #8b98b5;
+    --text-muted: #5a6580;
+    --accent-p: #f97316;   /* parabola — amber */
+    --accent-e: #22d3ee;   /* ellipse — cyan */
+    --accent-h: #a78bfa;   /* hyperbola — violet */
+    --gold: #fbbf24;
+    --green: #34d399;
+    --pink: #f472b6;
+    --formula-bg: #1a1f2e;
+    --tag-bg: #1c2334;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0a0c10 0%, #111827 50%, #0f172a 100%);
+    border-bottom: 1px solid var(--border2);
+    padding: 48px 24px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 50%, rgba(249,115,22,.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(34,211,238,.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 50%, rgba(167,139,250,.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .header-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .18em;
+    color: var(--gold);
+    background: rgba(251,191,36,.1);
+    border: 1px solid rgba(251,191,36,.25);
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+  }
+  header h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -.02em;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, var(--accent-p) 0%, var(--accent-e) 50%, var(--accent-h) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  header p {
+    color: var(--text-dim);
+    font-size: 15px;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px 16px 0;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+  }
+  .tab-btn {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    background: var(--surface2);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    transition: all .2s;
+    margin-bottom: -1px;
+  }
+  .tab-btn.active-p { background: rgba(249,115,22,.15); color: var(--accent-p); border-color: var(--accent-p); }
+  .tab-btn.active-e { background: rgba(34,211,238,.12); color: var(--accent-e); border-color: var(--accent-e); }
+  .tab-btn.active-h { background: rgba(167,139,250,.12); color: var(--accent-h); border-color: var(--accent-h); }
+  .tab-btn.active-sl { background: rgba(52,211,153,.15); color: var(--green); border-color: var(--green); }
+  .tab-btn.active-c { background: rgba(244,114,182,.15); color: var(--pink); border-color: var(--pink); }
+  .tab-btn:hover:not(.active-p):not(.active-e):not(.active-h) { background: var(--surface3); color: var(--text); }
+  
+  /* ── SECTION PANEL ── */
+  .panel { display: none; padding: 32px 16px 64px; max-width: 1100px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  /* ── SECTION HEADER ── */
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .section-subtitle {
+    color: var(--text-dim);
+    font-size: 14px;
+    margin-bottom: 32px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── ACCORDION ── */
+  .accordion {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    background: var(--surface);
+  }
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: background .2s;
+    gap: 12px;
+  }
+  .accordion-header:hover { background: var(--surface2); }
+  .accordion-header-left { display: flex; align-items: center; gap: 14px; flex: 1; min-width: 0; }
+  .topic-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .icon-p { background: rgba(249,115,22,.15); }
+  .icon-e { background: rgba(34,211,238,.12); }
+  .icon-h { background: rgba(167,139,250,.12); }
+  .icon-sl  { background: rgba(52,211,153,.12); }
+  .icon-c  { background: rgba(244,114,182,.12); }
+
+  .accordion-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .accordion-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--tag-bg);
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  .chevron {
+    color: var(--text-muted);
+    font-size: 12px;
+    transition: transform .25s;
+    flex-shrink: 0;
+  }
+  .accordion.open .chevron { transform: rotate(180deg); }
+  .accordion-body { display: none; padding: 0 20px 20px; }
+  .accordion.open .accordion-body { display: block; }
+
+  /* ── FORMULA CARD ── */
+  .formula-card {
+    background: var(--formula-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    transition: border-color .2s;
+  }
+  .formula-card:last-child { margin-bottom: 0; }
+  .formula-card:hover { border-color: var(--border2); }
+
+  .formula-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .label-p { color: var(--accent-p); }
+  .label-e { color: var(--accent-e); }
+  .label-h { color: var(--accent-h); }
+  .label-sl { color: var(--green); }
+  .label-c { color: var(--pink); }
+
+  .label-gen { color: var(--gold); }
+
+  .label-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .dot-p { background: var(--accent-p); }
+  .dot-e { background: var(--accent-e); }
+  .dot-h { background: var(--accent-h); }
+  .dot-sl   { background: var(--green); }
+  .dot-c   { background: var(--pink); }
+  .dot-gen { background: var(--gold); }
+
+  .formula-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+
+  .formula-math {
+    font-size: 16px;
+    color: #c8d8f8;
+    padding: 10px 14px;
+    background: #070a0f;
+    border-radius: 6px;
+    border-left: 3px solid var(--border2);
+    margin-bottom: 10px;
+    overflow-x: auto;
+    line-height: 2;
+  }
+
+  .formula-use {
+    font-size: 13px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .use-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .use-tag-p { background: rgba(249,115,22,.15); color: var(--accent-p); border: 1px solid rgba(249,115,22,.3); }
+  .use-tag-e { background: rgba(34,211,238,.1); color: var(--accent-e); border: 1px solid rgba(34,211,238,.25); }
+  .use-tag-h { background: rgba(167,139,250,.12); color: var(--accent-h); border: 1px solid rgba(167,139,250,.25); }
+  .use-tag-sl {background: rgba(52,211,153,.1);color: var(--green);border: 1px solid rgba(52,211,153,.3); }
+  .use-tag-c { background: rgba(244,114,182,.1);color: var(--pink);border: 1px solid rgba(244,114,182,.3);}
+  .use-tag-gen { background: rgba(251,191,36,.1); color: var(--gold); border: 1px solid rgba(251,191,36,.25); }
+
+  /* multi-formula grid */
+  .formula-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  @media (max-width: 640px) { .formula-grid { grid-template-columns: 1fr; } }
+
+  .note-box {
+    background: rgba(52,211,153,.05);
+    border: 1px solid rgba(52,211,153,.2);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #a7f3d0;
+    line-height: 1.6;
+  }
+  .note-box b { color: var(--green); }
+
+  .warn-box {
+    background: rgba(251,191,36,.05);
+    border: 1px solid rgba(251,191,36,.2);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #fde68a;
+    line-height: 1.6;
+  }
+
+  /* sub-heading inside body */
+  .sub-heading {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin: 18px 0 10px;
+    padding-left: 2px;
+    border-left: 3px solid var(--border2);
+    padding-left: 10px;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 14px 20px;
+    background: var(--surface2);
+    border-radius: 8px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+  }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-dim); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #3e4f6a; }
+
+  .formula-math mjx-container { overflow-x: auto; }
+
+  .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+  /* conic eccentricity row */
+  .ecc-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .ecc-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .ecc-card .ecc-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .ecc-card .ecc-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+    
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">JEE Main + Advanced</div>
+  <h1>Coordinate Geometry Formula Compendium</h1>
+  <p>Every formula, shortcut & result from Straight Line · Circle · Parabola · Ellipse · Hyperbola — organised topic-wise with use-cases.</p>
+  <b><p>- Made by UnknownShadow08</p></b>
+</header>
+
+<!-- TAB BAR -->
+<div class="tab-bar">
+  <button class="tab-btn active-p" onclick="showPanel('parabola',this,'active-p')">⟡ Parabola</button>
+  <button class="tab-btn" onclick="showPanel('ellipse',this,'active-e')">◎ Ellipse</button>
+  <button class="tab-btn" onclick="showPanel('hyperbola',this,'active-h')">⟆ Hyperbola</button>
+  <button class="tab-btn" onclick="showPanel('straightline',this,'active-sl')">⟋ Straight Lines</button>
+  <button class="tab-btn" onclick="showPanel('circle',this,'active-c')">◉ Circle</button>
+  
+
+
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     PARABOLA PANEL
+══════════════════════════════════════════ -->
+<div id="parabola" class="panel active">
+  <div class="section-title" style="color:var(--accent-p)">⟡ Parabola</div>
+  <div class="section-subtitle">eccentricity e = 1 &nbsp;|&nbsp; PS/PM = 1 &nbsp;|&nbsp; locus of equal distance from focus & directrix</div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent-p)"></div> Core Formula</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> General / Definition</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Note / Trick</div>
+  </div>
+
+  <!-- 1. GENERAL & CONIC CLASSIFICATION -->
+  <div class="accordion open">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">📐</div>
+        <div>
+          <div class="accordion-title">General Conic & Classification</div>
+        </div>
+      </div>
+      <span class="accordion-count">6 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-gen"><div class="label-dot dot-gen"></div>Focal-Directrix Definition</div>
+        <div class="formula-name">Focus-Directrix Property</div>
+        <div class="formula-math">$$\frac{PS}{PM} = e \quad \Longrightarrow \quad \text{Conic}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-gen">USE</span> Base definition — ratio of distance from focus to distance from directrix equals eccentricity.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-gen"><div class="label-dot dot-gen"></div>General Second-Degree Conic</div>
+        <div class="formula-name">Discriminant Classification</div>
+        <div class="formula-math">$$ax^2+2hxy+by^2+2gx+2fy+c=0, \quad \Delta = abc+2fgh-af^2-bg^2-ch^2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-gen">USE</span> Identify conic type from general second-degree equation before solving.</div>
+      </div>
+
+      <div class="ecc-row">
+        <div class="ecc-card">
+          <div class="ecc-name" style="color:var(--accent-e)">Circle</div>
+          <div class="ecc-val">e=0, h=0, a=b, Δ≠0</div>
+        </div>
+        <div class="ecc-card">
+          <div class="ecc-name" style="color:var(--accent-e)">Ellipse</div>
+          <div class="ecc-val">0&lt;e&lt;1, h²&lt;ab, Δ≠0</div>
+        </div>
+        <div class="ecc-card">
+          <div class="ecc-name" style="color:var(--accent-p)">Parabola</div>
+          <div class="ecc-val">e=1, h²=ab, Δ≠0</div>
+        </div>
+        <div class="ecc-card">
+          <div class="ecc-name" style="color:var(--accent-h)">Hyperbola</div>
+          <div class="ecc-val">e&gt;1, h²&gt;ab, Δ≠0</div>
+        </div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-gen"><div class="label-dot dot-gen"></div>Latus Rectum → Length Formula</div>
+        <div class="formula-name">LR = 2 × (perp. distance from focus to directrix)</div>
+        <div class="formula-math">$$\ell_{LR} = 2 \times d(\text{focus, directrix})$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-gen">USE</span> Quick latus rectum length from given focus & directrix without full equation.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-gen"><div class="label-dot dot-gen"></div>Focus on Directrix → Degenerate</div>
+        <div class="formula-name">When Focus lies on Directrix (Δ = 0)</div>
+        <div class="formula-math">$$e>1 \Rightarrow \text{two real distinct lines} \quad e=1 \Rightarrow \text{coincident lines} \quad e<1 \Rightarrow \text{imaginary lines}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-gen">USE</span> Detect degenerate conics when Δ = 0 in MCQs.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. STANDARD PARABOLAS -->
+  <div class="accordion open">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">📋</div>
+        <div><div class="accordion-title">Four Standard Parabolas (a > 0)</div></div>
+      </div>
+      <span class="accordion-count">4 forms + all parameters</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-grid">
+        <div class="formula-card">
+          <div class="formula-label label-p"><div class="label-dot dot-p"></div>Standard Form 1</div>
+          <div class="formula-name">Right-opening: $y^2 = 4ax$</div>
+          <div class="formula-math">
+            Focus: $(a,0)$ &nbsp;|&nbsp; Directrix: $x+a=0$<br>
+            Vertex: $(0,0)$ &nbsp;|&nbsp; Axis: $y=0$<br>
+            LR length: $4a$ &nbsp;|&nbsp; LR endpoints: $(a,\pm2a)$
+          </div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-label label-p"><div class="label-dot dot-p"></div>Standard Form 2</div>
+          <div class="formula-name">Left-opening: $y^2 = -4ax$</div>
+          <div class="formula-math">
+            Focus: $(-a,0)$ &nbsp;|&nbsp; Directrix: $x-a=0$<br>
+            Vertex: $(0,0)$ &nbsp;|&nbsp; Axis: $y=0$<br>
+            LR length: $4a$
+          </div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-label label-p"><div class="label-dot dot-p"></div>Standard Form 3</div>
+          <div class="formula-name">Upward: $x^2 = 4ay$</div>
+          <div class="formula-math">
+            Focus: $(0,a)$ &nbsp;|&nbsp; Directrix: $y+a=0$<br>
+            Vertex: $(0,0)$ &nbsp;|&nbsp; Axis: $x=0$<br>
+            LR length: $4a$ &nbsp;|&nbsp; LR endpoints: $(\pm2a,a)$
+          </div>
+        </div>
+        <div class="formula-card">
+          <div class="formula-label label-p"><div class="label-dot dot-p"></div>Standard Form 4</div>
+          <div class="formula-name">Downward: $x^2 = -4ay$</div>
+          <div class="formula-math">
+            Focus: $(0,-a)$ &nbsp;|&nbsp; Directrix: $y-a=0$<br>
+            Vertex: $(0,0)$ &nbsp;|&nbsp; Axis: $x=0$<br>
+            LR length: $4a$
+          </div>
+        </div>
+      </div>
+      <div class="note-box"><b>Note:</b> Two parabolas are equal iff they have the same latus rectum length. Only 2 distinct parabolas can be drawn for a given latus rectum.</div>
+      <div class="note-box" style="margin-top:8px"><b>Vertex–Focus relation:</b> Vertex is the midpoint of focus and foot of directrix on axis. Perp. distance from focus to directrix = ½(LR).</div>
+    </div>
+  </div>
+
+  <!-- 3. SHIFTED PARABOLA -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">↗</div>
+        <div><div class="accordion-title">Shifted (Translated) Parabola</div></div>
+      </div>
+      <span class="accordion-count">4 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Axis Parallel to X-axis</div>
+        <div class="formula-name">$(y-k)^2 = 4a(x-h)$</div>
+        <div class="formula-math">$$x = ay^2+by+c \;\longrightarrow\; (y-k)^2 = 4a(x-h)$$
+Vertex: $(h,k)$ | Focus: $(h+a,k)$ | Directrix: $x=h-a$ | Axis: $y=k$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Parabola whose axis is horizontal (parallel to X-axis).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Axis Parallel to Y-axis</div>
+        <div class="formula-name">$(x-h)^2 = 4a(y-k)$</div>
+        <div class="formula-math">$$y = ax^2+bx+c \;\longrightarrow\; (x-h)^2 = 4a(y-k)$$
+Vertex: $(h,k)$ | Focus: $(h,k+a)$ | Directrix: $y=k-a$ | Axis: $x=h$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Parabola whose axis is vertical (parallel to Y-axis).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. POSITION OF POINT -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">🎯</div>
+        <div><div class="accordion-title">Position of a Point w.r.t. Parabola</div></div>
+      </div>
+      <span class="accordion-count">3 conditions</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>S₁ Test for $y^2-4ax=0$</div>
+        <div class="formula-name">$S_1 = y_1^2 - 4ax_1$</div>
+        <div class="formula-math">
+          $S_1 < 0 \Rightarrow$ Point INSIDE the parabola (0 tangents can be drawn)<br>
+          $S_1 = 0 \Rightarrow$ Point ON the parabola (1 tangent)<br>
+          $S_1 > 0 \Rightarrow$ Point OUTSIDE (2 tangents can be drawn)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Instantly classify a point's position without graph — prerequisite for pair of tangents.</div>
+        <div class="note-box"><b>Key:</b> Make coefficient of $x^2$ and $y^2$ non-negative before testing.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. FOCAL DISTANCE -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">📏</div>
+        <div><div class="accordion-title">Focal Distance / Focal Radii</div></div>
+      </div>
+      <span class="accordion-count">4 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Horizontal Parabolas</div>
+        <div class="formula-name">Focal distance for $y^2 = \pm4ax$</div>
+        <div class="formula-math">$$\text{Focal distance of } P(h,k) = |h| + a$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Distance from point on parabola to focus = distance to directrix = $|h|+a$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Vertical Parabolas</div>
+        <div class="formula-name">Focal distance for $x^2 = \pm4ay$</div>
+        <div class="formula-math">$$\text{Focal distance of } P(h,k) = |k| + a$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Same idea for vertically oriented parabolas.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Shifted Parabola</div>
+        <div class="formula-name">$(y-\beta)^2 = \pm4a(x-\alpha)$</div>
+        <div class="formula-math">$$\text{Focal distance} = |h-\alpha| + a, \quad a>0$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Focal distance for translated parabola — shift then apply standard formula.</div>
+      </div>
+      <div class="note-box"><b>Min focal distance</b> on any parabola = $a$ (at vertex). If focal distance &lt; $a$: impossible; = $a$: vertex only; &gt; $a$: two such points.</div>
+    </div>
+  </div>
+
+  <!-- 6. PARAMETRIC COORDINATES -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">🔢</div>
+        <div><div class="accordion-title">Parametric Coordinates</div></div>
+      </div>
+      <span class="accordion-count">6 forms</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>All Standard Parametric Forms</div>
+        <div class="formula-math">
+          $y^2=4ax$: point $\equiv (at^2,\; 2at)$<br><br>
+          $y^2=-4ax$: point $\equiv (-at^2,\; 2at)$<br><br>
+          $x^2=4ay$: point $\equiv (2at,\; at^2)$<br><br>
+          $x^2=-4ay$: point $\equiv (2at,\; -at^2)$<br><br>
+          $(y-\beta)^2=4a(x-\alpha)$: point $\equiv (\alpha+at^2,\; \beta+2at)$<br><br>
+          $(x-\alpha)^2=4a(y-\beta)$: point $\equiv (\alpha+2at,\; \beta+at^2)$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Reduce chord/tangent/normal problems to single variable $t$ — massive simplification in JEE Advanced.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. CHORD OF PARABOLA -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">〰</div>
+        <div><div class="accordion-title">Chord Joining Two Points $t_1$ & $t_2$</div></div>
+      </div>
+      <span class="accordion-count">7 results</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Chord Equation</div>
+        <div class="formula-name">Parametric chord for $y^2=4ax$</div>
+        <div class="formula-math">$$2x - y(t_1+t_2) + 2at_1t_2 = 0$$
+$$\text{Memory trick: } x - y\cdot\text{AM}(t_1,t_2) + a\cdot[\text{GM}(t_1,t_2)]^2 = 0$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Equation of any chord without computing individual point coordinates.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Slope of Chord</div>
+        <div class="formula-math">$$m_{chord} = \frac{2}{t_1+t_2}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Slope in one step from parameters.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Length of Chord</div>
+        <div class="formula-math">$$\ell = a|t_1-t_2|\sqrt{(t_1+t_2)^2+4}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Chord length in parametric form without distance formula computation.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Focal Chord Condition</div>
+        <div class="formula-name">Chord passes through focus $(a,0)$</div>
+        <div class="formula-math">$$t_1 t_2 = -1 \quad \Longleftrightarrow \quad t_2 = -\frac{1}{t_1}$$
+$$\text{Endpoints: } (at^2,2at) \text{ and } \left(\frac{a}{t^2}, -\frac{2a}{t}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Key condition to identify or construct focal chords — core JEE result.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Length of Focal Chord</div>
+        <div class="formula-math">$$\ell_f = a\!\left(t+\frac{1}{t}\right)^{\!2} = a(t_1-t_2)^2$$
+$$\ell_f = \frac{4a}{\sin^2\!\theta} = 4a\csc^2\!\theta \quad (\theta = \text{angle with x-axis})$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Length of a focal chord by inclination angle — avoids full chord computation.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Harmonic Mean of Focal Segments</div>
+        <div class="formula-math">$$\text{If } \ell_1, \ell_2 \text{ are segments of focal chord: } \frac{4\ell_1\ell_2}{\ell_1+\ell_2} = 4a \quad \Rightarrow \quad \frac{1}{\ell_1}+\frac{1}{\ell_2} = \frac{1}{a}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> HM of focal chord segments = semi-latus rectum — elegant relation for integer problems.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Chord subtending 90° at Vertex</div>
+        <div class="formula-math">$$t_1 t_2 = -4 \quad \text{and chord passes through fixed point } (4a,0)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> If chord subtends right angle at vertex, it passes through $(4a,0)$ always.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Product of Coordinates (Focal Chord)</div>
+        <div class="formula-math">$$x_1 x_2 = a^2 \qquad y_1 y_2 = -4a^2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Direct result for focal chord endpoint coordinates — saves parametric substitution.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. TANGENTS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">⟋</div>
+        <div><div class="accordion-title">Tangents to Parabola $y^2=4ax$</div></div>
+      </div>
+      <span class="accordion-count">8 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Slope Form</div>
+        <div class="formula-math">$$y = mx + \frac{a}{m} \quad (m \ne 0) \quad \text{at point } \left(\frac{a}{m^2}, \frac{2a}{m}\right)$$
+$$\textbf{Condition of tangency: } c = \frac{a}{m}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Write tangent with given slope or check if a line is tangent.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Point Form (T = 0)</div>
+        <div class="formula-math">$$yy_1 = 2a(x+x_1) \quad \text{at point } (x_1,y_1) \text{ on parabola}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Tangent at a specific point on the parabola.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Parametric Form</div>
+        <div class="formula-math">$$ty = x + at^2 \quad \text{at } P(at^2, 2at) \quad \text{slope} = \frac{1}{t}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Simplest form — one-variable tangent equation used in most JEE proofs.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Tangent to $x^2=4ay$ (slope form)</div>
+        <div class="formula-math">$$y = mx - am^2 \quad \text{at point } (2am, am^2)$$
+$$\textbf{Condition of tangency for } y=mx+c: \quad c = -am^2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Use interchange $x \leftrightarrow y,\; m \leftrightarrow 1/m$ rule from $y^2=4ax$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Point of Intersection of Two Tangents</div>
+        <div class="formula-math">$$\text{Tangents at } t_1 \text{ and } t_2 \text{ meet at: } \big(at_1t_2,\; a(t_1+t_2)\big)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Instantly get intersection without solving two equations simultaneously.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>X-intercept of Tangent & Normal</div>
+        <div class="formula-math">$$T \text{ meets x-axis at } (-at^2, 0) \qquad N \text{ meets x-axis at } (2a+at^2, 0)$$
+$$TM = 2at^2, \quad MN = 2a, \quad \text{Midpoint of }TN = (a,0) = \text{Focus}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Sub-normal is constant $= 2a$. Midpoint of $TN$ is always the focus.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Tangent meets Y-axis</div>
+        <div class="formula-math">$$\text{Tangent at } P(t) \text{ meets y-axis at } (0, at)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Useful in area/locus problems involving y-intercepts.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Common Tangent: Parabola & Circle</div>
+        <div class="formula-math">$$y^2=4ax,\; x^2+y^2=r^2: \quad \frac{a/m}{\sqrt{1+m^2}} = r \;\Rightarrow\; c=\frac{a}{m} = \pm r\sqrt{1+m^2}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Find common tangent by combining parabola tangency condition with circle's perpendicular-radius rule.</div>
+      </div>
+      <div class="note-box"><b>Properties of tangents:</b> Foot of ⊥ from focus to any tangent lies on tangent at vertex. Image of focus in any tangent lies on directrix. Tangent between contact point & directrix subtends right angle at focus.</div>
+    </div>
+  </div>
+
+  <!-- 9. NORMALS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">⊥</div>
+        <div><div class="accordion-title">Normals to Parabola $y^2=4ax$</div></div>
+      </div>
+      <span class="accordion-count">7 results</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Cartesian Form</div>
+        <div class="formula-math">$$y - y_1 = -\frac{y_1}{2a}(x-x_1) \quad \text{at } (x_1,y_1)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Normal at a known point (Cartesian) on parabola.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Parametric Form</div>
+        <div class="formula-math">$$y + tx = 2at + at^3 \quad \text{at } P(at^2,2at) \quad \text{slope} = -t$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Standard form used in all JEE normal-meets-parabola-again problems.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Slope Form</div>
+        <div class="formula-math">$$y = mx - 2am - am^3 \quad \text{at point } (am^2, -2am)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Normal with given slope — substitute $t=-m$ in parametric form.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Normal meets Parabola again</div>
+        <div class="formula-name">Normal at $t_1$ hits parabola at $t_2$</div>
+        <div class="formula-math">$$t_2 = -t_1 - \frac{2}{t_1}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Most important result: find second intersection of normal with parabola.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Two Normals Meet on Parabola</div>
+        <div class="formula-name">Normals at $t_1, t_2$ meet again at $t_3$</div>
+        <div class="formula-math">$$t_1 t_2 = 2 \qquad t_3 = -(t_1+t_2)$$
+$$\text{Chord joining } t_1 \text{ and } t_2 \text{ passes through fixed point } (-2a,0)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Conormal points: three normals through one point — JEE Advanced favourite.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Equation of Normal from External Point $(h,k)$</div>
+        <div class="formula-math">$$am^3 + (2a-h)m + k = 0$$
+$$m_1+m_2+m_3=0, \quad m_1m_2m_3 = -\frac{k}{a}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Cubic in $m$ — at most 3 normals from any external point, at least 1 real.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Co-normal Points Properties</div>
+        <div class="formula-math">$$\text{Sum of ordinates of 3 conormal points} = 0$$
+$$\text{Centroid of triangle lies on axis of parabola} \Rightarrow y\text{-coordinate}=0$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Verify conormal configuration or find unknowns using centroid property.</div>
+      </div>
+      <div class="note-box"><b>Key:</b> Normal other than axis never passes through the focus ($t^2+1=0$ has no real solution). For 3 distinct normals from $(h,0)$: need $h > 4a$.</div>
+    </div>
+  </div>
+
+  <!-- 10. PAIR OF TANGENTS, CHORD OF CONTACT, MIDPOINT -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">✦</div>
+        <div><div class="accordion-title">Pair of Tangents · Chord of Contact · Midpoint Chord</div></div>
+      </div>
+      <span class="accordion-count">4 master formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Pair of Tangents</div>
+        <div class="formula-math">$$SS_1 = T^2$$
+$$S = y^2-4ax, \quad S_1 = y_1^2-4ax_1, \quad T = yy_1-2a(x+x_1)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Equation of both tangents from external point in one formula.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Director Circle (Perpendicular Tangents)</div>
+        <div class="formula-name">Locus of intersection of perpendicular tangents</div>
+        <div class="formula-math">$$x + a = 0 \quad (\text{the directrix itself!})$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Director circle of parabola IS its directrix — perpendicular tangents always meet on directrix.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Chord of Contact (T = 0)</div>
+        <div class="formula-math">$$yy_1 = 2a(x+x_1) \quad \text{from external point } (x_1,y_1)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Chord joining the two points where tangents from an external point touch the parabola.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Chord with Given Midpoint (T = S₁)</div>
+        <div class="formula-math">$$yy_1 - 2a(x+x_1) = y_1^2 - 4ax_1$$
+$$\text{Slope of chord} = \frac{2a}{y_1} \quad \text{[key slope formula]}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Find chord equation given its midpoint — slope of chord depends only on midpoint's $y$-coordinate.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. AREA & HIGHLIGHTS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-p">💡</div>
+        <div><div class="accordion-title">Important Highlights & Advanced Results</div></div>
+      </div>
+      <span class="accordion-count">6 results</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Area of Triangle by 3 Tangents vs 3 Points</div>
+        <div class="formula-math">$$\frac{\text{Area of triangle formed by 3 points on parabola}}{\text{Area of triangle formed by tangents at those points}} = 2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Ratio is always 2 — use to find unknown areas quickly.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Circle on Focal Chord as Diameter</div>
+        <div class="formula-math">$$\text{Circle on focal chord as diameter touches the directrix}$$
+$$\text{Circle on focal length as diameter touches the tangent at vertex}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Geometric property — proves circles are tangent to fixed lines.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Parabolic Mirror Reflection</div>
+        <div class="formula-math">$$\text{Incident ray parallel to axis} \xrightarrow{\text{reflects}} \text{passes through focus}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Reflection property — normal bisects angle between focal chord and perpendicular to directrix.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Slope of Axis (from 2 points + tangent intersection)</div>
+        <div class="formula-math">$$\text{Line joining midpoint of chord to intersection of tangents at endpoints} \parallel \text{axis}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Determine axis direction of a general parabola from given point conditions.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Alternate Equation of Parabola</div>
+        <div class="formula-math">$$\frac{(a_1x+b_1y+c_1)^2}{a_1^2+b_1^2} = \ell \cdot \frac{a_2x+b_2y+c_2}{\sqrt{a_2^2+b_2^2}}$$
+$$\text{where axis: } a_1x+b_1y+c_1=0,\; \text{tangent at vertex: } a_2x+b_2y+c_2=0, \; \ell=\text{LR}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Write parabola equation when axis & tangent-at-vertex lines are given directly.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-p"><div class="label-dot dot-p"></div>Focal Chord tangent to Circle</div>
+        <div class="formula-math">$$y^2=4ax \text{ focal chord tangent to } (x-d)^2+(y-e)^2=r^2: \quad \frac{|4m\cdot d - \ldots|}{\sqrt{1+m^2}} = r$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-p">USE</span> Combine focal chord equation $x-y\!\left(t-\tfrac{1}{t}\right)-2a=0$ with circle tangency condition.</div>
+      </div>
+    </div>
+  </div>
+</div><!-- end parabola panel -->
+
+
+<!-- ══════════════════════════════════════════
+     ELLIPSE PANEL
+══════════════════════════════════════════ -->
+<div id="ellipse" class="panel">
+  <div class="section-title" style="color:var(--accent-e)">◎ Ellipse</div>
+  <div class="section-subtitle">eccentricity 0 &lt; e &lt; 1 &nbsp;|&nbsp; SP + S'P = 2a &nbsp;|&nbsp; h² &lt; ab</div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent-e)"></div> Core Formula</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> General / Definition</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Note / Trick</div>
+  </div>
+
+  <!-- E1. STANDARD ELLIPSE -->
+  <div class="accordion open">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-e">📋</div>
+        <div><div class="accordion-title">Standard Ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$, $a>b$</div></div>
+      </div>
+      <span class="accordion-count">All parameters</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Core Relations</div>
+        <div class="formula-math">
+          $b^2 = a^2(1-e^2) \Rightarrow a^2-b^2=a^2e^2$<br><br>
+          Eccentricity: $\displaystyle e = \sqrt{1-\frac{b^2}{a^2}}$<br><br>
+          Foci: $(\pm ae, 0)$ &nbsp;|&nbsp; Vertices: $(\pm a, 0)$<br><br>
+          Directrices: $x = \pm\dfrac{a}{e}$<br><br>
+          LR length: $\dfrac{2b^2}{a}$ &nbsp;|&nbsp; LR equation: $x = \pm ae$<br><br>
+          LR endpoints: $\left(\pm ae, \pm\dfrac{b^2}{a}\right)$<br><br>
+          Minor axis endpoints: $(0, \pm b)$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Complete parameter set for the standard horizontal ellipse.</div>
+      </div>
+      <div class="note-box"><b>Key:</b> Distance from focus to extremity of minor axis = semi-major axis ($BS = CA = a$). Sum of focal distances of any point = $2a$ (major axis).</div>
+    </div>
+  </div>
+
+  <!-- E2. ALTERNATE FORM -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-e">↕</div>
+        <div><div class="accordion-title">Vertical Ellipse $\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$, $a < b$</div></div>
+      </div>
+      <span class="accordion-count">All parameters</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Vertical (Major axis on Y-axis)</div>
+        <div class="formula-math">
+          $a^2 = b^2(1-e^2),\quad e = \sqrt{1-\tfrac{a^2}{b^2}}$<br><br>
+          Foci: $(0, \pm be)$ &nbsp;|&nbsp; Vertices (major): $(0, \pm b)$<br><br>
+          Directrices: $y = \pm\dfrac{b}{e}$<br><br>
+          LR length: $\dfrac{2a^2}{b}$ &nbsp;|&nbsp; LR equation: $y=\pm be$<br><br>
+          LR endpoints: $\left(\pm\dfrac{a^2}{b}, \pm be\right)$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> When $a < b$ in $x^2/a^2 + y^2/b^2 = 1$ — major axis is vertical.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E3. SHIFTED -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-e">↗</div>
+        <div><div class="accordion-title">Shifted Ellipse</div></div>
+      </div>
+      <span class="accordion-count">3 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Horizontal Major Axis at $(h,k)$</div>
+        <div class="formula-math">$$\frac{(x-h)^2}{a^2}+\frac{(y-k)^2}{b^2}=1, \quad a>b$$
+$$\text{Foci: }(h\pm ae,k) \quad$$ $$\text{Directrices: }x = h\pm\frac{a}{e}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Ellipse with shifted center — substitute $X=x-h, Y=y-k$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Vertical Major Axis at $(h,k)$</div>
+        <div class="formula-math">$$\frac{(x-h)^2}{a^2}+\frac{(y-k)^2}{b^2}=1, \quad a&lt;b $$
+$$\text{Foci: }(h, k\pm be) \quad$$ $$\text{Directrices: }y = k\pm\frac{b}{e}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Ellipse with vertical major axis — identify by $b>a$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Director Circle of Shifted Ellipse</div>
+        <div class="formula-math">$$(x-h)^2+(y-k)^2 = a^2+b^2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Perpendicular tangents to shifted ellipse meet on this circle.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E4. POSITION OF POINT -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-e">🎯</div>
+        <div><div class="accordion-title">Position of a Point · Focal Radii</div></div>
+      </div>
+      <span class="accordion-count">5 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Position Test ($S_1$)</div>
+        <div class="formula-math">$$S_1 = \frac{x_1^2}{a^2}+\frac{y_1^2}{b^2}-1 \begin{cases} <0 & \text{Inside} \\ =0 & \text{On} \\ >0 & \text{Outside}\end{cases}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Classify point w.r.t. ellipse without graph.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Focal Radii for $a>b$</div>
+        <div class="formula-math">$$PF_1 = a - ex_1 \qquad PF_2 = a + ex_1$$
+$$PF_1 + PF_2 = 2a \quad \text{(Major axis)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Focal distances from any point — core definition of ellipse as locus.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Focal Radii for $a&lt;b$</div>
+        <div class="formula-math">$$PF_1 = b - ey_1 \qquad PF_2 = b + ey_1 \quad PF_1+PF_2 = 2b$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Vertical major axis version of focal radii.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Range of Focal Distances</div>
+        <div class="formula-math">$$a(1-e) \leq PF_i \leq a(1+e) \quad \text{(for horizontal ellipse)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Greatest focal length = semi-major axis; least = semi-minor axis.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E5. AUXILIARY CIRCLE & PARAMETRIC -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-e">🔢</div>
+        <div><div class="accordion-title">Auxiliary Circle · Eccentric Angle · Parametric Form</div></div>
+      </div>
+      <span class="accordion-count">4 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Auxiliary Circle & Parametric</div>
+        <div class="formula-math">$$\text{Auxiliary circle: } x^2+y^2=a^2$$
+$$P(\theta) = (a\cos\theta,\; b\sin\theta) \text{ on ellipse}$$
+$$Q(\theta) = (a\cos\theta,\; a\sin\theta) \text{ on auxiliary circle}$$
+$$\frac{PN}{QN} = \frac{b}{a} = \frac{\text{semi-minor}}{\text{semi-major}}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Parametric form reduces all ellipse problems to single variable $\theta$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Shifted Ellipse Parametric</div>
+        <div class="formula-math">$$\frac{(x-h)^2}{a^2}+\frac{(y-k)^2}{b^2}=1 \;\Rightarrow\; x=h+a\cos\theta,\; y=k+b\sin\theta$$
+$$\text{Auxiliary circle: }(x-h)^2+(y-k)^2 = a^2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Parametric form for translated ellipse.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Chord joining $P(\alpha)$ & $Q(\beta)$</div>
+        <div class="formula-math">$$\frac{x}{a}\cos\!\left(\frac{\alpha+\beta}{2}\right)+\frac{y}{b}\sin\!\left(\frac{\alpha+\beta}{2}\right) = \cos\!\left(\frac{\alpha-\beta}{2}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Chord connecting two eccentric angle points — also gives focal chord condition.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Focal Chord Condition (eccentric angles)</div>
+        <div class="formula-math">$$\tan\!\frac{\alpha}{2}\tan\!\frac{\beta}{2} = \frac{e-1}{e+1} \quad \text{(chord through focus at }x=ae)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Eccentricity from eccentric angles of focal chord endpoints — elegant result.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E6. TANGENTS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-e">⟋</div>
+        <div><div class="accordion-title">Tangents to Ellipse</div></div>
+      </div>
+      <span class="accordion-count">7 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Slope Form</div>
+        <div class="formula-math">$$y = mx \pm\sqrt{a^2m^2+b^2}$$
+$$\text{Point of contact: } \left(\pm\frac{a^2m}{\sqrt{a^2m^2+b^2}},\; \mp\frac{b^2}{\sqrt{a^2m^2+b^2}}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Tangent with given slope — two parallel tangents exist for any $m$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Condition of Tangency</div>
+        <div class="formula-math">$$y=mx+c \text{ touches ellipse} \;\Leftrightarrow\; c^2 = a^2m^2+b^2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Check tangency or find $m$ when tangent passes through a given point.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Point Form (T = 0)</div>
+        <div class="formula-math">$$\frac{xx_1}{a^2}+\frac{yy_1}{b^2}=1 \quad \text{at } (x_1,y_1)$$
+$$\text{Slope} = -\frac{b^2x_1}{a^2y_1}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Tangent at a specific point on ellipse.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Parametric Form</div>
+        <div class="formula-math">$$\frac{x\cos\theta}{a}+\frac{y\sin\theta}{b}=1 \quad \text{at } (a\cos\theta, b\sin\theta)$$
+$$\text{Slope} = -\frac{b}{a}\cot\theta$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Tangent at eccentric angle $\theta$ — most used in JEE Advanced proofs.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Point of Intersection of Two Tangents</div>
+        <div class="formula-math">$$\text{Tangents at } P(\alpha) \text{ and } Q(\beta) \text{ meet at: } \left(a\frac{\cos\frac{\alpha-\beta}{2}}{\cos\frac{\alpha+\beta}{2}},\; b\frac{\sin\frac{\alpha+\beta}{2}}{\cos\frac{\alpha+\beta}{2}}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Intersection of tangents at two eccentric-angle points.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Slope of Perpendicular Tangents</div>
+        <div class="formula-math">$$m_1 m_2 = -1 \quad \text{and their locus} \Rightarrow x^2+y^2 = a^2+b^2 \text{ (Director Circle)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Perpendicular tangents always meet on the director circle.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E7. NORMALS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-e">⊥</div>
+        <div><div class="accordion-title">Normals to Ellipse</div></div>
+      </div>
+      <span class="accordion-count">5 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Point Form</div>
+        <div class="formula-math">$$\frac{a^2x}{x_1}-\frac{b^2y}{y_1} = a^2-b^2 \quad \text{at } (x_1,y_1)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Normal at a known Cartesian point on ellipse.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Parametric Form</div>
+        <div class="formula-math">$$\frac{ax}{\cos\theta}-\frac{by}{\sin\theta} = a^2-b^2 \quad \text{i.e. } ax\sec\theta - by\csc\theta = a^2-b^2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Normal at eccentric angle $\theta$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Slope Form</div>
+        <div class="formula-math">$$y = mx \pm \frac{(a^2-b^2)m}{\sqrt{a^2+b^2m^2}}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Normal with given slope — condition that $m\ne 0$ and $a\ne b$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Major & Minor Axes are Normals</div>
+        <div class="formula-math">$$\text{Major axis } (y=0) \text{ and minor axis } (x=0) \text{ are normals to the ellipse}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> The axes themselves are normals — any normal through centre must be an axis.</div>
+      </div>
+      <div class="note-box"><b>Key:</b> Normal other than major axis never passes through focus. Normal bisects the external angle between focal radii — reflection law of ellipse.</div>
+    </div>
+  </div>
+
+  <!-- E8. PAIR OF TANGENTS, COC, MIDPOINT -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-e">✦</div>
+        <div><div class="accordion-title">Pair of Tangents · Chord of Contact · Midpoint Chord</div></div>
+      </div>
+      <span class="accordion-count">4 master formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Pair of Tangents</div>
+        <div class="formula-math">$$SS_1 = T^2$$
+$$S=\frac{x^2}{a^2}+\frac{y^2}{b^2}-1,\quad S_1=\frac{x_1^2}{a^2}+\frac{y_1^2}{b^2}-1,\quad T=\frac{xx_1}{a^2}+\frac{yy_1}{b^2}-1$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Both tangents from external point in one combined equation.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Director Circle</div>
+        <div class="formula-math">$$x^2+y^2 = a^2+b^2 \quad \text{(perpendicular tangents locus)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Any point on director circle can draw perpendicular tangents to ellipse.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Chord of Contact (T = 0)</div>
+        <div class="formula-math">$$\frac{xx_1}{a^2}+\frac{yy_1}{b^2}=1 \quad \text{from } (x_1,y_1)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Chord joining the two tangent points from an external point.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Chord with Given Midpoint (T = S₁)</div>
+        <div class="formula-math">$$\frac{xx_1}{a^2}+\frac{yy_1}{b^2}-1 = \frac{x_1^2}{a^2}+\frac{y_1^2}{b^2}-1$$
+$$\text{Slope of chord} = -\frac{b^2 x_1}{a^2 y_1}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Chord equation when midpoint is given — slope depends on both coordinates of midpoint.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E9. PROPERTIES -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-e">💡</div>
+        <div><div class="accordion-title">Important Properties & Advanced Results</div></div>
+      </div>
+      <span class="accordion-count">8 results</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Area Ratio: Ellipse vs Auxiliary Circle</div>
+        <div class="formula-math">$$\frac{\text{Area of }\Delta XYZ \text{ (on ellipse)}}{\text{Area of }\Delta PQR \text{ (corresponding on aux. circle)}} = \frac{b}{a}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Instantly relate areas of triangles inscribed in ellipse vs auxiliary circle.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Product of Perpendiculars from Foci to Tangent</div>
+        <div class="formula-math">$$(SF_1)(SF_2) = b^2 \quad \text{where } F_1, F_2 \text{ are feet of ⊥ from foci to tangent}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Feet lie on auxiliary circle; product = $b^2$ always.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Circle on Focal Distance as Diameter</div>
+        <div class="formula-math">$$\text{Circle on any focal distance as diameter touches the auxiliary circle}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Geometric property — internal tangency with auxiliary circle.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Chord of Contact from Directrix → Focus</div>
+        <div class="formula-math">$$\text{Chord of contact from any point on directrix passes through corresponding focus}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Produces focal chord — used in reflection and optical properties.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>HM of Focal Chord Segments</div>
+        <div class="formula-math">$$\frac{2(AF_1)(BF_1)}{AF_1+BF_1} = \frac{b^2}{a} \quad \text{(semi-latus rectum)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> HM of segments of any focal chord = semi-latus rectum.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Reflection Law (Optical Property)</div>
+        <div class="formula-math">$$\text{Ray from one focus reflects off ellipse and passes through other focus}$$
+$$\frac{PS'}{PS} = \frac{S'N}{NS} \quad \text{(angle bisector property of normal)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Ellipse is a perfect mirror — used in whispering gallery, lithotripsy problems.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Image of Focus in Tangent</div>
+        <div class="formula-math">$$\text{Image of one focus in any tangent lies on the line joining other focus and point of contact}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Find tangent point when focus and image of focus are given.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-e"><div class="label-dot dot-e"></div>Locus of Tangent-Directrix Intersection</div>
+        <div class="formula-math">$$\text{Tangent between contact point and directrix subtends right angle at corresponding focus}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-e">USE</span> Property V — prove specific angle results in JEE Advanced.</div>
+      </div>
+    </div>
+  </div>
+</div><!-- end ellipse panel -->
+
+
+<!-- ══════════════════════════════════════════
+     HYPERBOLA PANEL
+══════════════════════════════════════════ -->
+<div id="hyperbola" class="panel">
+  <div class="section-title" style="color:var(--accent-h)">⟆ Hyperbola</div>
+  <div class="section-subtitle">eccentricity e &gt; 1 &nbsp;|&nbsp; |PS − PS'| = 2a &nbsp;|&nbsp; h² &gt; ab</div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--accent-h)"></div> Core Formula</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> General / Definition</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Note / Trick</div>
+  </div>
+
+  <!-- H1. STANDARD -->
+  <div class="accordion open">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-h">📋</div>
+        <div><div class="accordion-title">Standard Hyperbola $\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$</div></div>
+      </div>
+      <span class="accordion-count">All parameters</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Core Relations</div>
+        <div class="formula-math">
+          $b^2 = a^2(e^2-1) \Rightarrow a^2e^2 = a^2+b^2$<br><br>
+          $e = \sqrt{1+\dfrac{b^2}{a^2}} = \sqrt{1+\left(\dfrac{\text{Conj. axis}}{\text{Trans. axis}}\right)^2}$<br><br>
+          Foci: $(\pm ae, 0)$ &nbsp;|&nbsp; Vertices: $(\pm a, 0)$<br><br>
+          Directrices: $x = \pm\dfrac{a}{e}$<br><br>
+          Transverse axis: $2a$ &nbsp;|&nbsp; Conjugate axis: $2b$<br><br>
+          LR length: $\dfrac{2b^2}{a}$ &nbsp;|&nbsp; LR eq: $x = \pm ae$<br><br>
+          LR endpoints: $\left(\pm ae, \pm\dfrac{b^2}{a}\right)$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Complete parameter set for the standard horizontal hyperbola.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Focal Distance</div>
+        <div class="formula-math">$$PS = ex - a \qquad PS' = ex + a \qquad |PS - PS'| = 2a$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Difference of focal distances is constant = transverse axis length.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H2. SECOND STANDARD & CONJUGATE -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-h">↕</div>
+        <div><div class="accordion-title">Vertical Hyperbola · Conjugate Hyperbola</div></div>
+      </div>
+      <span class="accordion-count">5 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Vertical: $\frac{y^2}{b^2}-\frac{x^2}{a^2}=1$</div>
+        <div class="formula-math">
+          $e = \sqrt{1+\tfrac{a^2}{b^2}}$ &nbsp;|&nbsp; Foci: $(0, \pm be)$<br>
+          Vertices: $(0, \pm b)$ &nbsp;|&nbsp; Directrices: $y = \pm\tfrac{b}{e}$<br>
+          LR length: $\tfrac{2a^2}{b}$ &nbsp;|&nbsp; Trans. axis = $2b$, Conj. axis = $2a$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Hyperbola with transverse axis along Y-axis — often confused with ellipse.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Conjugate Hyperbola: $\frac{x^2}{a^2}-\frac{y^2}{b^2}=-1$</div>
+        <div class="formula-math">$$e_2 = \sqrt{1+\frac{a^2}{b^2}} \qquad \frac{1}{e_1^2}+\frac{1}{e_2^2}=1$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Relation between eccentricities of conjugate hyperbolas — key MCQ result.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Foci of Conjugate Form a Square</div>
+        <div class="formula-math">$$ae_1 = be_2 \;\Rightarrow\; F_1F_2F_3F_4 \text{ form a square} \quad (\text{all four foci concyclic})$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Foci of hyperbola + its conjugate = 4 vertices of a square.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H3. POSITION & PARAMETRIC -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-h">🔢</div>
+        <div><div class="accordion-title">Position of Point · Auxiliary Circle · Parametric</div></div>
+      </div>
+      <span class="accordion-count">5 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Position Test</div>
+        <div class="formula-math">$$S_1 = \frac{x_1^2}{a^2}-\frac{y_1^2}{b^2}-1 \begin{cases} >0 & \text{Inside} \\ =0 & \text{On} \\ <0 & \text{Outside}\end{cases}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Note the reversal: $S_1>0$ is INSIDE for hyperbola (opposite to ellipse/parabola).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Auxiliary Circle & Eccentric Angle</div>
+        <div class="formula-math">$$\text{Auxiliary circle: }x^2+y^2=a^2$$
+$$P(\theta) = (a\sec\theta,\; b\tan\theta) \quad \theta \ne \frac{\pi}{2}, \frac{3\pi}{2}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Parametric form using sec and tan — note $\sec^2-\tan^2=1$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Chord joining $P(\alpha)$ & $Q(\beta)$</div>
+        <div class="formula-math">$$\frac{x}{a}\cos\!\frac{\alpha-\beta}{2} - \frac{y}{b}\sin\!\frac{\alpha+\beta}{2} = \cos\!\frac{\alpha+\beta}{2}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Chord of hyperbola in eccentric angle form.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Focal Chord Condition (eccentric angles)</div>
+        <div class="formula-math">$$\tan\frac{\theta}{2}\tan\frac{\phi}{2} = \frac{e-1}{e+1} \quad \text{or} \quad \frac{e+1}{e-1} \quad (\text{two foci})$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Condition for chord to pass through either focus of hyperbola.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H4. TANGENTS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-h">⟋</div>
+        <div><div class="accordion-title">Tangents to Hyperbola</div></div>
+      </div>
+      <span class="accordion-count">6 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Slope Form</div>
+        <div class="formula-math">$$y = mx \pm\sqrt{a^2m^2-b^2} \quad (m^2 > b^2/a^2)$$
+$$\text{Point of contact: }\left(\pm\frac{a^2m}{\sqrt{a^2m^2-b^2}},\; \mp\frac{b^2}{\sqrt{a^2m^2-b^2}}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Note: $+b^2$ in ellipse becomes $-b^2$ here — key distinction.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Condition of Tangency</div>
+        <div class="formula-math">$$c^2 = a^2m^2 - b^2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Check or find when a line is tangent to hyperbola.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Point Form (T = 0)</div>
+        <div class="formula-math">$$\frac{xx_1}{a^2}-\frac{yy_1}{b^2}=1 \quad \text{at } (x_1,y_1)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Tangent at a known point on hyperbola.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Parametric Form</div>
+        <div class="formula-math">$$\frac{x\sec\theta}{a}-\frac{y\tan\theta}{b}=1 \quad \text{at } (a\sec\theta, b\tan\theta)$$
+$$\text{Point of intersection of tangents at }\theta_1, \theta_2: \left(a\frac{\cos\frac{\theta_1-\theta_2}{2}}{\cos\frac{\theta_1+\theta_2}{2}},\; b\tan\frac{\theta_1+\theta_2}{2}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Parametric tangent — slope = $\frac{b}{a}\csc\theta$.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H5. ASYMPTOTES -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-h">∞</div>
+        <div><div class="accordion-title">Asymptotes</div></div>
+      </div>
+      <span class="accordion-count">7 results</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Equations of Asymptotes</div>
+        <div class="formula-math">$$\frac{x}{a}+\frac{y}{b}=0 \quad \text{and} \quad \frac{x}{a}-\frac{y}{b}=0$$
+$$\text{Combined: } \frac{x^2}{a^2}-\frac{y^2}{b^2}=0$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Lines the hyperbola approaches but never touches — slopes $\pm b/a$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Asymptotes ↔ Hyperbola Relation</div>
+        <div class="formula-math">$$\text{Hyperbola} - \text{Conjugate} = 2\times\text{Asymptotes}$$
+$$\text{Hyperbola and conjugate differ from asymptotes by same constant}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Find asymptotes: add constant $\lambda$ to hyperbola equation, make discriminant zero.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Angle Between Asymptotes</div>
+        <div class="formula-math">$$2\theta = \text{angle between asymptotes} \;\Rightarrow\; e = \sec\theta$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Find eccentricity from the angle between asymptotes — extremely elegant.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Area: Tangent between Asymptotes</div>
+        <div class="formula-math">$$\text{Area of } \triangle \text{formed by any tangent and asymptotes} = ab = \text{constant}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Area is constant = $ab$ regardless of where the tangent is drawn.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Tangent bisected at Contact Point</div>
+        <div class="formula-math">$$\text{Any tangent to hyperbola is bisected at point of contact between the two asymptotes}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Midpoint of intercept on asymptotes = point of contact — geometric shortcut.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H6. NORMALS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-h">⊥</div>
+        <div><div class="accordion-title">Normals to Hyperbola</div></div>
+      </div>
+      <span class="accordion-count">4 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Point Form</div>
+        <div class="formula-math">$$\frac{a^2x}{x_1}+\frac{b^2y}{y_1} = a^2+b^2 = a^2e^2 \quad \text{at }(x_1,y_1)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Normal at specific Cartesian point — note the $+$ (unlike tangent which has $-$).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Parametric Form</div>
+        <div class="formula-math">$$ax\cos\theta + by\cot\theta = a^2+b^2 \quad \text{at }(a\sec\theta, b\tan\theta)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Normal at eccentric angle $\theta$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Slope Form</div>
+        <div class="formula-math">$$y = mx \mp \frac{m(a^2+b^2)}{\sqrt{a^2-b^2m^2}}, \quad m\in\left(-\frac{a}{b},\frac{a}{b}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Normal with given slope — exists only for specific slope range.</div>
+      </div>
+      <div class="note-box"><b>Key:</b> Normal other than transverse axis never passes through focus. Normal bisects internal angle between focal radii (reflection law).</div>
+    </div>
+  </div>
+
+  <!-- H7. PAIR TANGENTS, COC, MIDPOINT -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-h">✦</div>
+        <div><div class="accordion-title">Pair of Tangents · Chord of Contact · Midpoint Chord · Director Circle</div></div>
+      </div>
+      <span class="accordion-count">4 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Pair of Tangents</div>
+        <div class="formula-math">$$SS_1 = T^2$$
+$$S=\frac{x^2}{a^2}-\frac{y^2}{b^2}-1,\quad T=\frac{xx_1}{a^2}-\frac{yy_1}{b^2}-1$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Both tangents from external point in one equation.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Director Circle</div>
+        <div class="formula-math">$$x^2+y^2 = a^2-b^2 \quad (\text{exists only if }a>b)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Perpendicular tangents meet here. Note: $a^2-b^2$ (not $+$ like ellipse).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Chord of Contact (T = 0)</div>
+        <div class="formula-math">$$\frac{xx_1}{a^2}-\frac{yy_1}{b^2}=1 \quad \text{from }(x_1,y_1)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Chord from external point — passes through corresponding focus if point is on directrix.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Chord with Given Midpoint (T = S₁)</div>
+        <div class="formula-math">$$\frac{xx_1}{a^2}-\frac{yy_1}{b^2}-1 = \frac{x_1^2}{a^2}-\frac{y_1^2}{b^2}-1$$
+$$\text{Slope} = \frac{b^2x_1}{a^2y_1}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Chord with known midpoint — slope is $+$ here (opposite sign to ellipse).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H8. RECTANGULAR HYPERBOLA -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-h">⟁</div>
+        <div><div class="accordion-title">Rectangular Hyperbola $xy = c^2$</div></div>
+      </div>
+      <span class="accordion-count">20+ results</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="sub-heading">Basic Parameters of $xy = c^2$</div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>All Basics</div>
+        <div class="formula-math">
+          Eccentricity: $e = \sqrt{2}$ (asymptotes ⊥)<br>
+          Asymptotes: $x=0,\; y=0$ (coordinate axes)<br>
+          Transverse axis: $y=x$ &nbsp;|&nbsp; Conjugate axis: $y=-x$<br>
+          Vertices: $(c,c)$ and $(-c,-c)$<br>
+          Foci: $(c\sqrt{2}, c\sqrt{2})$ and $(-c\sqrt{2}, -c\sqrt{2})$<br>
+          LR length: $2\sqrt{2}\,c$<br>
+          Auxiliary circle: $x^2+y^2=2c^2$<br>
+          Director circle: $x^2+y^2=0$ (a point!)<br>
+          Directrices: $x+y = \pm\sqrt{2}\,c$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Complete reference for $xy=c^2$ — most JEE RH problems use these.</div>
+      </div>
+
+      <div class="sub-heading">Parametric & Chord</div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Parametric Representation</div>
+        <div class="formula-math">$$P(t) = \left(ct,\; \frac{c}{t}\right), \quad t \in \mathbb{R}\setminus\{0\}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Single-parameter form — all chord/tangent/normal in terms of $t$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Chord $P(t_1)Q(t_2)$</div>
+        <div class="formula-math">$$x + t_1t_2\,y = c(t_1+t_2) \qquad \text{slope} = -\frac{1}{t_1t_2}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Chord equation between two parametric points.</div>
+      </div>
+
+      <div class="sub-heading">Tangent & Normal</div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Tangent — all three forms</div>
+        <div class="formula-math">
+          Cartesian at $(x_1,y_1)$: $\dfrac{x}{x_1}+\dfrac{y}{y_1} = 2$<br><br>
+          Parametric at $P(t)$: $\dfrac{x}{t}+ty = 2c$, &nbsp; slope $= -\dfrac{1}{t^2}$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Tangent to $xy=c^2$ — clean one-variable form.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Normal at $P(t)$</div>
+        <div class="formula-math">$$xt^3 - yt = c(t^4-1) \qquad \text{slope} = t^2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Normal to $xy=c^2$ — slope = $t^2$ (always positive except at vertex).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Four Co-normal Points</div>
+        <div class="formula-math">$$t_1 \cdot t_2 \cdot t_3 \cdot t_4 = -1$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Product of parameters of 4 co-normal points on $xy=c^2$ is always $-1$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Chord with Given Midpoint $(h,k)$</div>
+        <div class="formula-math">$$kx + hy = 2hk$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Chord equation using $T=S_1$ on $xy=c^2$.</div>
+      </div>
+
+      <div class="sub-heading">Circle cutting $xy=c^2$ — Key Results</div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Four Intersection Points</div>
+        <div class="formula-math">$$t_1 t_2 t_3 t_4 = 1 \qquad \text{(circle cuts RH at 4 points)}$$
+$$\frac{1}{t_1}+\frac{1}{t_2}+\frac{1}{t_3}+\frac{1}{t_4} = -\frac{2f}{c}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Product of 4 parameters = 1 (circle case) vs $-1$ (co-normal case).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Orthocentre of Triangle on RH</div>
+        <div class="formula-math">$$\text{If }P(t_1), Q(t_2), R(t_3) \text{ on }xy=c^2, \text{ orthocentre} = \left(\frac{-c}{t_1t_2t_3},\; -ct_1t_2t_3\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Orthocentre of any triangle inscribed in RH also lies on the same RH.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- H9. ADVANCED HIGHLIGHTS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-h">💡</div>
+        <div><div class="accordion-title">Important Highlights & Advanced Results</div></div>
+      </div>
+      <span class="accordion-count">8 results</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Product of ⊥ from Foci to Tangent</div>
+        <div class="formula-math">$$(SP)(S'Q) = b^2 \quad \text{(feet of ⊥ lie on auxiliary circle)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Same as ellipse but product = $b^2$ (semi-conjugate)² for hyperbola.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Reflection Property</div>
+        <div class="formula-math">$$\text{Ray aimed at one focus reflects off outer surface towards other focus}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Hyperbolic mirror in telescope — reflected ray passes through far focus.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Angle Bisector Property of Normal</div>
+        <div class="formula-math">$$\angle S'PQ = \angle SPQ \quad \text{(normal bisects internal angle between focal radii)}$$
+$$\frac{PS'}{PS} = \frac{S'N}{SN}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Normal bisects internal angle (opposite to ellipse where tangent bisects external angle).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Confocal Ellipse & Hyperbola</div>
+        <div class="formula-math">$$\text{Confocal ellipse and hyperbola} \;\Leftrightarrow\; \text{they intersect orthogonally}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Find $b^2$: set $a_e^2 - b_e^2 = a_h^2 + b_h^2$ (same foci condition).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Locus of Midpoints of Focal Chords</div>
+        <div class="formula-math">$$\frac{x^2}{a^2}-\frac{y^2}{b^2} = \frac{ex}{a} \quad \text{(another similar hyperbola with same eccentricity)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Midpoints of focal chords trace another similar hyperbola.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Circle on Focal Chord as Diameter</div>
+        <div class="formula-math">$$\text{Circle on focal chord as diameter touches the directrix}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Same as parabola — circle on focal chord touches directrix.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Tangent from Directrix → Focus</div>
+        <div class="formula-math">$$\text{Chord of contact from any point on directrix passes through corresponding focus}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Standard property shared by parabola, ellipse, and hyperbola.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-h"><div class="label-dot dot-h"></div>Tangent meets Directrix at Right Angle</div>
+        <div class="formula-math">$$\text{Tangent between contact point and directrix subtends right angle at corresponding focus}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-h">USE</span> Property shared across all conics — use in locus proofs.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end hyperbola panel -->
+
+  
+
+<!-- ═══════════════════════════════════════════════════════════════
+     BLOCK C — Full Panels  (paste after </div><!-- end hyperbola panel -->)
+
+<!-- ══════════════════════════════════════════
+     STRAIGHT LINE PANEL
+══════════════════════════════════════════ -->
+<div id="straightline" class="panel">
+  <div class="section-title" style="color:var(--green)">⟋ Point &amp; Straight Lines</div>
+  <div class="section-subtitle">Coordinate Geometry — distance · section · slope · angle · locus · pair of lines</div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Core Formula</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> General / Definition</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--text-muted)"></div> Trick / Short-cut</div>
+  </div>
+
+  <!-- SL-1. COORDINATES & DISTANCE -->
+  <div class="accordion open">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">📍</div>
+        <div><div class="accordion-title">Coordinate Systems &amp; Distance</div></div>
+      </div>
+      <span class="accordion-count">7 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="sub-heading">Cartesian ↔ Polar Conversion</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Polar → Cartesian</div>
+        <div class="formula-math">$$x = r\cos\theta,\quad y = r\sin\theta$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Convert polar point $(r,\theta)$ to Cartesian — use when circle/line equation is in polar form.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Cartesian → Polar</div>
+        <div class="formula-math">$$r = \sqrt{x^2+y^2},\quad \theta = \tan^{-1}\!\left(\frac{y}{x}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Convert Cartesian to polar — $\theta$ measured anticlockwise from positive x-axis.</div>
+      </div>
+
+      <div class="sub-heading">Distance</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Distance Formula</div>
+        <div class="formula-math">$$AB = \sqrt{(x_2-x_1)^2+(y_2-y_1)^2}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Fundamental — used to verify type of quadrilateral (equal sides → rhombus/square; equal diagonals → rectangle/square).</div>
+      </div>
+
+      <div class="sub-heading">Quadrilateral Identification (given 4 vertices A, B, C, D)</div>
+      <div class="formula-card">
+        <div class="formula-label label-gen"><div class="label-dot dot-gen"></div>Type Conditions</div>
+        <div class="formula-math">
+          <b>Square</b>: $AB=BC=CD=DA$ and $AC=BD$; $AC\perp BD$<br>
+          <b>Rhombus</b>: $AB=BC=CD=DA$ and $AC\neq BD$; $AC\perp BD$<br>
+          <b>Rectangle</b>: $AB=CD$, $BC=DA$, $AC=BD$; $AC\not\perp BD$<br>
+          <b>Parallelogram</b>: $AB=DC$, $BC=AD$; $AC\neq BD$; $AC\not\perp BD$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-gen">USE</span> After computing all six distances, classify the quadrilateral — check diagonals last.</div>
+      </div>
+
+      <div class="sub-heading">Collinearity of 3 Points A, B, C</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Three Methods</div>
+        <div class="formula-math">
+          (a) $AB + BC = CA$ (or any permutation of two summing to third)<br>
+          (b) $\text{Area of }\triangle ABC = 0$<br>
+          (c) Slope $AB$ = Slope $BC$ = Slope $AC$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Method (b) using determinant is fastest for JEE : set up $\frac{1}{2}|x_1(y_2-y_3)+\ldots|=0$.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SL-2. SECTION FORMULA & SPECIAL POINTS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">🔀</div>
+        <div><div class="accordion-title">Section Formula &amp; Triangle Special Points</div></div>
+      </div>
+      <span class="accordion-count">12 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="sub-heading">Section Formula</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Internal Division (m : n)</div>
+        <div class="formula-math">$$R = \left(\frac{mx_2+nx_1}{m+n},\;\frac{my_2+ny_1}{m+n}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Point R divides segment PQ internally — ratio positive means point lies between P and Q.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>External Division (m : n)</div>
+        <div class="formula-math">$$R = \left(\frac{mx_2-nx_1}{m-n},\;\frac{my_2-ny_1}{m-n}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> R lies outside segment — if λ in assumed ratio λ:1 is negative, division is external.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-gen"><div class="label-dot dot-gen"></div>Harmonic Conjugate</div>
+        <div class="formula-math">$$\frac{2}{AB} = \frac{1}{AP} + \frac{1}{AQ} \quad \text{(AP, AB, AQ in H.P.)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-gen">USE</span> P divides AB internally and Q divides AB externally in same ratio m:n → P and Q are harmonic conjugates.</div>
+      </div>
+
+      <div class="sub-heading">Centroid (G)</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Centroid Formula</div>
+        <div class="formula-math">$$G = \left(\frac{x_1+x_2+x_3}{3},\;\frac{y_1+y_2+y_3}{3}\right)$$
+          Centroid divides each median in ratio $2:1$ from vertex.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> G is always inside the triangle — use to find third vertex when G and two vertices are given.</div>
+      </div>
+
+      <div class="sub-heading">Incentre (I) — where angle bisectors meet</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Incentre Formula</div>
+        <div class="formula-math">$$I = \left(\frac{ax_1+bx_2+cx_3}{a+b+c},\;\frac{ay_1+by_2+cy_3}{a+b+c}\right)$$
+          where $a=BC,\; b=CA,\; c=AB$ (sides opposite to vertices $A,B,C$)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Centre of inscribed circle (incircle). Angle bisector from A divides BC in ratio $c:b$ (ratio of adjacent sides).</div>
+      </div>
+
+      <div class="sub-heading">Circumcentre (O) — equidistant from all vertices</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Circumcentre — Key Properties</div>
+        <div class="formula-math">
+          $OA^2 = OB^2 = OC^2 = R^2$<br><br>
+          $$O = \left(\frac{x_1\sin 2A+x_2\sin 2B+x_3\sin 2C}{\sin 2A+\sin 2B+\sin 2C},\;\frac{y_1\sin 2A+y_2\sin 2B+y_3\sin 2C}{\sin 2A+\sin 2B+\sin 2C}\right)$$
+          <br>
+          <b>Short-cut:</b> If right-angled at B, circumcentre = midpoint of hypotenuse AC.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Fastest method: set $OA^2=OB^2$ and $OB^2=OC^2$, solve two equations for $(h,k)$.</div>
+      </div>
+
+      <div class="sub-heading">Orthocentre (H) — altitudes meet</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Orthocentre — Key Properties</div>
+        <div class="formula-math">
+          $$H = \left(\frac{x_1\tan A+x_2\tan B+x_3\tan C}{\tan A+\tan B+\tan C},\;\frac{y_1\tan A+y_2\tan B+y_3\tan C}{\tan A+\tan B+\tan C}\right)$$
+          <br>
+          <b>Right-angled</b>: H is at the vertex with right angle.<br>
+          <b>Equilateral</b>: G = I = O = H (all four coincide).<br>
+          <b>Euler Line</b>: O, G, H are collinear; $G$ divides $OH$ in ratio $1:2$.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Euler line: once circumcentre O and centroid G known, orthocentre $H = 3G - 2O$ (vector form).</div>
+      </div>
+
+      <div class="sub-heading">Ex-centres (I₁, I₂, I₃)</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Ex-centre opposite vertex A</div>
+        <div class="formula-math">$$I_1 = \left(\frac{-ax_1+bx_2+cx_3}{-a+b+c},\;\frac{-ay_1+by_2+cy_3}{-a+b+c}\right)$$
+          Similarly:
+          $I_2 = \dfrac{(ax_1-bx_2+cx_3,\;ay_1-by_2+cy_3)}{a-b+c},\quad I_3 = \dfrac{(ax_1+bx_2-cx_3,\;ay_1+by_2-cy_3)}{a+b-c}$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Excircle touches one side and extensions of other two — sign of the vertex's side term flips.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SL-3. AREA -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">△</div>
+        <div><div class="accordion-title">Area of Triangle &amp; Polygon</div></div>
+      </div>
+      <span class="accordion-count">6 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Area of Triangle</div>
+        <div class="formula-math">$$\Delta = \frac{1}{2}\left|x_1(y_2-y_3)+x_2(y_3-y_1)+x_3(y_1-y_2)\right|$$
+$$= \frac{1}{2}\left|\det\begin{pmatrix}x_1&y_1&1\\x_2&y_2&1\\x_3&y_3&1\end{pmatrix}\right|$$
+Shoelace: $= \frac{1}{2}\left|(x_1y_2-x_2y_1)+(x_2y_3-x_3y_2)+(x_3y_1-x_1y_3)\right|$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Always take absolute value — negative result just means you enumerated vertices clockwise.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Area of Equilateral Triangle</div>
+        <div class="formula-math">$$\text{Side }(a):\quad \Delta = \frac{\sqrt{3}}{4}a^2 \qquad \text{Altitude }(p):\quad \Delta = \frac{p^2}{\sqrt{3}}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Area of equilateral triangle with integer coordinates is always irrational (JEE proof question).</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Area of Quadrilateral (Shoelace)</div>
+        <div class="formula-math">$$\text{Area} = \frac{1}{2}\left|(x_1y_2-x_2y_1)+(x_2y_3-x_3y_2)+(x_3y_4-x_4y_3)+(x_4y_1-x_1y_4)\right|$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Split any polygon into triangles and sum areas, or directly apply the shoelace formula going around the vertices in order.</div>
+      </div>
+
+      <div class="note-box">
+        <b>KEY FACT:</b> Area = 0 → points are collinear. Vertices of equilateral triangle <em>cannot</em> all have rational coordinates (area would be $\frac{\sqrt{3}}{4}a^2$ = irrational, but rational × rational combinations = rational — contradiction).
+      </div>
+    </div>
+  </div>
+
+  <!-- SL-4. LOCUS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">〰</div>
+        <div><div class="accordion-title">Locus — Finding the Equation</div></div>
+      </div>
+      <span class="accordion-count">3 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-gen"><div class="label-dot dot-gen"></div>Standard Procedure</div>
+        <div class="formula-math">
+          Step 1: Let moving point $P = (h,k)$<br>
+          Step 2: Express the geometric condition in terms of $h,k$ and any parameters<br>
+          Step 3: Eliminate all parameters<br>
+          Step 4: Replace $h \to x$, $k \to y$ — the result is the locus equation
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-gen">USE</span> General method — the key step is elimination of the free parameter from the geometric condition.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Rod on Axes Locus (classic)</div>
+        <div class="formula-math">
+          Rod of length $\ell$ with ends on axes, point dividing in $m_1:m_2$:<br>
+          $$\left(\frac{m_1 x}{m_2}\right)^2 + \left(\frac{m_2 y}{m_1}\right)^2 = \ell^2 \quad\Longrightarrow\quad m_1^2x^2+m_2^2y^2 = \left(\frac{m_1m_2\ell}{m_1+m_2}\right)^2$$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Classic locus — point on rod with ends on axes traces an ellipse (or circle if divides equally).</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>cotA + cotB = λ Locus</div>
+        <div class="formula-math">
+          Fixed points $A(a,0)$, $B(-a,0)$; vertex $C(h,k)$ with $\cot A + \cot B = \lambda$:<br>
+          $$\cot A = \frac{a-h}{k},\quad \cot B = \frac{a+h}{k} \Rightarrow \frac{2a}{k}=\lambda$$
+          Locus: $\boxed{y\lambda = 2a}$ (a horizontal line)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Whenever cotA + cotB = constant, vertex traces a horizontal line parallel to AB.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SL-5. SLOPE & STANDARD FORMS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">📐</div>
+        <div><div class="accordion-title">Slope &amp; Standard Forms of a Straight Line</div></div>
+      </div>
+      <span class="accordion-count">10 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="sub-heading">Slope</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Slope Definition</div>
+        <div class="formula-math">$$m = \tan\theta = \frac{y_2-y_1}{x_2-x_1}, \quad 0°\le\theta<180°,\;\theta\neq 90°$$
+          $\theta=90°$: $m$ undefined (vertical line) $\quad \theta=0°$: $m=0$ (horizontal)</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Parallel lines: $m_1=m_2$; Perpendicular lines: $m_1 m_2 = -1$.</div>
+      </div>
+
+      <div class="sub-heading">Standard Forms</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Five Standard Forms</div>
+        <div class="formula-math">
+          <b>(a) Slope-Intercept:</b> $y = mx + c$<br><br>
+          <b>(b) Point-Slope:</b> $y - y_1 = m(x-x_1)$<br><br>
+          <b>(c) Two-Point:</b> $\dfrac{y-y_1}{y_2-y_1} = \dfrac{x-x_1}{x_2-x_1}$ &nbsp;or&nbsp; $\begin{vmatrix}x&y&1\\x_1&y_1&1\\x_2&y_2&1\end{vmatrix}=0$<br><br>
+          <b>(d) Intercept Form:</b> $\dfrac{x}{a}+\dfrac{y}{b}=1$; intercept length $=\sqrt{a^2+b^2}$; area $\triangle OAB=\dfrac{1}{2}|ab|$<br><br>
+          <b>(e) Normal Form:</b> $x\cos\alpha+y\sin\alpha = p$ ($p>0$, $0\le\alpha<2\pi$)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> (d) useful when sum of intercepts is given. (e) useful when perpendicular from origin and its angle are given.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>General Form $ax+by+c=0$</div>
+        <div class="formula-math">
+          Slope $= -\dfrac{a}{b}$ &emsp;
+          $x$-intercept $= -\dfrac{c}{a}$ &emsp;
+          $y$-intercept $= -\dfrac{c}{b}$<br><br>
+          Convert to normal form: divide by $\sqrt{a^2+b^2}$ (after making RHS positive)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Every first-degree equation in $x,y$ represents a straight line — proven because any point on the segment joining two solutions also satisfies it.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Parametric Form</div>
+        <div class="formula-math">$$\frac{x-x_1}{\cos\theta} = \frac{y-y_1}{\sin\theta} = r \;\Longrightarrow\; P=(x_1+r\cos\theta,\;y_1+r\sin\theta)$$
+          $|r|$ = distance of $P$ from fixed point $(x_1,y_1)$; $r>0$ forward, $r<0$ backward along direction $\theta$.</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Find intersection distances: substitute parametric coords into the other curve, get equation in $r$ — product of roots $= r_1 r_2$ = PQ · PR.</div>
+      </div>
+
+      <div class="sub-heading">Parallel &amp; Perpendicular Lines</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>From a Given Line $ax+by+c=0$</div>
+        <div class="formula-math">
+          Parallel: $ax + by + \lambda = 0$ (same coefficients, different constant)<br>
+          Perpendicular: $bx - ay + k = 0$ (swap coefficients, flip sign of one)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> $\lambda$ or $k$ determined from additional condition (passes through a point, distance = $d$, etc.).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SL-6. ANGLE BETWEEN LINES & POSITION -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">∠</div>
+        <div><div class="accordion-title">Angle, Distance &amp; Position</div></div>
+      </div>
+      <span class="accordion-count">8 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="sub-heading">Angle Between Two Lines</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Angle Formula</div>
+        <div class="formula-math">$$\tan\theta = \left|\frac{m_1-m_2}{1+m_1m_2}\right| \quad \text{(acute angle)}$$
+Internal angles of triangle with sides $m_1>m_2>m_3$:
+$$\tan A = \frac{m_1-m_2}{1+m_1m_2},\quad \tan B=\frac{m_2-m_3}{1+m_2m_3},\quad \tan C=\frac{m_3-m_1}{1+m_3m_1}$$
+Negative $\tan C$ → obtuse triangle.</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Take slopes in decreasing order $m_1>m_2>m_3$; third tangent value automatically has opposite sign if obtuse.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Line at Angle $\alpha$ to Given Line</div>
+        <div class="formula-math">$$y - y_1 = \frac{m\pm\tan\alpha}{1\mp m\tan\alpha}(x-x_1) \quad \text{(two lines making angle }\alpha\text{ with slope }m)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> When line through a given point makes a specific angle with another line — gives two solutions (±).</div>
+      </div>
+
+      <div class="sub-heading">Position of Points</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Same / Opposite Side of a Line</div>
+        <div class="formula-math">
+          For line $ax+by+c=0$ and points $P(x_1,y_1)$, $Q(x_2,y_2)$:<br>
+          Same side if $(ax_1+by_1+c)$ and $(ax_2+by_2+c)$ have same sign.<br>
+          Opposite side if signs differ.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Determine which region a point lies in — used for triangle inside/outside checks and inequality solution regions.</div>
+      </div>
+
+      <div class="sub-heading">Perpendicular Distance</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Point to Line Distance</div>
+        <div class="formula-math">$$d = \frac{|ax_1+by_1+c|}{\sqrt{a^2+b^2}}$$
+From origin: $\displaystyle P = \frac{|c|}{\sqrt{a^2+b^2}}$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Core formula — radius of inscribed circle equals distance from incentre to any side.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Distance Between Parallel Lines</div>
+        <div class="formula-math">$$d = \frac{|c_1-c_2|}{\sqrt{a^2+b^2}} \quad \text{(for }ax+by+c_1=0 \text{ and } ax+by+c_2=0\text{)}$$
+Area of parallelogram bounded by $y=m_1x+c_1$, $y=m_1x+c_2$, $y=m_2x+d_1$, $y=m_2x+d_2$:
+$$\text{Area} = \left|\frac{(c_1-c_2)(d_1-d_2)}{m_1-m_2}\right|$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Coefficient of $x$ and $y$ must be identical in both lines before applying — normalise first if needed.</div>
+      </div>
+
+      <div class="sub-heading">Foot of Perpendicular &amp; Reflection</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Foot of Perpendicular from $(x_1,y_1)$ to $ax+by+c=0$</div>
+        <div class="formula-math">$$\frac{x-x_1}{a} = \frac{y-y_1}{b} = -\frac{ax_1+by_1+c}{a^2+b^2}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Foot $(\alpha,\beta)$: $\alpha = x_1 - a\cdot\frac{ax_1+by_1+c}{a^2+b^2}$; $\beta$ similarly — solve directly.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Image / Reflection of $(x_1,y_1)$ in $ax+by+c=0$</div>
+        <div class="formula-math">$$\frac{h-x_1}{a} = \frac{k-y_1}{b} = \frac{-2(ax_1+by_1+c)}{a^2+b^2}$$
+Special reflections of $P(x,y)$: x-axis→$(x,-y)$; y-axis→$(-x,y)$; origin→$(-x,-y)$; $y=x$→$(y,x)$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Image = $2\times\text{foot} - \text{original point}$. The factor $-2$ vs $-1$ in foot formula is the only difference.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-gen"><div class="label-dot dot-gen"></div>Algebraic Sum of Perpendiculars = 0</div>
+        <div class="formula-math">$$\sum_{i=1}^{n}\frac{ax_i+by_i+c}{\sqrt{a^2+b^2}} = 0 \;\Rightarrow\; \text{variable line passes through fixed point }\left(\frac{\sum x_i}{n},\frac{\sum y_i}{n}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-gen">USE</span> If algebraic sum of perpendiculars from n given points to a variable line is zero, the line always passes through the centroid of those n points.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SL-7. FAMILY OF LINES & CONCURRENCY -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">⊕</div>
+        <div><div class="accordion-title">Family of Lines, Concurrency &amp; Determinant Form</div></div>
+      </div>
+      <span class="accordion-count">6 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Family of Lines Through Intersection of $L_1=0$ and $L_2=0$</div>
+        <div class="formula-math">$$L_1 + \lambda L_2 = 0 \quad \text{(for all values of }\lambda\text{)}$$
+i.e. $a_1x+b_1y+c_1 + \lambda(a_2x+b_2y+c_2) = 0$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Any line through intersection point of two given lines — find $\lambda$ from extra condition (passes through a point, perpendicular to one, etc.).</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Fixed Point of a Family (ax+by+c=0 with constraint)</div>
+        <div class="formula-math">
+          If $pa+qb+rc=0$, rearrange as $L_1+\frac{r}{q}L_2=0$ form → fixed point = intersection of $L_1=0$, $L_2=0$.<br>
+          Quick method: treat as $\lambda L_1 + \mu L_2 = 0$ and find their intersection.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> E.g. $3a+2b+5c=0$: rewrite $ax+by+c=0$ eliminating one coefficient → passes through $(\frac{3}{5},\frac{2}{5})$.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Concurrency of Three Lines</div>
+        <div class="formula-math">$$\begin{vmatrix}a_1&b_1&c_1\\a_2&b_2&c_2\\a_3&b_3&c_3\end{vmatrix}=0$$
+Equivalently: $\exists\; l,m,n$ (not all zero) such that $lL_1+mL_2+nL_3=0$.</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Determinant = 0 is necessary but not sufficient (may be parallel) — verify by checking the system is consistent.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Line Through Two Points (Determinant Form)</div>
+        <div class="formula-math">$$\begin{vmatrix}x&y&1\\x_1&y_1&1\\x_2&y_2&1\end{vmatrix}=0$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Clean form for median, altitude through a triangle vertex using midpoint coordinates.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-gen"><div class="label-dot dot-gen"></div>Family Parameterised by Angle (θ parameter)</div>
+        <div class="formula-math">
+          If family is $(A\sin\theta+B\cos\theta)x+(C\sin\theta+D\cos\theta)y+(E\sin\theta+F\cos\theta)=0$,<br>
+          rewrite as $\sin\theta(\cdot)+\cos\theta(\cdot)=0 \;\Rightarrow\; L_1+\tan\theta\cdot L_2=0$<br>
+          → passes through intersection of $L_1=0$ and $L_2=0$.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-gen">USE</span> Separate sine and cosine terms; treat as $P+\lambda Q=0$ family — fixed point is intersection of P=0, Q=0.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SL-8. ANGLE BISECTORS -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">⊿</div>
+        <div><div class="accordion-title">Angle Bisectors of Two Lines</div></div>
+      </div>
+      <span class="accordion-count">6 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Bisector Equation</div>
+        <div class="formula-math">$$\frac{a_1x+b_1y+c_1}{\sqrt{a_1^2+b_1^2}} = \pm\frac{a_2x+b_2y+c_2}{\sqrt{a_2^2+b_2^2}}$$
+Two bisectors — one acute, one obtuse (they are always perpendicular to each other).</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Two bisectors always intersect at right angles — use this to find the second once the first is known.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Bisector Containing the Origin</div>
+        <div class="formula-math">
+          Make $c_1>0$ and $c_2>0$ (multiply equation by $-1$ if constant term is negative).<br>
+          Then the bisector containing origin is the <b>positive sign</b> bisector.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Origin lies in the acute-angle region if $a_1a_2+b_1b_2 < 0$ (after making constants positive).</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Acute / Obtuse Bisector — Sign Rule</div>
+        <div class="formula-math">
+          After making $c_1, c_2 > 0$, compute $a_1a_2+b_1b_2$:<br>
+          <b>Positive</b>: $+$ sign → obtuse bisector; $-$ sign → acute bisector<br>
+          <b>Negative</b>: $+$ sign → acute bisector; $-$ sign → obtuse bisector
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Alternative: find angle between a bisector and one given line; $\tan\phi<1\Rightarrow\phi<45°\Rightarrow$ that bisector is the acute one.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Bisector Containing a Given Point $(x_1,y_1)$</div>
+        <div class="formula-math">
+          Compute $L_1(x_1,y_1)=a_1x_1+b_1y_1+c_1$ and $L_2(x_1,y_1)$.<br>
+          If both have same sign → use $+$ bisector.<br>
+          If signs differ → use $-$ bisector.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Directly test which bisector the given point satisfies — no need to compute angles.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SL-9. PAIR OF STRAIGHT LINES -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">⚡</div>
+        <div><div class="accordion-title">Pair of Straight Lines (Homogeneous &amp; General)</div></div>
+      </div>
+      <span class="accordion-count">15 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="sub-heading">Homogeneous Second Degree: $ax^2+2hxy+by^2=0$</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Sum &amp; Product of Slopes</div>
+        <div class="formula-math">$$m_1+m_2 = -\frac{2h}{b},\quad m_1m_2 = \frac{a}{b}$$
+$$\tan\theta = \left|\frac{2\sqrt{h^2-ab}}{a+b}\right| \quad \text{(angle between the pair)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Both lines always pass through the origin. Treat as quadratic in $m = y/x$.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Nature of Lines</div>
+        <div class="formula-math">
+          $h^2 - ab > 0$: real and distinct<br>
+          $h^2 - ab = 0$: real and coincident<br>
+          $h^2 - ab < 0$: imaginary (complex conjugates, only real intersection = origin)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Same discriminant logic as quadratic — $h^2-ab$ replaces $b^2-4ac$.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Special Conditions</div>
+        <div class="formula-math">
+          Perpendicular: $a+b=0$ (sum of coefficients of $x^2$ and $y^2$ = 0)<br>
+          Coincident: $h^2=ab$<br>
+          Equally inclined to x-axis: $h=0$ (no xy term)<br>
+          Bisectors of $ax^2+2hxy+by^2=0$: $\;\dfrac{x^2-y^2}{a-b}=\dfrac{xy}{h}$<br>
+          Perpendicular pair to given: replace $(a,h,b)\to(b,-h,a)$, giving $bx^2-2hxy+ay^2=0$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Bisectors of a pair are always perpendicular to each other (coeff of $x^2$ + coeff of $y^2=0$ in bisector eq).</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Product of Perpendiculars from $(x_1,y_1)$</div>
+        <div class="formula-math">$$p_1\cdot p_2 = \frac{|ax_1^2+2hx_1y_1+by_1^2|}{\sqrt{(a-b)^2+4h^2}}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Used to find the product of perpendicular lengths from a given external point to both lines of the pair.</div>
+      </div>
+
+      <div class="sub-heading">General Second Degree: $ax^2+2hxy+by^2+2gx+2fy+c=0$</div>
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Condition for Pair of Lines ($\Delta=0$)</div>
+        <div class="formula-math">$$\Delta = \begin{vmatrix}a&h&g\\h&b&f\\g&f&c\end{vmatrix} = abc+2fgh-af^2-bg^2-ch^2 = 0$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> If $\Delta=0$, the equation represents a pair of lines (not necessarily through origin) — find $\lambda$ to make $\Delta=0$.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Point of Intersection of the Pair</div>
+        <div class="formula-math">$$\left(\frac{hf-bg}{ab-h^2},\;\frac{gh-af}{ab-h^2}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Solve $\partial F/\partial x = 0$ and $\partial F/\partial y = 0$ simultaneously.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Angle between Lines (General)</div>
+        <div class="formula-math">$$\tan\theta = \frac{2\sqrt{h^2-ab}}{a+b}$$
+Perpendicular: $a+b=0$ &emsp; Parallel: $h^2=ab$ and $bg^2=af^2$</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Same formula as for homogeneous pair — the terms $g,f,c$ don't affect the angle between the lines.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Homogenization (Making Curve Homogeneous with Line)</div>
+        <div class="formula-math">
+          Curve: $ax^2+2hxy+by^2+2gx+2fy+c=0$; Line: $\ell x+my+n=0\Rightarrow\dfrac{\ell x+my}{-n}=1$<br><br>
+          Combined equation of lines $OP$, $OQ$ (chord intersections from origin):
+          $$ax^2+2hxy+by^2+2(gx+fy)\!\left(\frac{\ell x+my}{-n}\right)+c\!\left(\frac{\ell x+my}{-n}\right)^{\!2}=0$$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Find the pair of lines joining origin to intersection of curve and line — then use $a+b=0$ for perpendicularity condition (angle at origin = 90°).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SL-10. TRANSFORMATION OF AXES -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">🔄</div>
+        <div><div class="accordion-title">Transformation of Axes</div></div>
+      </div>
+      <span class="accordion-count">4 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Shifting of Origin to $(\alpha,\beta)$</div>
+        <div class="formula-math">$$x = x'+\alpha,\quad y = y'+\beta \quad\Longleftrightarrow\quad x'=x-\alpha,\quad y'=y-\beta$$
+Replace $x\to x+\alpha$ and $y\to y+\beta$ in the equation to get new equation.</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Eliminate first-degree terms — shift origin to point of intersection / vertex of conic.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Rotation of Axes by Angle $\theta$ (anticlockwise)</div>
+        <div class="formula-math">$$x = x'\cos\theta - y'\sin\theta,\quad y = x'\sin\theta + y'\cos\theta$$
+$$x' = x\cos\theta+y\sin\theta,\quad y' = -x\sin\theta+y\cos\theta$$
+Table: New $x'$ uses $\cos\theta$ from old $x$, $\sin\theta$ from old $y$; New $y'$ uses $-\sin\theta$, $\cos\theta$.</div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Eliminate the xy term from a second-degree equation — choose θ so that coefficient of x'y' becomes zero (solve $\cot 2\theta=(a-b)/2h$).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SL-11. LINEAR INEQUALITIES (brief) -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-sl">▧</div>
+        <div><div class="accordion-title">Linear Inequalities &amp; Regions</div></div>
+      </div>
+      <span class="accordion-count">3 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Region Represented by $ax+by+c>0$</div>
+        <div class="formula-math">
+          Test with a convenient point (e.g., origin):<br>
+          If $a(0)+b(0)+c>0$ → origin is in the region $ax+by+c>0$.<br>
+          The inequality represents the half-plane on one side of the line $ax+by+c=0$.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> For feasibility region: shade intersection of all inequality half-planes — corner points give extrema of objective function.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-sl"><div class="label-dot dot-sl"></div>Line Passing Inside a Triangle</div>
+        <div class="formula-math">
+          Line $L=0$ passes inside $\triangle ABC$ if it separates at least one vertex from the other two.<br>
+          i.e. $L(A)$ and $L(B)$ have opposite signs, or $L(A)$ and $L(C)$ have opposite signs.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-sl">USE</span> Check signs of $L$ at each vertex — two on same side, one on other side → line passes through interior.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end straightline panel -->
+
+
+<!-- ══════════════════════════════════════════
+     CIRCLE PANEL
+══════════════════════════════════════════ -->
+<div id="circle" class="panel">
+  <div class="section-title" style="color:var(--pink)">◉ Circle</div>
+  <div class="section-subtitle">Locus of equidistant points from centre · General form · Tangent · Chord · Power of a Point · Radical Axis</div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--pink)"></div> Core Formula</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div> General / Definition</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div> Theorem / Property</div>
+  </div>
+
+  <!-- C-1. BASIC GEOMETRY THEOREMS -->
+  <div class="accordion open">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">📐</div>
+        <div><div class="accordion-title">Basic Circle Geometry — Key Theorems</div></div>
+      </div>
+      <span class="accordion-count">9 theorems</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Chord Perpendicularity</div>
+        <div class="formula-math">Line from centre bisects a chord $\;\Leftrightarrow\;$ it is perpendicular to the chord. (Two-way)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Perpendicular from centre to chord bisects it — use to find chord length given distance from centre.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Equal Chords &amp; Distance</div>
+        <div class="formula-math">$AB = CD \;\Leftrightarrow\; OP = OQ$ (equal chords equidistant from centre; nearer chord is longer)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Greatest chord = diameter ($d=0$ from centre); shortest chord approaches diameter approaches the tangent.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Angle at Centre = 2 × Inscribed Angle</div>
+        <div class="formula-math">$$\angle AOB = 2\angle APB \quad \text{(same arc AB)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Angle in semicircle = 90° (special case where $\angle AOB=180°$).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Angles in Same Segment</div>
+        <div class="formula-math">$$\angle APB = \angle AQB \quad \text{(P, Q on same arc)} \quad\Leftrightarrow\quad A,P,Q,B \text{ concyclic}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Converse: if line segment subtends equal angles at two points on same side, four points are concyclic.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Cyclic Quadrilateral</div>
+        <div class="formula-math">$$\angle P + \angle R = 180°,\quad \angle Q + \angle S = 180° \quad\Leftrightarrow\quad \text{PQRS concyclic}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Opposite angles supplementary — test for concyclicity or use as angle-finding shortcut.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Tangent ⊥ Radius</div>
+        <div class="formula-math">Tangent at point of contact is perpendicular to the radius at that point.</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> $OT\perp PT$ → $OT^2+PT^2=OP^2$ — find length of tangent from external point.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Equal Tangents from External Point</div>
+        <div class="formula-math">$PT_1 = PT_2$ (two tangents from same external point are equal in length)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> $\triangle OT_1P \cong \triangle OT_2P$ (RHS) — also $\angle T_1PO = \angle T_2PO$ (tangents are symmetric about $PO$).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Alternate Segment Theorem</div>
+        <div class="formula-math">Angle between tangent at $T$ and chord $TM$ = Inscribed angle in alternate segment.<br>
+$\angle MTB = \angle TPM$ &emsp; and &emsp; $\angle MTA = \angle MQT$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Tangent-chord angle equals the angle subtended by the chord on the opposite arc.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Power of a Point — Intersecting Lines</div>
+        <div class="formula-math">
+          P outside circle: $PT^2 = PA\cdot PB = PC\cdot PD$ (secant-tangent; secant-secant)<br>
+          P inside circle: $PA\cdot PB = PC\cdot PD$ (chord-chord)<br>
+          Two touching circles: $O_1O_2 = r_1+r_2$ (external) or $|r_1-r_2|$ (internal)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> $PA\cdot PB$ is constant for any chord through $P$ — the "power of point P" w.r.t. the circle.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-2. EQUATIONS OF CIRCLE -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">⭕</div>
+        <div><div class="accordion-title">Equations of a Circle — All Forms</div></div>
+      </div>
+      <span class="accordion-count">8 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Centre-Radius Form</div>
+        <div class="formula-math">$$(x-h)^2+(y-k)^2 = r^2 \quad \text{centre }(h,k),\text{ radius }r$$
+Origin as centre: $x^2+y^2=r^2$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Simplest form — complete the square in general form to arrive here.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>General Form</div>
+        <div class="formula-math">$$x^2+y^2+2gx+2fy+c=0$$
+Centre: $(-g,-f)$ &emsp; Radius: $r=\sqrt{g^2+f^2-c}$<br><br>
+Conditions: $g^2+f^2-c>0$ (real circle); $=0$ (point circle); $<0$ (imaginary)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Check: coefficient of $x^2$ = coefficient of $y^2$ and coefficient of $xy=0$ for any equation to be a circle.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Diameter Form</div>
+        <div class="formula-math">$$(x-x_1)(x-x_2)+(y-y_1)(y-y_2)=0$$
+($(x_1,y_1)$ and $(x_2,y_2)$ are ends of diameter — angle in semicircle = 90°)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Circle of minimum radius through two given points — any circle through same points has larger radius.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Parametric Equations</div>
+        <div class="formula-math">$$x = h+r\cos\theta,\quad y = k+r\sin\theta,\quad -\pi<\theta\le\pi$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Any point on circle in one-parameter form — substitute to find intersection with another curve.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Intercepts on Axes</div>
+        <div class="formula-math">$$x\text{-intercept} = 2\sqrt{g^2-c} \quad (g^2>c); \quad y\text{-intercept} = 2\sqrt{f^2-c} \quad (f^2>c)$$
+$g^2=c$: circle touches x-axis; $\;f^2=c$: circle touches y-axis</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Locus of centre when intercepts are given: eliminate $c$ using $g^2-c=a^2/4$ and $f^2-c=b^2/4$ → $x^2-y^2=(a^2-b^2)/4$.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Condition $ax^2+(b-3)xy+3y^2+\ldots$ to be Circle</div>
+        <div class="formula-math">
+          Coefficient of $x^2$ = coefficient of $y^2$ → $a=3$<br>
+          Coefficient of $xy$ = 0 → $b=3$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Two conditions to identify circle from general second-degree: equal squared coefficients and zero xy-term.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Position of a Point w.r.t. Circle</div>
+        <div class="formula-math">$$S_1 = x_1^2+y_1^2+2gx_1+2fy_1+c \begin{cases} <0 & \text{inside} \\ =0 & \text{on} \\ >0 & \text{outside}\end{cases}$$
+Max distance from point $A$ outside circle = $AC+r$ &emsp; Min = $AC-r$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> $S_1$ is also the square of the tangent length from $(x_1,y_1)$ — double duty formula.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-3. LINE AND CIRCLE -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">⌁</div>
+        <div><div class="accordion-title">Line &amp; Circle — Intersection Conditions</div></div>
+      </div>
+      <span class="accordion-count">6 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Perpendicular Distance Test</div>
+        <div class="formula-math">
+          $p$ = distance from centre to line, $r$ = radius:<br>
+          $p > r$: no intersection (outside) &emsp; $p = r$: tangent &emsp; $p < r$: secant (chord)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Fastest test — compute $p=|ah+bk+c|/\sqrt{a^2+b^2}$ and compare with radius.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Discriminant Test ($y=mx+c$ with $x^2+y^2=a^2$)</div>
+        <div class="formula-math">
+          $c^2 < a^2(1+m^2)$: secant &emsp; $c^2 = a^2(1+m^2)$: tangent &emsp; $c^2 > a^2(1+m^2)$: no intersection
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Substitute $y=mx+c$ into circle, form quadratic in $x$, set discriminant $\ge 0$ for intersection.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Length of Chord</div>
+        <div class="formula-math">$$\ell = 2\sqrt{r^2-p^2} \quad \text{where }p=\text{perpendicular distance from centre to chord}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Use Pythagoras: half-chord $= \sqrt{r^2-p^2}$. Longest chord = diameter ($p=0$); approaches 0 as $p\to r$.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-4. TANGENT -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">⟋</div>
+        <div><div class="accordion-title">Tangent — All Forms</div></div>
+      </div>
+      <span class="accordion-count">8 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="sub-heading">To $x^2+y^2=a^2$</div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Slope Form</div>
+        <div class="formula-math">$$y = mx \pm a\sqrt{1+m^2}$$
+Point of contact: $\left(\frac{-a^2m}{c},\frac{a^2}{c}\right)$ where $c=\pm a\sqrt{1+m^2}$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Use when slope of tangent is known — gives two parallel tangents for each $m$.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Point Form</div>
+        <div class="formula-math">$$xx_1+yy_1 = a^2 \quad \text{at point }(x_1,y_1)\text{ on circle}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Replace $x^2\to xx_1$, $y^2\to yy_1$ in circle equation — the "T=0" substitution rule.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Parametric Form</div>
+        <div class="formula-math">$$x\cos\alpha + y\sin\alpha = a \quad \text{at }(a\cos\alpha, a\sin\alpha)$$
+Intersection of tangents at $P(\alpha)$ and $Q(\beta)$:
+$$\left(\frac{a\cos\!\tfrac{\alpha+\beta}{2}}{\cos\!\tfrac{\alpha-\beta}{2}},\;\frac{a\sin\!\tfrac{\alpha+\beta}{2}}{\cos\!\tfrac{\alpha-\beta}{2}}\right)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Parametric tangent simplest for angle-based problems — one clean formula instead of slope form.</div>
+      </div>
+
+      <div class="sub-heading">To General Circle $x^2+y^2+2gx+2fy+c=0$</div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Point Form (T = 0)</div>
+        <div class="formula-math">$$T \equiv xx_1+yy_1+g(x+x_1)+f(y+y_1)+c = 0$$
+Rule: Replace $x^2\!\to\!xx_1$, $y^2\!\to\!yy_1$, $x\!\to\!\tfrac{x+x_1}{2}$, $y\!\to\!\tfrac{y+y_1}{2}$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Same substitution rule works for any second-degree conic — memorise the pattern, not individual cases.</div>
+      </div>
+
+      <div class="sub-heading">Normal</div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Normal to Circle at $(x_1,y_1)$</div>
+        <div class="formula-math">$$y - y_1 = \frac{y_1+f}{x_1+g}(x-x_1)$$
+(Passes through centre $(-g,-f)$ — normal is the line joining centre to the point)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Point of intersection of two normals = centre of circle. Given two normals, find their intersection to get centre.</div>
+      </div>
+
+      <div class="sub-heading">Director Circle</div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Director Circle</div>
+        <div class="formula-math">$$\text{Locus of intersection of } \perp \text{ tangents} = x^2+y^2 = 2a^2$$
+(concentric circle with radius $r\sqrt{2}$)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> The angle $\angle T_1PT_2=90°$ means P lies on director circle — radius is $\sqrt{2}$ times original radius.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-5. LENGTH OF TANGENT, CHORD OF CONTACT, MIDPOINT CHORD -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">📏</div>
+        <div><div class="accordion-title">Length of Tangent · Chord of Contact · Midpoint Chord</div></div>
+      </div>
+      <span class="accordion-count">10 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="sub-heading">Length of Tangent &amp; Power</div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Length of Tangent from $(x_1,y_1)$</div>
+        <div class="formula-math">$$PT = \sqrt{S_1} = \sqrt{x_1^2+y_1^2+2gx_1+2fy_1+c}$$
+Power of point $P$ = $S_1 = PT^2 = PA\cdot PB$ (for any secant $PAB$ through $P$)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> $S_1>0$ → outside (tangent exists); $S_1=0$ → on circle; $S_1<0$ → inside. $\sqrt{S_1}$ = tangent length.</div>
+      </div>
+
+      <div class="sub-heading">Chord of Contact (from external point $P(x_1,y_1)$)</div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Equation of Chord of Contact ($T=0$)</div>
+        <div class="formula-math">$$xx_1+yy_1+g(x+x_1)+f(y+y_1)+c = 0 \quad \text{(same as tangent formula!)}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Tangent formula from point on circle = Chord of contact from external point — same equation, different context.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Chord of Contact — Derived Results</div>
+        <div class="formula-math">
+          Let $L=\sqrt{S_1}$ (tangent length), $R$ = radius:<br><br>
+          Length of chord of contact $T_1T_2 = \dfrac{2LR}{\sqrt{R^2+L^2}}$<br><br>
+          Area of $\triangle PT_1T_2 = \dfrac{RL^3}{R^2+L^2}$<br><br>
+          $\tan(\angle\text{between tangents}) = \dfrac{2RL}{L^2-R^2}$<br><br>
+          Circumcircle of $\triangle PT_1T_2$: $(x-x_1)(x+g)+(y-y_1)(y+f)=0$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> All four results derived from the geometry of $\triangle OPT$ (right angle at $T$) — $L=\sqrt{OP^2-R^2}$.</div>
+      </div>
+
+      <div class="sub-heading">Chord with Given Midpoint ($T = S_1$)</div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Equation of Chord (Midpoint = $(x_1,y_1)$)</div>
+        <div class="formula-math">$$T = S_1$$
+$$xx_1+yy_1+g(x+x_1)+f(y+y_1)+c = x_1^2+y_1^2+2gx_1+2fy_1+c$$
+Slope of chord $= -\dfrac{x_1+g}{y_1+f}$ (perpendicular to line joining centre to midpoint)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Shortest chord through an interior point has its midpoint at that point — use $T=S_1$ for its equation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-6. PAIR OF TANGENTS & SS₁=T² -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">↗↙</div>
+        <div><div class="accordion-title">Pair of Tangents — $SS_1 = T^2$</div></div>
+      </div>
+      <span class="accordion-count">3 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Combined Equation of Pair of Tangents</div>
+        <div class="formula-math">$$SS_1 = T^2$$
+where $S\equiv x^2+y^2+2gx+2fy+c$,\quad $S_1\equiv x_1^2+y_1^2+2gx_1+2fy_1+c$
+$$T\equiv xx_1+yy_1+g(x+x_1)+f(y+y_1)+c$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> From external point $(x_1,y_1)$, $SS_1=T^2$ gives joint equation of both tangents as a pair of straight lines.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Chord of Contact from Pair of Tangents on $xy=c^2$</div>
+        <div class="formula-math">
+          Tangent pair from origin to circle: $2x^2-3xy+y^2=0$ (example)<br>
+          Angle $2\theta$ between tangents: use $\tan\theta = r/L$<br>
+          Four co-normal points on $xy=c^2$: product of parameters $t_1t_2t_3t_4=-1$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> $OA = r/\sin\theta$ where $\theta$ is half the angle between tangents — use angle formula to find distance $OA$.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-7. FAMILY OF CIRCLES -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">🔵</div>
+        <div><div class="accordion-title">Family of Circles</div></div>
+      </div>
+      <span class="accordion-count">8 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Through Intersection of Two Circles $S_1=0$, $S_2=0$</div>
+        <div class="formula-math">$$S_1 + \lambda S_2 = 0 \quad (\lambda\neq -1)$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> All circles through the two intersection points — find $\lambda$ from extra condition (passes through point, has given radius, etc.).</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Through Intersection of Circle $S=0$ and Line $L=0$</div>
+        <div class="formula-math">$$S + \lambda L = 0$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Smallest circle in this family: its centre lies on the line $L=0$ (set $-g/\lambda$ type centre on line and solve).</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Through Two Given Points $(x_1,y_1)$ and $(x_2,y_2)$</div>
+        <div class="formula-math">$$(x-x_1)(x-x_2)+(y-y_1)(y-y_2)+K\begin{vmatrix}x&y&1\\x_1&y_1&1\\x_2&y_2&1\end{vmatrix}=0$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> $K=0$ gives the minimum-radius circle (diameter form). Non-zero $K$ gives other circles through the same two points.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Touching a Fixed Line at Fixed Point $(x_1,y_1)$</div>
+        <div class="formula-math">$$(x-x_1)^2+(y-y_1)^2 + K\bigl[y-y_1-m(x-x_1)\bigr]=0$$
+where $y-y_1=m(x-x_1)$ is the given tangent line.</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> All circles tangent to a given line at a given point — centre lies on the perpendicular to the line at the point.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Circle Touching y-axis at $(0,k)$</div>
+        <div class="formula-math">$$x^2+(y-k)^2+\lambda x = 0$$
+(Centre on line $x=0$ side shifts; the $\lambda x$ term ensures tangency at the point on y-axis)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Substitute the other given point to find $\lambda$, then the complete equation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-8. COMMON TANGENTS TO TWO CIRCLES -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">⟺</div>
+        <div><div class="accordion-title">Common Tangents to Two Circles — Five Cases</div></div>
+      </div>
+      <span class="accordion-count">10 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Five Cases Based on Distance $d = |C_1C_2|$</div>
+        <div class="formula-math">
+          $d > r_1+r_2$: 4 tangents (2 direct, 2 transverse) — circles external<br>
+          $d = r_1+r_2$: 3 tangents — circles touch externally<br>
+          $|r_1-r_2| < d < r_1+r_2$: 2 tangents (only direct) — circles intersect<br>
+          $d = |r_1-r_2|$: 1 tangent — circles touch internally<br>
+          $d < |r_1-r_2|$: 0 tangents — one circle inside the other
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Number of common tangents = 4, 3, 2, 1, or 0 based on relative position — memorise the boundary conditions.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>External Centre of Similitude $P$</div>
+        <div class="formula-math">$$P \text{ divides }C_1C_2 \text{ externally in ratio }r_1:r_2$$
+$$P = \left(\frac{r_1x_2-r_2x_1}{r_1-r_2},\;\frac{r_1y_2-r_2y_1}{r_1-r_2}\right)$$
+(Direct common tangents pass through $P$)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Write equation of tangent from $P$ to either circle to find direct common tangents.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Internal Centre of Similitude $T$</div>
+        <div class="formula-math">$$T \text{ divides }C_1C_2 \text{ internally in ratio }r_1:r_2$$
+$$T = \left(\frac{r_1x_2+r_2x_1}{r_1+r_2},\;\frac{r_1y_2+r_2y_1}{r_1+r_2}\right)$$
+(Transverse common tangents pass through $T$)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Transverse tangents cross between the circles — internal division gives the crossing point.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Length of Direct Common Tangent</div>
+        <div class="formula-math">$$L_{\text{direct}} = \sqrt{d^2-(r_1-r_2)^2}$$
+$$L_{\text{transverse}} = \sqrt{d^2-(r_1+r_2)^2}$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Direct tangent uses $(r_1-r_2)^2$ (same direction radii); transverse uses $(r_1+r_2)^2$ (opposite radii).</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Two Circles Touch Each Other — Condition</div>
+        <div class="formula-math">
+          Externally: $d = r_1+r_2$ → point of contact divides $C_1C_2$ internally in $r_1:r_2$<br>
+          Internally: $d = |r_1-r_2|$ → point of contact divides $C_1C_2$ externally in $r_1:r_2$<br>
+          Circles $x^2+y^2+2ax+c^2=0$ and $x^2+y^2+2by+c^2=0$ touch each other if $\dfrac{1}{a^2}+\dfrac{1}{b^2}=\dfrac{1}{c^2}$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> For touching: distance between centres = sum (ext) or difference (int) of radii.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-9. RADICAL AXIS & RADICAL CENTRE -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">⊕</div>
+        <div><div class="accordion-title">Radical Axis &amp; Radical Centre</div></div>
+      </div>
+      <span class="accordion-count">8 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Radical Axis of $S_1=0$ and $S_2=0$</div>
+        <div class="formula-math">$$S_1 - S_2 = 0 \quad\Longrightarrow\quad 2(g_1-g_2)x+2(f_1-f_2)y+(c_1-c_2)=0$$
+(Locus of equal power w.r.t. both circles)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> First normalise both equations so coefficients of $x^2,y^2$ are each 1, then subtract directly.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Key Properties of Radical Axis</div>
+        <div class="formula-math">
+          (a) Always $\perp$ to the line joining the centres<br>
+          (b) If circles intersect → radical axis = common chord<br>
+          (c) If circles touch → radical axis = common tangent at contact point<br>
+          (d) Bisects each common external tangent<br>
+          (e) Passes through midpoint of $C_1C_2$ only if $r_1=r_2$<br>
+          (f) Concentric circles have no radical axis
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Property (a): verify your radical axis is perpendicular to $C_1C_2$ as a quick sanity check.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Radical Centre</div>
+        <div class="formula-math">
+          Common intersection of radical axes of three circles taken two at a time.<br>
+          Equal tangent lengths from radical centre to all three circles.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Find radical axes of any two pairs → solve simultaneously → radical centre. Then $\sqrt{S_1}$ from this point = tangent to each circle.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-10. COAXIAL SYSTEM & ORTHOGONALITY -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">⊗</div>
+        <div><div class="accordion-title">Coaxial System &amp; Orthogonal Circles</div></div>
+      </div>
+      <span class="accordion-count">7 formulas</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="sub-heading">Coaxial System</div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Definition &amp; Forms</div>
+        <div class="formula-math">
+          Family with common radical axis = coaxial system.<br><br>
+          Form 1 (radical axis $P=0$ and one circle $S=0$): $\quad S+\lambda P=0$<br>
+          Form 2 (two circles $S_1=0$, $S_2=0$): $\quad S_1+\lambda(S_1-S_2)=0$<br>
+          Simplest form: $\quad x^2+y^2+2gx+c=0$ ($g$ variable, $c$ constant)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Coaxial circles share a radical axis — all have centres on the same line perpendicular to the radical axis.</div>
+      </div>
+
+      <div class="sub-heading">Orthogonal Circles</div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Orthogonality Condition</div>
+        <div class="formula-math">$$2g_1g_2 + 2f_1f_2 = c_1+c_2$$
+Proof: $(C_1C_2)^2 = r_1^2+r_2^2$ (Pythagoras at right-angle intersection)
+$$\Rightarrow (g_1-g_2)^2+(f_1-f_2)^2 = g_1^2+f_1^2-c_1+g_2^2+f_2^2-c_2$$</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Tangents at intersection point of orthogonal circles pass through the other circle's centre.</div>
+      </div>
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Key Orthogonality Properties</div>
+        <div class="formula-math">
+          (a) Centre of variable circle orthogonal to two fixed circles lies on their radical axis.<br>
+          (b) Centre of circle orthogonal to three given circles = radical centre (if outside all three).
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Use (a) to find locus of centre when orthogonality to two circles is the condition.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C-11. IMPORTANT RESULTS & QUICK NOTES -->
+  <div class="accordion">
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <div class="accordion-header-left">
+        <div class="topic-icon icon-c">💡</div>
+        <div><div class="accordion-title">Important Highlights &amp; Quick Results</div></div>
+      </div>
+      <span class="accordion-count">10 results</span>
+      <span class="chevron">▼</span>
+    </div>
+    <div class="accordion-body">
+
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Circle on Focal Chord as Diameter</div>
+        <div class="formula-math">Circle drawn on any focal chord of a conic as diameter touches the corresponding directrix.</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Shared property — parabola, ellipse, and hyperbola all satisfy this.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Chord of Contact from Directrix</div>
+        <div class="formula-math">Chord of contact from any point on the directrix passes through the corresponding focus.</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Standard conic property — used in both circle and conic section proofs.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Angle in Semicircle</div>
+        <div class="formula-math">$\angle APB = 90°$ if $AB$ is diameter — use diameter form circle $(x-x_1)(x-x_2)+(y-y_1)(y-y_2)=0$ directly.</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Shortcut: if a triangle has sides such that $AB^2+BC^2=AC^2$, the circumcircle has $AC$ as diameter.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Circumcircle of Triangle $PT_1T_2$</div>
+        <div class="formula-math">$$(x-x_1)(x+g)+(y-y_1)(y+f)=0$$
+(where $(x_1,y_1)$ is external point and $(-g,-f)$ is the centre)</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Circumcircle of triangle formed by tangents and chord of contact — diameter is $OP$ (from external point to centre).</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Two Circles: $x^2+y^2=ax$ and $x^2+y^2=c^2$ Touch iff $|a|=c$</div>
+        <div class="formula-math">
+          Circle 1: centre $(a/2,0)$, radius $|a|/2$<br>
+          Circle 2: centre $(0,0)$, radius $c$<br>
+          Touch internally iff distance between centres = difference of radii: $|a|/2 = c - |a|/2 \Rightarrow |a|=c$
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Common pattern — one circle passes through origin and touches the other.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Circle Through Origin: $x^2+y^2+\lambda y=0$ Touching y-axis at $(0,2)$</div>
+        <div class="formula-math">
+          Family touching y-axis at $(0,k)$: $x^2+(y-k)^2+\lambda x=0$<br>
+          Substitute other given point to find $\lambda$ → complete equation.
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Quick family form — saves solving from general form. Don't forget to verify the given point satisfies the final equation.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Locus of Midpoint of Chord of Contact</div>
+        <div class="formula-math">
+          Point $(x_1,y_1)$ on line $lx+my=1$ → chord of contact of $x^2+y^2=a^2$:<br>
+          Midpoint $(h,k)$ satisfies: $h^2+k^2 = a^2(lh+mk)$<br>
+          Locus: $x^2+y^2=a(lx+my)$ (a circle through origin)
+        </div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Use $T=S_1$ for chord with midpoint $(h,k)$, then eliminate $(x_1,y_1)$ using the given line condition.</div>
+      </div>
+      <div class="formula-card">
+        <div class="formula-label label-c"><div class="label-dot dot-c"></div>Common Chord of Two Circles</div>
+        <div class="formula-math">$$S_1-S_2=0 \quad \text{(radical axis = common chord when circles intersect)}$$
+Length of common chord: use distance from either centre to the radical axis line, then $\ell = 2\sqrt{r^2-p^2}$.</div>
+        <div class="formula-use"><span class="use-tag use-tag-c">USE</span> Subtract the two circle equations (coefficients of $x^2,y^2$ must be 1 first) to get the common chord.</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end circle panel -->  
+  
+  
+  
+  
+
+<script>
+function showPanel(id, btn, cls) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.className = 'tab-btn';
+  });
+  btn.classList.add(cls);
+}
+
+function toggleAcc(header) {
+  const acc = header.parentElement;
+  acc.classList.toggle('open');
+}
+
+// Open first accordion in each panel by default
+document.querySelectorAll('.accordion:first-of-type .accordion-body').forEach(b => b.style.display = 'block');
+
+// Re-render MathJax when tab switches
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    setTimeout(() => {
+      if (window.MathJax) MathJax.typesetPromise();
+    }, 100);
+  });
+});
+</script>
+
+</body>
+</html>

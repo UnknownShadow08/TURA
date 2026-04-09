@@ -1,0 +1,1677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>P&amp;C &amp; Probability — Formula Compendium</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']], packages: {'[+]': ['ams']} },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
+  startup: { pageReady() { return MathJax.startup.defaultPageReady(); } }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --bg:#07090f;
+  --bg2:#0d1120;
+  --bg3:#111827;
+  --bg4:#162036;
+  --panel1:#0b1e3a;
+  --panel2:#0d1f2d;
+  --accent1:#3b82f6;
+  --accent2:#22d3ee;
+  --accent3:#f59e0b;
+  --accent4:#10b981;
+  --accent5:#a78bfa;
+  --accent6:#f472b6;
+  --text:#e2e8f0;
+  --text2:#94a3b8;
+  --text3:#64748b;
+  --border:#1e3a5f;
+  --border2:#1e293b;
+  --glow1:rgba(59,130,246,0.15);
+  --glow2:rgba(34,211,238,0.12);
+  --glow3:rgba(245,158,11,0.12);
+  --tag-core:#1e3a5f;
+  --tag-def:#1a3a2e;
+  --tag-trick:#3d2a00;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:17px;
+  line-height:1.65;
+  min-height:100vh;
+}
+
+/* ─── HEADER ─── */
+.site-header{
+  background:linear-gradient(180deg,#020510 0%,var(--bg) 100%);
+  border-bottom:1px solid var(--border);
+  text-align:center;
+  padding:3rem 1rem 2rem;
+  position:relative;
+  overflow:hidden;
+}
+.site-header::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(59,130,246,0.08),transparent);
+  pointer-events:none;
+}
+.site-header h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:800;
+  letter-spacing:-0.02em;
+  color:#fff;
+  text-shadow:0 0 40px rgba(59,130,246,0.4);
+}
+.site-header h1 span{color:var(--accent1)}
+.site-subtitle{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.78rem;
+  color:var(--text2);
+  margin-top:0.5rem;
+  letter-spacing:0.08em;
+}
+
+/* ─── PANEL TABS ─── */
+.tabs{
+  display:flex;
+  justify-content:center;
+  gap:0;
+  padding:1.5rem 1rem 0;
+  border-bottom:2px solid var(--border2);
+  background:var(--bg);
+  position:sticky;top:0;z-index:100;
+  backdrop-filter:blur(12px);
+}
+.tab-btn{
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:0.9rem;
+  padding:0.8rem 2rem;
+  background:transparent;
+  border:none;
+  border-bottom:3px solid transparent;
+  color:var(--text2);
+  cursor:pointer;
+  transition:all 0.25s;
+  letter-spacing:0.04em;
+  white-space:nowrap;
+}
+.tab-btn.active{
+  color:#fff;
+  border-bottom-color:var(--accent1);
+  background:linear-gradient(180deg,rgba(59,130,246,0.08),transparent);
+}
+.tab-btn:hover:not(.active){color:var(--text);border-bottom-color:var(--border)}
+
+/* ─── PANEL CONTENT ─── */
+.panel{display:none;padding:2rem 0.5rem 4rem;max-width:1060px;margin:0 auto}
+.panel.active{display:block}
+
+/* ─── PANEL HEADER ─── */
+.panel-head{
+  margin-bottom:2rem;
+  padding:1.5rem 2rem;
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  position:relative;
+  overflow:hidden;
+}
+.panel-head::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent3));
+}
+.panel-head h2{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:#fff}
+.panel-head p{color:var(--text2);font-size:0.92rem;margin-top:0.3rem;font-family:'JetBrains Mono',monospace}
+
+/* ─── SECTION (DROPDOWN) ─── */
+.section{
+  border:1px solid var(--border2);
+  border-radius:10px;
+  margin-bottom:1rem;
+  overflow:hidden;
+  background:var(--bg2);
+  transition:border-color 0.2s;
+}
+.section:hover{border-color:var(--border)}
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:0.8rem;
+  padding:0.95rem 1.2rem;
+  cursor:pointer;
+  background:transparent;
+  border:none;
+  width:100%;
+  text-align:left;
+  color:var(--text);
+  transition:background 0.2s;
+  user-select:none;
+}
+.section-header:hover{background:rgba(255,255,255,0.03)}
+.section-icon{font-size:1.1rem;flex-shrink:0}
+.section-title{
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:1rem;
+  flex:1;
+  color:#e2e8f0;
+}
+.section-count{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.72rem;
+  color:var(--text3);
+  background:var(--bg3);
+  padding:0.15rem 0.5rem;
+  border-radius:4px;
+}
+.section-arrow{
+  color:var(--text3);
+  font-size:0.9rem;
+  transition:transform 0.3s;
+  flex-shrink:0;
+}
+.section.open .section-arrow{transform:rotate(180deg)}
+.section-body{
+  display:none;
+  padding:0.5rem 1rem 1rem;
+  border-top:1px solid var(--border2);
+}
+.section.open .section-body{display:block}
+
+/* ─── FORMULA CARD ─── */
+.fcard{
+  border:1px solid var(--border2);
+  border-radius:8px;
+  margin:0.75rem 0;
+  overflow:hidden;
+  background:var(--bg3);
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.fcard:hover{border-color:var(--border);box-shadow:0 0 16px var(--glow1)}
+.fcard-head{
+  display:flex;
+  align-items:center;
+  gap:0.6rem;
+  padding:0.55rem 0.9rem;
+  background:var(--bg4);
+  border-bottom:1px solid var(--border2);
+}
+.fcard-title{
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:0.88rem;
+  color:#c8d9f0;
+  flex:1;
+}
+.tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem;
+  font-weight:700;
+  padding:0.1rem 0.45rem;
+  border-radius:4px;
+  letter-spacing:0.05em;
+  text-transform:uppercase;
+}
+.tag-core{background:var(--tag-core);color:var(--accent2)}
+.tag-trick{background:var(--tag-trick);color:var(--accent3)}
+.tag-def{background:var(--tag-def);color:var(--accent4)}
+.fcard-body{padding:0.75rem 1rem 0.6rem}
+.math-block{
+  display:block;
+  text-align:center;
+  font-size:1.05rem;
+  margin:0.4rem 0;
+  overflow-x:auto;
+}
+.use-box{
+  display:flex;
+  align-items:flex-start;
+  gap:0.5rem;
+  margin-top:0.7rem;
+  padding:0.5rem 0.75rem;
+  background:rgba(59,130,246,0.06);
+  border-left:3px solid var(--accent1);
+  border-radius:0 4px 4px 0;
+}
+.use-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.65rem;
+  font-weight:700;
+  color:var(--accent1);
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  flex-shrink:0;
+  margin-top:0.05rem;
+}
+.use-text{
+  font-size:0.88rem;
+  color:var(--text2);
+  line-height:1.5;
+}
+.note-box{
+  margin-top:0.6rem;
+  padding:0.45rem 0.75rem;
+  background:rgba(245,158,11,0.07);
+  border-left:3px solid var(--accent3);
+  border-radius:0 4px 4px 0;
+  font-size:0.85rem;
+  color:#d4b483;
+}
+.note-box b{color:var(--accent3)}
+.formula-inline{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.85rem;
+  background:rgba(255,255,255,0.06);
+  padding:0.05rem 0.35rem;
+  border-radius:3px;
+  color:var(--accent2);
+}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem}
+.multi-row{margin:0.35rem 0;padding:0.35rem 0;border-bottom:1px solid var(--border2)}
+.multi-row:last-child{border-bottom:none}
+.multi-row .label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--accent4);margin-bottom:0.15rem}
+
+/* ─── TABLE ─── */
+.ftable{width:100%;border-collapse:collapse;font-size:0.85rem;margin:0.5rem 0}
+.ftable th{background:var(--bg4);color:var(--accent2);padding:0.45rem 0.7rem;text-align:left;font-family:'Syne',sans-serif;font-size:0.8rem;letter-spacing:0.04em}
+.ftable td{padding:0.4rem 0.7rem;border-top:1px solid var(--border2);color:var(--text2)}
+.ftable tr:hover td{background:rgba(255,255,255,0.02)}
+
+/* ─── STRATEGY BOX (end section) ─── */
+.strategy-box{
+  margin-top:2.5rem;
+  padding:1.5rem;
+  background:linear-gradient(135deg,rgba(167,139,250,0.08),rgba(34,211,238,0.05));
+  border:1px solid rgba(167,139,250,0.25);
+  border-radius:12px;
+}
+.strategy-box h3{
+  font-family:'Syne',sans-serif;
+  font-size:1.1rem;
+  font-weight:800;
+  color:var(--accent5);
+  margin-bottom:1rem;
+}
+.strategy-item{
+  display:flex;gap:0.75rem;
+  margin:0.6rem 0;
+  padding:0.6rem;
+  border-radius:6px;
+  background:rgba(255,255,255,0.02);
+}
+.strategy-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem;
+  font-weight:700;
+  color:var(--accent5);
+  background:rgba(167,139,250,0.15);
+  width:22px;height:22px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:0.05rem;
+}
+.strategy-text{font-size:0.9rem;color:var(--text2);line-height:1.5}
+.strategy-text strong{color:#e2e8f0}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+@media(max-width:600px){
+  .tab-btn{padding:0.7rem 1rem;font-size:0.8rem}
+  .panel{padding:1rem 0.25rem 3rem}
+  .grid2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>P&amp;C and Probability <br><span>Formula Compendium</span></h1>
+  <div class="site-subtitle">JEE Main + Advanced · Every Formula · Every Shortcut · Every Strategy</div>
+  </header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showPanel('pc')">⚂ Permutations &amp; Combinations</button>
+  <button class="tab-btn" onclick="showPanel('prob')">◎ Probability</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ PANEL 1 ═══ -->
+<div id="panel-pc" class="panel active">
+  
+  <!-- S1: FPC -->
+  <div class="section open" id="s-fpc">
+    <button class="section-header" onclick="toggleSection('s-fpc')">
+      <span class="section-icon">⚡</span>
+      <span class="section-title">Fundamental Principles of Counting</span>
+      <span class="section-count">2 principles</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head">
+          <span class="fcard-title">Multiplication Principle (AND rule)</span>
+          <span class="tag tag-core">Core</span>
+        </div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{If event } E_1 \text{ can occur in } m \text{ ways AND event } E_2 \text{ in } n \text{ ways} \Rightarrow \text{Total} = m \times n$$</span>
+          <span class="math-block">$$\text{Generalised: } n_1 \times n_2 \times n_3 \times \cdots \times n_k$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Tasks performed <b>sequentially</b> (one AND then another). Selecting IIT then branch: 23×10 = 230. Travelling from T₁→T₂→T₃ via 3 and 2 roads: 3×2 = 6.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head">
+          <span class="fcard-title">Addition Principle (OR rule)</span>
+          <span class="tag tag-core">Core</span>
+        </div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{If } E_1 \text{ occurs in } m \text{ ways OR } E_2 \text{ in } n \text{ ways (mutually exclusive)} \Rightarrow m + n$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Choosing <b>one</b> thing from two disjoint sources. Selecting 1 institute from 23 IITs OR 31 NITs: 23+31 = 54. One course from morning OR evening.</span></div>
+          <div class="note-box"><b>Key distinction:</b> "AND" → multiply; "OR" (exclusive) → add. Mixed problems: break into AND/OR layers.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S2: FACTORIALS -->
+  <div class="section" id="s-fact">
+    <button class="section-header" onclick="toggleSection('s-fact')">
+      <span class="section-icon">🔢</span>
+      <span class="section-title">Factorials, Special Results &amp; Prime Exponents</span>
+      <span class="section-count">7 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Factorial Definition</span><span class="tag tag-def">Definition</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$n! = n \cdot (n-1) \cdot (n-2) \cdots 3 \cdot 2 \cdot 1$$</span>
+          <div class="multi-row"><div class="label">Key values</div>$0!=1,\;1!=1,\;2!=2,\;3!=6,\;4!=24,\;5!=120,\;6!=720,\;7!=5040$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Memorise values up to 7!. Used directly in nPr, nCr, and alike-object permutations.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">0! = 1 (Proof)</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$n! = n \cdot (n-1)! \;\Rightarrow\; 1! = 1 \cdot 0! \;\Rightarrow\; 0! = 1$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Justify 0! = 1 in proofs. Also $(-1)! = 0!/0$ is undefined — factorial of negatives is not defined.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Recurrence &amp; Reduction Formula</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$(n-1)! = \frac{n!}{n} \qquad (n+1)! = (n+1)\cdot n!$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Solve equations like $(n+1)! = 2550\cdot n!$ → $(n+1)(n+2)=2550$ → $n=49$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Exponent of Prime $p$ in $n!$ (Legendre's Formula)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$E_p(n!) = \left\lfloor\frac{n}{p}\right\rfloor + \left\lfloor\frac{n}{p^2}\right\rfloor + \left\lfloor\frac{n}{p^3}\right\rfloor + \cdots$$</span>
+          <div class="multi-row"><div class="label">Example: Exponent of 3 in 100!</div>$\lfloor 100/3\rfloor + \lfloor 100/9\rfloor + \lfloor 100/27\rfloor + \lfloor 100/81\rfloor = 33+11+3+1 = 48$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Find how many times prime $p$ divides $n!$. Find the highest power of $p$ that divides $n!$ exactly.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Trailing Zeros in $n!$</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Trailing zeros of } n! = E_5(n!) = \left\lfloor\frac{n}{5}\right\rfloor+\left\lfloor\frac{n}{25}\right\rfloor+\left\lfloor\frac{n}{125}\right\rfloor+\cdots$$</span>
+          <div class="multi-row"><div class="label">1000! trailing zeros</div>$\lfloor 1000/5\rfloor+\lfloor 1000/25\rfloor+\lfloor 1000/125\rfloor+\lfloor 1000/625\rfloor = 200+40+8+1 = 249$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Powers of 2 always exceed powers of 5 in $n!$, so count factor-5s only. Each 10 = 2×5.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S3: PERMUTATIONS -->
+  <div class="section" id="s-perm">
+    <button class="section-header" onclick="toggleSection('s-perm')">
+      <span class="section-icon">⟳</span>
+      <span class="section-title">Permutations — $^nP_r$ (Arrangement)</span>
+      <span class="section-count">6 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$^nP_r$ — $n$ distinct, $r$ at a time</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$^nP_r = P(n,r) = \frac{n!}{(n-r)!} = n(n-1)(n-2)\cdots(n-r+1) \quad (r \text{ factors})$$</span>
+          <span class="math-block">$$0 \le r \le n$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Count <b>ordered</b> arrangements of $r$ items from $n$ distinct ones. 10 students in 3 positions: $10 \times 9 \times 8 = 720$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Special Values of $^nP_r$</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <div class="grid2">
+            <div><span class="math-block">$^nP_n = n! \quad \text{(all at a time)}$</span></div>
+            <div><span class="math-block">$^nP_1 = n$</span></div>
+            <div><span class="math-block">$^nP_0 = 1$</span></div>
+            <div><span class="math-block">$^{100}P_2 = 100 \times 99$</span></div>
+          </div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Memorise these to compute mentally. $^nP_n = n!$ is the total arrangements of $n$ distinct objects.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Solving $^nP_r$ equations — Approach</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$^nP_5 = 42 \cdot {}^nP_3 \;\Rightarrow\; n(n-1)\cdots(n-2)(n-3)(n-4) = 42 \cdot n(n-1)(n-2)$$</span>
+          <span class="math-block">$$\Rightarrow\; (n-3)(n-4) = 42 \;\Rightarrow\; n^2-7n-30=0 \;\Rightarrow\; n=10$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Cancel common factors of $^nP$ expressions; reduce to quadratic. Always check $n > r$ constraint at end.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Rank (Dictionary) Problems</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Rank of word} = \sum_{i} (\text{letters smaller than } i\text{-th letter at position }i) \times (n-i)! + 1$$</span>
+          <div class="multi-row"><div class="label">Example: Rank of TOUGH (alphabetical G,H,O,T,U)</div>Words starting G=4!, H=4!, O=4!, TG=3!, TH=3!, TOG=2!, TOH=2!, TOUGH=1<br>Rank = 24+24+24+6+6+2+2+1 = <b>89</b></div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">First arrange letters alphabetically. Count arrangements with smaller letters at each position, add 1.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Tie (String) Method — Adjacent Elements</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Group adjacent elements as one block} \Rightarrow \text{Total units} = (n - k + 1)$$</span>
+          <span class="math-block">$$\text{Arrangements} = (n-k+1)! \times k! \quad (k \text{ elements tied, internally arranged})$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Words of JODHPUR with all vowels together: treat OU as one block → 6!×2!. "PUR always comes" as fixed word (not rearranged): 5! arrangements.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Gap Method — Non-adjacent Elements</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Arrange } (n-k) \text{ others first: } (n-k)! \text{ ways}$$</span>
+          <span class="math-block">$$\text{Choose } k \text{ gaps from } (n-k+1) \text{ available: } {}^{n-k+1}C_k \times k! \text{ ways}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">No two vowels together in JODHPUR: arrange 5 consonants (5!), choose 2 gaps from 6 for vowels (⁶C₂×2!).</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S4: COMBINATIONS -->
+  <div class="section" id="s-comb">
+    <button class="section-header" onclick="toggleSection('s-comb')">
+      <span class="section-icon">✦</span>
+      <span class="section-title">Combinations — $^nC_r$ &amp; Identities</span>
+      <span class="section-count">12 identities</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$^nC_r$ Formula</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$^nC_r = \binom{n}{r} = \frac{n!}{r!\,(n-r)!} = \frac{n(n-1)\cdots(n-r+1)}{r!} \quad 0 \le r \le n$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Count unordered selections. Order irrelevant (committee, group). Cricket team from 16: $^{16}C_{11}$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Special Values &amp; Basic Identities</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <div class="grid2">
+            <div><span class="math-block">$^nC_0 = 1$</span></div>
+            <div><span class="math-block">$^nC_1 = n$</span></div>
+            <div><span class="math-block">$^nC_n = 1$</span></div>
+            <div><span class="math-block">$^nC_{n-r} = {}^nC_r$</span></div>
+          </div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">$^nC_{n-r} = {}^nC_r$: number of selections = number of rejections. Use to simplify large $r$ to small $r$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Equality Condition</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^nC_x = {}^nC_y \;\Rightarrow\; x = y \quad \text{OR} \quad x + y = n$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Find unknowns when two combinations from the same $n$ are equal. $^{15}C_{2x} = {}^{15}C_{x+3}$ → $2x=x+3$ or $2x+(x+3)=15$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$^nP_r$ in terms of $^nC_r$</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^nP_r = {}^nC_r \times r! \quad \Longleftrightarrow \quad {}^nC_r = \frac{{}^nP_r}{r!}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Permutation = combination × internal arrangements. Convert between the two depending on whether order matters.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Reduction Identity</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^nC_r = \frac{n}{r} \cdot {}^{n-1}C_{r-1}$$</span>
+          <div class="multi-row"><div class="label">Illustration</div>${}^{10}C_2 = \frac{10}{2}\cdot {}^9C_1 = 5 \times 9 = 45$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Simplify or compute $^nC_r$ without full factorial. Useful in telescoping sums and proofs.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Pascal's Identity (Addition Formula)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^nC_r + {}^nC_{r-1} = {}^{n+1}C_r$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Prove by substituting the extra element — either the element IS or IS NOT chosen. Builds Pascal's triangle. ${}^{52}C_{15}+{}^{52}C_{36} = {}^{53}C_{37}$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Ratio of Consecutive Combinations</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\frac{{}^nC_r}{{}^nC_{r-1}} = \frac{n-r+1}{r}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Find when $^nC_r$ is maximum — set ratio $\ge 1$: $n-r+1 \ge r \Rightarrow r \le (n+1)/2$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Vandermonde / Telescoping Sum</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^rC_r + {}^{r+1}C_r + {}^{r+2}C_r + \cdots + {}^nC_r = {}^{n+1}C_{r+1}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Sum a column of Pascal's triangle. ${}^rC_r = {}^{r+1}C_{r+1} = 1$ starts the sum.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Total Subsets of $n$-element Set</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^nC_0 + {}^nC_1 + {}^nC_2 + \cdots + {}^nC_n = 2^n$$</span>
+          <span class="math-block">$$\text{At least one selected: } 2^n - 1$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Total selections from $n$ distinct objects (any number). From set of 4 elements: $2^4 - 1 = 15$ non-empty subsets.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S5: ALIKE OBJECTS -->
+  <div class="section" id="s-alike">
+    <button class="section-header" onclick="toggleSection('s-alike')">
+      <span class="section-icon">🔁</span>
+      <span class="section-title">Permutations of Alike Objects</span>
+      <span class="section-count">3 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Multinomial Permutation</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Arrangements of } n \text{ objects with } p \text{ alike of type 1, } q \text{ of type 2, } r \text{ of type 3, ...}$$</span>
+          <span class="math-block">$$= \frac{n!}{p!\, q!\, r! \cdots}$$</span>
+          <div class="multi-row"><div class="label">Examples</div>
+          ALLAHABAD: $\frac{9!}{4!\,2!} = 7560$ &nbsp;|&nbsp; 4R+3Y+2G discs: $\frac{9!}{4!\,3!\,2!}=1260$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Word rearrangements with repeated letters. Always $\div$ by factorial of each repeated group's count.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Relative Position Fixed (vowels/consonants stay in place)</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Arrange vowels among themselves} \times \text{Arrange consonants among themselves}$$</span>
+          <div class="multi-row"><div class="label">Aeroplane (5 vowels with 2A,2E; 4 consonants)</div>Vowels: $\frac{5!}{2!\,2!}=30$ &nbsp;|&nbsp; Consonants: $4!=24$ &nbsp;|&nbsp; Total: $720$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">When positions of vowels/consonants are fixed but internal ordering varies. Multiply the two independent arrangements.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S6: CIRCULAR -->
+  <div class="section" id="s-circ">
+    <button class="section-header" onclick="toggleSection('s-circ')">
+      <span class="section-icon">⭕</span>
+      <span class="section-title">Circular Permutations &amp; Necklaces</span>
+      <span class="section-count">5 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Circular Arrangement — Distinct Objects</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Circular arrangements of } n \text{ distinct objects} = (n-1)!$$</span>
+          <div class="multi-row"><div class="label">Proof idea</div>Fix one object (remove rotational symmetry): remaining $n-1$ objects arranged linearly = $(n-1)!$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Seating around a round table (clockwise ≠ anticlockwise). 10 children on merry-go-round = 9!.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Circular — CW = CCW (Necklace/Garland)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Necklace/Garland arrangements} = \frac{(n-1)!}{2}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">When flipping (clockwise = anticlockwise): beads in necklace, flowers in garland. 9 people at table with same neighbours: $8!/2$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$r$ objects from $n$ in a circle</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^nC_r \times (r-1)!$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Select $r$ from $n$ distinct, arrange in circle. Garland of 6 flowers from 10: ${}^{10}C_6 \times \frac{5!}{2}$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Necklace — $r$ from $n$</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^nC_r \cdot \frac{(r-1)!}{2}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Garland of 6 distinct flowers from 10: ${}^{10}C_6 \cdot \frac{5!}{2}$. Necklace has reflective symmetry — divide by 2.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S7: COMBINATIONS OF ALIKE OBJECTS -->
+  <div class="section" id="s-comb-alike">
+    <button class="section-header" onclick="toggleSection('s-comb-alike')">
+      <span class="section-icon">🎯</span>
+      <span class="section-title">Selections of Alike/Mixed Objects</span>
+      <span class="section-count">5 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Select $r$ from $n$ identical objects</span><span class="tag tag-def">Definition</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Only 1 way (identical objects)}$$</span>
+          <span class="math-block">$$\text{Select 0 or more from } n \text{ identical} = n+1 \text{ ways}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">All identical → choosing any quantity = 1 way. Choosing 0,1,2,...,n: gives (n+1) choices including none.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Select ≥1 from groups of alike objects</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{p alike of type 1, q alike of type 2, r alike of type 3:}$$</span>
+          <span class="math-block">$$\text{Total selections (≥1)} = (p+1)(q+1)(r+1) - 1$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Letter selections from MISSISSIPPI ($M^1, I^4, S^4, P^2$): $(1+1)(4+1)(4+1)(2+1)-1 = 149$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Mixed: alike + different</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{p alike + q alike + r alike + s different: total} = (p+1)(q+1)(r+1)\cdot 2^s - 1$$</span>
+          <div class="multi-row"><div class="label">Example: AAAABBCCCDEF (4A,2B,3C + D,E,F)</div>$(4+1)(2+1)(3+1)\cdot 2^3 - 1 = 5\cdot3\cdot4\cdot8-1 = 479$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Each different object has 2 choices (include/exclude). Multiply all choices, subtract 1 for empty selection.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">At least one of each kind</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{At least one of each = } p \cdot q \cdot r \cdots \cdot (2^s - 1)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Select at least one of each type from mixed collection. For identical groups: $p$ choices each; for different: $2^s - 1$.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S8: DIVISORS -->
+  <div class="section" id="s-div">
+    <button class="section-header" onclick="toggleSection('s-div')">
+      <span class="section-icon">🔣</span>
+      <span class="section-title">Divisors of a Number</span>
+      <span class="section-count">6 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Setup: Prime Factorisation</span><span class="tag tag-def">Definition</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$N = p^a \cdot q^b \cdot r^c \cdots \quad (p,q,r \text{ distinct primes; } a,b,c \in \mathbb{N})$$</span>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Total Positive Divisors</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\tau(N) = (a+1)(b+1)(c+1)\cdots$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Count divisors including 1 and $N$. Proper divisors (excluding $N$): $\tau(N)-1$. 38808=2³·3²·7²·11: $(3+1)(2+1)(2+1)(1+1)=72$ divisors.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Sum of All Divisors</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\sigma(N) = (1+p+p^2+\cdots+p^a)(1+q+\cdots+q^b)(1+r+\cdots+r^c)\cdots$$</span>
+          <span class="math-block">$$= \frac{p^{a+1}-1}{p-1}\cdot\frac{q^{b+1}-1}{q-1}\cdots$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Sum of all divisors. Sum of proper divisors = $\sigma(N) - N$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Ways to Write as Product of 2 Factors</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$N \text{ not perfect square:} \quad \frac{(a+1)(b+1)(c+1)\cdots}{2}$$</span>
+          <span class="math-block">$$N \text{ perfect square:} \quad \frac{(a+1)(b+1)(c+1)\cdots + 1}{2}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Ordered pairs $(d, N/d)$: divide by 2 unless $N$ is perfect square (where $d = N/d$ gives one extra case).</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Coprime Factor Pairs</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Ways to write } N = AB \text{ with } \gcd(A,B)=1 \;=\; 2^{n-1}$$</span>
+          <span class="math-block">$$\text{where } n = \text{number of distinct prime factors of } N$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Each prime factor group goes entirely to $A$ or $B$. $2^n$ ordered pairs ÷ 2 for unordered = $2^{n-1}$.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S9: DISTRIBUTION -->
+  <div class="section" id="s-dist">
+    <button class="section-header" onclick="toggleSection('s-dist')">
+      <span class="section-icon">📦</span>
+      <span class="section-title">Distribution &amp; Integral Solutions</span>
+      <span class="section-count">8 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$n$ identical → $r$ persons (any number)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^{n+r-1}C_{r-1} \quad \text{(Stars and Bars)}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">10 identical coins to 4 beggars (each may get 0+): ${}^{13}C_3 = 286$. Think of placing $r-1$ separators among $n+r-1$ positions.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$n$ identical → $r$ persons (at least 1 each)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Give 1 to each first, then distribute remaining } (n-r) \text{ freely}$$</span>
+          <span class="math-block">$${}^{n-r+r-1}C_{r-1} = {}^{n-1}C_{r-1}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">5 identical balls in 3 boxes (none empty): give 1 to each → distribute 2 freely → ${}^4C_2 = 6$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Non-negative Integral Solutions of $x_1+x_2+\cdots+x_r = n$</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Number of solutions} = {}^{n+r-1}C_{r-1}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">$x+y+z=20$, $x,y,z \ge 0$: ${}^{22}C_2 = 231$ solutions. Identical to distributing $n$ among $r$ persons.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Positive Integral Solutions ($x_i \ge 1$)</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Substitute } y_i = x_i - 1 \ge 0 \;\Rightarrow\; y_1+\cdots+y_r = n-r$$</span>
+          <span class="math-block">$$\text{Solutions} = {}^{n-1}C_{r-1}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">$x+y+z=20$, $x,y,z \ge 1$: reduce → ${}^{19}C_2$. For $15 < x_1+x_2+x_3 \le 20$: sum ${}^{19-t}C_2$ for $t=0,\ldots,4$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Non-negative Even Solutions</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$x_i = 2p_i \;\Rightarrow\; 2p_1+\cdots+2p_r = n \;\Rightarrow\; p_1+\cdots+p_r = n/2$$</span>
+          <span class="math-block">$$\text{Valid only if } n \text{ even; solutions} = {}^{n/2+r-1}C_{r-1}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">$x+y+z=20$ even: $p+q+r=10$ → ${}^{12}C_2 = 66$. Odd sum → no even solutions.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Non-negative Odd Solutions</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$x_i = 2p_i+1 \;\Rightarrow\; 2(p_1+\cdots+p_r) + r = n \;\Rightarrow\; p_1+\cdots+p_r = \frac{n-r}{2}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">$x+y+z=21$ all odd: $p+q+r=9$ → ${}^{11}C_2$. Valid only if $n-r$ is even and non-negative.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$m$ different objects → $n$ persons</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Each person may get any number: } n^m$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Each of $m$ toys independently goes to one of $n$ children. 5 different toys, 3 students: $3^5 = 243$ ways.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S10: GROUPS -->
+  <div class="section" id="s-groups">
+    <button class="section-header" onclick="toggleSection('s-groups')">
+      <span class="section-icon">👥</span>
+      <span class="section-title">Formation of Groups &amp; Division</span>
+      <span class="section-count">8 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$(m+n)$ different → 2 unequal groups ($m \ne n$)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Number of ways (unnamed groups)} = \frac{(m+n)!}{m!\, n!} = {}^{m+n}C_m$$</span>
+          <span class="math-block">$$\text{If groups are named (distributed to 2 persons)} = \frac{(m+n)!}{m!\, n!} \times 2!$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">10 children into groups of 4 & 6: ${}^{10}C_4$. If distributed between two teams: ${}^{10}C_4 \times 2!$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$2n$ different → 2 equal groups ($m = n$)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Unnamed groups} = \frac{(2n)!}{n!\, n!\, 2!} = \frac{{}^{2n}C_n}{2}$$</span>
+          <span class="math-block">$$\text{Named (distributed to 2 persons)} = \frac{(2n)!}{n!\, n!}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Divide by 2! extra when groups are identical (unlabeled). 10 into groups of 5,5: $\frac{{}^{10}C_5}{2}$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$(m+n+p)$ → 3 unequal groups</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\frac{(m+n+p)!}{m!\, n!\, p!}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">10 children into groups 2,3,5: $\frac{10!}{2!\,3!\,5!}$. Named (sent to 3 borders): $\frac{10!}{2!\,3!\,5!}\times 3!$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$3n$ → 3 equal groups</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Unnamed} = \frac{(3n)!}{(n!)^3 \cdot 3!} \qquad \text{Named} = \frac{(3n)!}{(n!)^3}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">6 toys → 3 equal groups of 2 each: $\frac{6!}{(2!)^3 \cdot 3!}$. Named (assigned to 3 students): $\frac{6!}{(2!)^3}$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$kn$ → $k$ equal groups</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Unnamed} = \frac{(kn)!}{(n!)^k \cdot k!} \qquad \text{Named} = \frac{(kn)!}{(n!)^k}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">10 into 5 equal groups of 2: $\frac{10!}{(2!)^5 \cdot 5!}$. If groups are labeled (chairs A,B,C,D,E): $\frac{10!}{(2!)^5}$.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S11: GEOMETRIC -->
+  <div class="section" id="s-geo">
+    <button class="section-header" onclick="toggleSection('s-geo')">
+      <span class="section-icon">📐</span>
+      <span class="section-title">Geometric Selections, Grids &amp; Summation</span>
+      <span class="section-count">10 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Lines from $n$ points ($m$ collinear)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Distinct lines} = {}^nC_2 - {}^mC_2 + 1$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">The $m$ collinear points give only 1 line instead of ${}^mC_2$; add 1 back for that one line.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Triangles from $n$ points ($m$ collinear)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Distinct triangles} = {}^nC_3 - {}^mC_3$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Collinear points cannot form a triangle; subtract all 3-point subsets from the collinear set.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Diagonals in Convex $n$-gon</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Diagonals} = {}^nC_2 - n = \frac{n(n-3)}{2}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Total segments between $n$ vertices minus $n$ sides. Pentagon: ${}^5C_2-5=5$; Hexagon: 9.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Parallelograms from $m \| \times n \|$ lines</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^mC_2 \times {}^nC_2 = \frac{mn(m-1)(n-1)}{4}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Choose 2 from each family of parallels. Chessboard rectangles (9×9 lines): ${}^9C_2 \times {}^9C_2 = 1296$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Triangles in Convex $n$-gon — Classification</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <div class="multi-row"><div class="label">Total triangles (vertices)</div>${}^nC_3$</div>
+          <div class="multi-row"><div class="label">Exactly 2 sides common with polygon</div>$n$</div>
+          <div class="multi-row"><div class="label">Exactly 1 side common</div>$n(n-4)$</div>
+          <div class="multi-row"><div class="label">No side common</div>${}^nC_3 - n(n-4) - n = \frac{n(n-4)(n-5)}{6}$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Classify triangle types by shared sides with polygon. Octagon ($n=8$): no-side-common = $\frac{8\cdot4\cdot3}{6}=16$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Chessboard Squares &amp; Rectangles</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <div class="multi-row"><div class="label">Total rectangles (8×8 board)</div>${}^9C_2 \times {}^9C_2 = 1296$</div>
+          <div class="multi-row"><div class="label">Total squares (all sizes)</div>$\displaystyle\sum_{k=1}^{n}(n+1-k)^2 = \frac{n(n+1)(2n+1)}{6} = 204$ (8×8 board)</div>
+          <div class="multi-row"><div class="label">Non-square rectangles</div>$1296 - 204 = 1092$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Rectangle = choose 2 horizontal lines × 2 vertical lines. Square: count $8^2+7^2+\cdots+1^2$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Grid Shortest Path</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Paths from }(x_1,y_1)\text{ to }(x_2,y_2) = \frac{(h+v)!}{h!\, v!} = {}^{h+v}C_h$$</span>
+          <span class="math-block">$$\text{where } h = x_2-x_1 \text{ (right moves)}, \; v = y_2-y_1 \text{ (up moves)}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">$(1,1)$ to $(4,5)$: $h=3, v=4$ → ${}^7C_3 = 35$. Via intermediate point: multiply sub-paths.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Sum of all $r$-digit numbers from $n$ digits</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Sum} = (n-1)! \times (\text{sum of digits}) \times \underbrace{111\cdots1}_{r\text{ ones}} = (n-1)!\times S\times R_r$$</span>
+          <span class="math-block">$$\text{where } R_r = \frac{10^r-1}{9} \quad \text{(repunit)}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">All 5-digit numbers from {3,4,5,6,7}: $(4!)\times(3+4+5+6+7)\times 11111 = 24\times25\times11111 = 6666600$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Sum with 0 among digits (correction)</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Full sum} = (n-1)! \cdot S \cdot R_r - (n-2)! \cdot (S-0) \cdot R_{r-1}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Subtract arrangements where 0 is at the leading position (they form $(r-1)$-digit numbers). Apply when 0 is included in digit set.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S12: SETS & SUBSETS -->
+  <div class="section" id="s-sets">
+    <button class="section-header" onclick="toggleSection('s-sets')">
+      <span class="section-icon">🔵</span>
+      <span class="section-title">Set &amp; Subset Problems</span>
+      <span class="section-count">5 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Number of subsets of an $n$-element set</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Total subsets (including } \emptyset) = 2^n$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Each element is in or out of a subset. $B \subseteq A$ where $|A|=4$: $2^4=16$ possible subsets for $B$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Ordered pairs $(B,C)$ with $B \cap C = \emptyset$</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Ordered pairs: } 3^n \quad \text{(each element: in }B\text{ only, in }C\text{ only, or in neither)}$$</span>
+          <span class="math-block">$$\text{Unordered pairs: } \frac{3^n+1}{2}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">$A=\{1,2,3,4,5\}$, ordered disjoint pairs: $3^5=243$. Unordered: $(243+1)/2=122$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Pairs with $B \cap C = \{a_1,a_2,\ldots,a_k\}$ fixed</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Remaining } (n-k) \text{ elements: each can be in }B\text{ only, }C\text{ only, or neither} \Rightarrow 3^{n-k}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">$X=\{1,\ldots,10\}$, $A\cap B=\{5,7,8\}$: remaining 7 elements → $3^7 - 1 = 2186$ (subtract case $A=B=\{5,7,8\}$).</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Choosing $P,Q$ with $P\cap Q = \emptyset$ (ordered)</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Ordered: } 3^n \qquad \text{Unordered with } P\ne Q: \frac{3^n-1}{2}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Choosing $P$ and $Q$ (subsets of $A$) such that $P\cap Q=\emptyset$: each element has 3 destinations ($P$, $Q$, neither). $3^n$ includes $P=Q=\emptyset$.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S13: DERANGEMENT -->
+  <div class="section" id="s-der">
+    <button class="section-header" onclick="toggleSection('s-der')">
+      <span class="section-icon">🔄</span>
+      <span class="section-title">Derangement Theorem</span>
+      <span class="section-count">6 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Derangement Formula $D_n$</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$D_n = n!\left(1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \cdots + (-1)^n\frac{1}{n!}\right)$$</span>
+          <div class="multi-row"><div class="label">Key values</div>$D_2=1,\quad D_3=2,\quad D_4=9,\quad D_5=44$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Arrangements where NO element is in its original position. 3 letters, 3 envelopes, all wrong: $D_3=2$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Derangement Recurrence</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$D_n = n! - {}^nC_1 D_{n-1} - {}^nC_2 D_{n-2} - \cdots - {}^nC_n D_0$$</span>
+          <span class="math-block">$$D_0=1,\; D_1=0$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Build $D_n$ incrementally. Also: $D_n = (n-1)(D_{n-1}+D_{n-2})$ — alternate recurrence.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Exactly $r$ in wrong position, $(n-r)$ in right position</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$${}^nC_{n-r} \cdot D_r = {}^nC_r \cdot D_r$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">5 letters, at least 3 wrong: ${}^5C_2 D_3 + {}^5C_1 D_4 + {}^5C_0 D_5 = 10(2)+5(9)+1(44)=109$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Exactly 2 fixed → $D_{n-2}$ subproblem</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Exactly 2 specific elements fixed} = {}^nC_2 \cdot D_{n-2}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Persons $P_1$ on $C_2$ and $P_2$ on $C_3$ fixed (like derangement of remaining 5 with $P_3$ constraint): split into sub-cases.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- S14: INCLUSION-EXCLUSION -->
+  <div class="section" id="s-ie">
+    <button class="section-header" onclick="toggleSection('s-ie')">
+      <span class="section-icon">∪</span>
+      <span class="section-title">Principle of Inclusion &amp; Exclusion</span>
+      <span class="section-count">5 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Two Sets</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$|A\cup B| = |A| + |B| - |A\cap B|$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Avoid double-counting overlap. "At least one": count union. Used in forbidden-pattern arrangement problems.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Three Sets</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$|A\cup B\cup C| = |A|+|B|+|C| - |A\cap B| - |B\cap C| - |C\cap A| + |A\cap B\cap C|$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Words from HONOLULU with no two alike letters together: Total − $|A\cup B\cup C|$ where A/B/C are bad events for each pair.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Exactly one of three events</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$|A\bar{B}\bar{C}|+|\bar{A}B\bar{C}|+|\bar{A}\bar{B}C| = |A|+|B|+|C| - 2|A\cap B| - 2|B\cap C| - 2|C\cap A| + 3|A\cap B\cap C|$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Count arrangements where exactly one of three "bad" conditions holds. Subtract from total for "none" of them.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$n$-digit numbers with all three digits 1,2,3 (at least once)</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$3^n - 3 \cdot 2^n + 3 \cdot 1^n = 3^n - 3 \cdot 2^n + 3$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Inclusion-exclusion: all 3 digits available, minus (any one digit missing), plus (any two digits missing). Complement approach for "all at least once".</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STRATEGY BOX PC -->
+  <div class="strategy-box">
+    <h3>⚡ Problem-Solving Strategies for P&amp;C</h3>
+    <div class="strategy-item"><span class="strategy-num">1</span><span class="strategy-text"><strong>AND/OR Identification:</strong> Read carefully — "both" signals multiply; "either...or" signals add. Mixed sentences need layer-by-layer breakdown.</span></div>
+    <div class="strategy-item"><span class="strategy-num">2</span><span class="strategy-text"><strong>Fix-then-Count:</strong> For "position" constraints, always handle the restricted elements first (vowels at odd positions, specific person at ends), then fill remaining.</span></div>
+    <div class="strategy-item"><span class="strategy-num">3</span><span class="strategy-text"><strong>Complement Method:</strong> "At least one" = Total − (none). "Not all together" = Total − (all together). Often reduces complex conditions to simple ones.</span></div>
+    <div class="strategy-item"><span class="strategy-num">4</span><span class="strategy-text"><strong>Stars and Bars:</strong> Any "distribute $n$ among $r$" or "non-negative integral solutions" reduces to ${}^{n+r-1}C_{r-1}$. Translate constraints ($\ge 1$, even, etc.) by substitution before applying.</span></div>
+    <div class="strategy-item"><span class="strategy-num">5</span><span class="strategy-text"><strong>Divisibility Conditions:</strong> Fix the constrained digit (units for even/odd/div-by-5) FIRST, count remaining. Never forget leading-zero restriction for multi-digit numbers.</span></div>
+    <div class="strategy-item"><span class="strategy-num">6</span><span class="strategy-text"><strong>Selections vs Arrangements:</strong> Verify if order matters. "Committee" = combination; "batting order" = permutation; "signal with flags" = permutation.</span></div>
+    <div class="strategy-item"><span class="strategy-num">7</span><span class="strategy-text"><strong>Equal-Group Trap:</strong> When dividing into equal groups without labels, divide by $k!$ for $k$ equal groups. Named groups → no extra division.</span></div>
+    <div class="strategy-item"><span class="strategy-num">8</span><span class="strategy-text"><strong>Derangement Decomposition:</strong> Break "exactly $r$ wrong" problems as ${}^nC_r \cdot D_r$ (choose which $r$ are wrong, derange them).</span></div>
+  </div>
+</div>
+
+
+
+<!-- ═══════════════════════════════════════════════════════ PANEL 2 ═══ -->
+<div id="panel-prob" class="panel">
+  
+  <!-- P1: CLASSICAL -->
+  <div class="section open" id="p-class">
+    <button class="section-header" onclick="toggleSection('p-class')">
+      <span class="section-icon">🎲</span>
+      <span class="section-title">Classical Probability &amp; Odds</span>
+      <span class="section-count">5 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Classical Definition</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A) = \frac{m}{n} = \frac{\text{Favourable outcomes}}{\text{Total equally likely outcomes}}$$</span>
+          <span class="math-block">$$0 \le P(A) \le 1 \qquad P(A) + P(\bar{A}) = 1$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Tossing coins, rolling dice, drawing cards — any experiment where all outcomes are equally likely. Count carefully using P&C.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Odds in Favour &amp; Against</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Odds in favour of }A = m:n-m \qquad P(A) = \frac{m}{m+n}$$</span>
+          <span class="math-block">$$\text{Odds against }A = (n-m):m \qquad P(\bar{A}) = \frac{n-m}{m+n}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Convert between odds and probability. Odds 3:1 in favour → $P(A)=3/4$. If $P(A)=a/b$: odds in favour = $a:(b-a)$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Empirical Probability</span><span class="tag tag-def">Definition</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A) = \lim_{n\to\infty}\frac{\text{Number of successes}}{n}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">When outcomes are not equally likely (bias, skill-based events). Use observed frequency data over large number of trials.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- P2: ADDITION THEOREMS -->
+  <div class="section" id="p-add">
+    <button class="section-header" onclick="toggleSection('p-add')">
+      <span class="section-icon">∪</span>
+      <span class="section-title">Addition Theorems &amp; Venn Diagram Results</span>
+      <span class="section-count">12 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Addition Rule — Two Events</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A\cup B) = P(A) + P(B) - P(A\cap B)$$</span>
+          <div class="multi-row"><div class="label">Alternative forms</div>
+          $P(A\cup B) = P(A) + P(\bar{A}\cap B) = P(B) + P(A\cap\bar{B}) = 1-P(\bar{A}\cap\bar{B})$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">"At least one of A, B." Find $P(A\cup B)$ from components. Drawing a red OR face card from deck: $P(R)+P(F)-P(R\cap F)$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Mutually Exclusive (ME) Events</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$A\cap B = \emptyset \;\Rightarrow\; P(A\cup B) = P(A)+P(B)$$</span>
+          <span class="math-block">$$E_1,E_2,\ldots,E_n \text{ ME \& exhaustive} \;\Rightarrow\; \sum P(E_i)=1$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Events that cannot both occur. Heart vs Spade from a deck (ME): probabilities add directly.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Exactly One of $A$, $B$</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A\cap\bar{B}) + P(\bar{A}\cap B) = P(A\cup B) - P(A\cap B)$$</span>
+          <span class="math-block">$$= P(A)+P(B) - 2P(A\cap B)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Exactly one of two candidates selected: $P(A)(1-P(B)) + (1-P(A))P(B) = 0.6$ type problems. Distinct from "at least one."</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">De Morgan's Laws (Events)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(\bar{A}\cap\bar{B}) = 1-P(A\cup B) \qquad P(\bar{A}\cup\bar{B}) = 1-P(A\cap B)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">"Neither A nor B": $1-P(A\cup B)$. "At least one fails" = $1-P(\text{both succeed})$. Anil and Ashima both fail: $1-P(E\cup F)$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Three Events — Addition</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A\cup B\cup C) = \sum P(A) - \sum P(A\cap B) + P(A\cap B\cap C)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">At least one newspaper read (25%A, 20%B, 15%C, overlaps given): systematic PIE gives 30%.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Exactly One of Three</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A\bar{B}\bar{C})+P(\bar{A}B\bar{C})+P(\bar{A}\bar{B}C)$$</span>
+          <span class="math-block">$$= \sum P(A) - 2\sum P(A\cap B) + 3P(A\cap B\cap C)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Exactly one of three guns hits target. Subtract over-counted pairs; add back triple.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Exactly Two of Three</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A\cap B\cap\bar{C})+P(A\cap\bar{B}\cap C)+P(\bar{A}\cap B\cap C)$$</span>
+          <span class="math-block">$$= \sum P(A\cap B) - 3P(A\cap B\cap C)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Exactly 2 out of 3 people hit target. Pairwise intersections minus triple-counted triple.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">At Least Two of Three</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$= \sum P(A\cap B) - 2P(A\cap B\cap C)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Exactly 2 OR exactly 3 events occur. Use when exactly-2 + exactly-3 needed together.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Bounds on Probability</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A\cap B) \le \min(P(A), P(B)) \le \max(P(A),P(B)) \le P(A\cup B) \le P(A)+P(B)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Verify feasibility of given probabilities. If $P(A)+P(B)<1$: $P(A\cup B)$ might be less than 1; check $P(A\cap B)\ge P(A)+P(B)-1$.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- P3: CONDITIONAL -->
+  <div class="section" id="p-cond">
+    <button class="section-header" onclick="toggleSection('p-cond')">
+      <span class="section-icon">⟶</span>
+      <span class="section-title">Conditional Probability</span>
+      <span class="section-count">5 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Definition</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P\!\left(\frac{A}{B}\right) = \frac{P(A\cap B)}{P(B)}, \quad P(B)\ne 0$$</span>
+          <span class="math-block">$$P\!\left(\frac{B}{A}\right) = \frac{P(A\cap B)}{P(A)}, \quad P(A)\ne 0$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Probability given partial information. Pair of dice: given sum is even, $P(\text{sum}<6)= P(B\cap A)/P(A) = (4/36)/(18/36) = 2/9$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Conditional from counting (reduced sample space)</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P\!\left(\frac{A}{B}\right) = \frac{n(A\cap B)}{n(B)}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">When you can count directly: die thrown, given doublet ($n(B)=6$), sum=6 occurs in $\{3,3\},\{4,4\}$: $n(A\cap B)=2/6$ → $P=1/3$. Wait, doublet AND sum=6: only $(3,3)$ so $P=1/6$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$P(A/B)$ key properties</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <div class="multi-row"><div class="label">Complement in B</div>$P(\bar{A}/B) = 1 - P(A/B)$</div>
+          <div class="multi-row"><div class="label">Union in B</div>$P(A_1\cup A_2 / B) = P(A_1/B)+P(A_2/B)-P(A_1\cap A_2/B)$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Conditional probability satisfies all probability axioms. Use these to simplify conditional event combinations.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- P4: MULTIPLICATION & INDEPENDENCE -->
+  <div class="section" id="p-mult">
+    <button class="section-header" onclick="toggleSection('p-mult')">
+      <span class="section-icon">✕</span>
+      <span class="section-title">Multiplication Theorem &amp; Independence</span>
+      <span class="section-count">10 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Multiplication Theorem</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A\cap B) = P(A)\cdot P\!\left(\frac{B}{A}\right) = P(B)\cdot P\!\left(\frac{A}{B}\right)$$</span>
+          <span class="math-block">$$P(A_1\cap A_2\cap\cdots\cap A_m) = P(A_1)\cdot P\!\left(\frac{A_2}{A_1}\right)\cdot P\!\left(\frac{A_3}{A_1 A_2}\right)\cdots$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Sequential draws WITHOUT replacement. Ball drawn then another: multiply conditional probabilities step by step.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Independent Events — Definition</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$A,B \text{ independent} \;\Leftrightarrow\; P(A\cap B) = P(A)\cdot P(B)$$</span>
+          <span class="math-block">$$\Leftrightarrow\; P\!\left(\frac{A}{B}\right) = P(A) \quad\text{and}\quad P\!\left(\frac{B}{A}\right) = P(B)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">With replacement draws, different experiments (coin + die), or given $P(A\cap B)=P(A)\cdot P(B)$ to verify.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Independence of Complements</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$A,B \text{ independent} \;\Rightarrow\; \bar{A},\bar{B} \text{ also independent}$$</span>
+          <span class="math-block">$$\text{Also: } A,\bar{B} \;\text{ and }\; \bar{A},B \text{ are independent}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Prove: $P(\bar{A}\cap\bar{B}) = 1-P(A\cup B) = 1-P(A)-P(B)+P(A)P(B) = P(\bar{A})P(\bar{B})$. Use to simplify "neither event" probabilities.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">$P(A\cup B)$ for Independent $A,B$</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A\cup B) = P(A)+P(B)-P(A)\cdot P(B)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">At least one of two independent events. $P(A)=1/2, P(B)=1/3$: $P(A\cup B) = 1/2+1/3-1/6=2/3$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Mutual Independence of 3 Events</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Requires ALL four conditions:}$$</span>
+          <span class="math-block">$$P(A\cap B)=P(A)P(B),\; P(B\cap C)=P(B)P(C),\; P(C\cap A)=P(C)P(A)$$</span>
+          <span class="math-block">$$\textbf{AND}\; P(A\cap B\cap C) = P(A)P(B)P(C)$$</span>
+          <div class="note-box"><b>Warning:</b> Pairwise independence ≠ mutual independence. Need all 4 conditions. For $n$ independent events: $2^n-n-1$ conditions.</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Verify full independence of three events. Three coins: E (3H/3T), F (≥2H), G (≤2H) — E&amp;F independent, E&amp;G dependent.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">"At Least One Success" in Independent Trials</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(\text{at least one}) = 1 - P(\text{none}) = 1 - \prod_{i}(1-p_i)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Gun hitting plane with 3 shots ($p_1=0.6, p_2=0.7, p_3=0.1$): $1-(0.4)(0.3)(0.9)=0.892$. Far simpler than counting all hit-cases.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- P5: TOTAL PROB & BAYES -->
+  <div class="section" id="p-bayes">
+    <button class="section-header" onclick="toggleSection('p-bayes')">
+      <span class="section-icon">⚖</span>
+      <span class="section-title">Total Probability &amp; Bayes' Theorem</span>
+      <span class="section-count">4 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Law of Total Probability</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(A) = \sum_{i=1}^{n} P(E_i)\cdot P\!\left(\frac{A}{E_i}\right)$$</span>
+          <span class="math-block">$$\text{where } E_1,E_2,\ldots,E_n \text{ are ME &amp; exhaustive (partition of sample space)}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Probability of event occurring via multiple causes/routes. Box with 3 coin types: $P(H)=\frac{1}{3}(\frac{1}{2}+1+\frac{1}{3})=\frac{11}{18}$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Bayes' Theorem</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P\!\left(\frac{E_i}{A}\right) = \frac{P(E_i)\cdot P\!\left(\dfrac{A}{E_i}\right)}{\displaystyle\sum_{j=1}^{n} P(E_j)\cdot P\!\left(\dfrac{A}{E_j}\right)}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Find probability of a cause given the effect. Defective bolt from machine B: $P(B_2/D)$. Gold coin drawn from box I of III boxes: $P(E_1/G)=2/3$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Prior vs Posterior</span><span class="tag tag-def">Definition</span></div>
+        <div class="fcard-body">
+          <div class="multi-row"><div class="label">Prior probability</div>$P(E_i)$ — known before experiment</div>
+          <div class="multi-row"><div class="label">Likelihood</div>$P(A/E_i)$ — probability of observation given cause</div>
+          <div class="multi-row"><div class="label">Posterior (Bayes)</div>$P(E_i/A)$ — updated probability after observation</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Student guesses/copies/knows: prior $P(A_i)$ given, likelihood $P(\text{correct}/A_i)$ given. Find $P(\text{knows}/\text{correct})$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Tree Diagram Probability</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(\text{path}) = \prod \text{(edge probabilities along path)}$$</span>
+          <span class="math-block">$$P(\text{event}) = \sum \text{(probabilities of all paths leading to event)}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Multi-stage experiments with evolving probabilities (bag-to-bag transfer, sequential draws). Expand the tree, multiply along branches, sum relevant endpoints.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- P6: DISTRIBUTION -->
+  <div class="section" id="p-dist">
+    <button class="section-header" onclick="toggleSection('p-dist')">
+      <span class="section-icon">📊</span>
+      <span class="section-title">Probability Distribution — Mean &amp; Variance</span>
+      <span class="section-count">5 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Probability Distribution Validity</span><span class="tag tag-def">Definition</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\sum_{i=1}^{n} p_i = 1 \qquad p_i \ge 0 \;\forall\, i$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Always verify probabilities sum to 1 before computing mean/variance. First condition to check in any distribution problem.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Mean (Expected Value)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\mu = E(X) = \sum_{i=1}^{n} p_i x_i$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Average value of the random variable. Mean bad eggs drawn = $\sum x_i p_i = 0\cdot\frac{6}{11}+1\cdot\frac{9}{22}+2\cdot\frac{1}{22} = \frac{1}{2}$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Variance</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\sigma^2 = \text{Var}(X) = \sum p_i(x_i-\mu)^2 = \sum p_i x_i^2 - \mu^2$$</span>
+          <span class="math-block">$$\sigma = \sqrt{\sigma^2} \quad \text{(Standard Deviation)}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Spread of distribution. Second form $\Sigma p_i x_i^2 - \mu^2$ is computationally easier — tabulate $p_i x_i$ and $p_i x_i^2$ columns.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Mathematical Expectation (Prize/Payout)</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Expected gain} = \sum (\text{payout}) \times P(\text{win}) = \sum x_i p_i$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Fair division of prize money. Players A (needs 3) and B (needs 2): $P(A \text{ wins})=5/16$, $P(B)=11/16$ → A gets Rs 5000 of Rs 16000.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- P7: BINOMIAL -->
+  <div class="section" id="p-binom">
+    <button class="section-header" onclick="toggleSection('p-binom')">
+      <span class="section-icon">⚂</span>
+      <span class="section-title">Binomial Probability Distribution (Bernoulli Trials)</span>
+      <span class="section-count">8 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Bernoulli Trial Conditions</span><span class="tag tag-def">Definition</span></div>
+        <div class="fcard-body">
+          <div class="multi-row">① Fixed number of trials $n$</div>
+          <div class="multi-row">② Independent trials</div>
+          <div class="multi-row">③ Exactly 2 outcomes: Success ($p$) or Failure ($q=1-p$)</div>
+          <div class="multi-row">④ $p$ remains constant across all trials</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Verify before applying binomial: tossing coin $n$ times ✓; drawing WITHOUT replacement ✗ (not independent).</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Binomial Probability</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(X=r) = {}^nC_r\, p^r\, q^{n-r}, \quad q=1-p, \quad r=0,1,2,\ldots,n$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Exactly $r$ successes in $n$ trials. Doublet probability $=1/6$, 6 throws, exactly 2 doublets: ${}^6C_2(1/6)^2(5/6)^4$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Recurrence Relation</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(r+1) = \frac{n-r}{r+1}\cdot\frac{p}{q}\cdot P(r)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Build probabilities sequentially starting from $P(0)=q^n$. Avoids recomputing ${}^nC_r$ from scratch each time.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">At Least $r$ Successes</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(X\ge r) = \sum_{k=r}^{n} {}^nC_k\, p^k\, q^{n-k} = 1 - P(X\le r-1)$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">At least one success = $1-q^n$ (use complement). "Fewer than 2 hurdles knocked" = $P(0)+P(1)$ directly.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">At Most $r$ Successes</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(X\le r) = \sum_{k=0}^{r} {}^nC_k\, p^k\, q^{n-k}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">At most one success in 6 dice throws: $P(0)+P(1) = q^6 + {}^6C_1 p q^5$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Mean, Variance, SD of Binomial</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\mu = np \qquad \sigma^2 = npq \qquad \sigma = \sqrt{npq}$$</span>
+          <div class="multi-row"><div class="label">Key inequality</div>$\sigma^2 = npq < np = \mu$ (variance always less than mean for binomial)</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Instantly get mean and variance without full distribution table. Given mean $=np$ and variance $=npq$: find $n,p,q$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Mode of Binomial</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Most probable value (mode):}$$</span>
+          <span class="math-block">$$\text{If }(n+1)p \text{ is integer: two modes } (n+1)p \text{ and }(n+1)p-1$$</span>
+          <span class="math-block">$$\text{Otherwise: mode} = \lfloor(n+1)p\rfloor$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Find the most likely number of successes. Use recurrence ratio $\ge 1$ to find where $P(r)$ is largest.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Head appears ODD number of times in $n$ tosses</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P = \frac{{}^nC_1+{}^nC_3+{}^nC_5+\cdots}{2^n} = \frac{2^{n-1}}{2^n} = \frac{1}{2}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Classic result: for a fair coin, probability of odd number of heads is always $\frac{1}{2}$ regardless of $n$.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- P8: GEOMETRIC -->
+  <div class="section" id="p-geom">
+    <button class="section-header" onclick="toggleSection('p-geom')">
+      <span class="section-icon">📏</span>
+      <span class="section-title">Geometrical Probability</span>
+      <span class="section-count">6 formulas</span>
+      <span class="section-arrow">▼</span>
+    </button>
+    <div class="section-body">
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">1D — Length Ratio</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P = \frac{\text{Favourable length}}{\text{Total length}}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Point chosen on segment. Break into cases based on geometric condition, find favourable sub-length.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">2D — Area Ratio</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P = \frac{\text{Favourable area}}{\text{Total area}}$$</span>
+          <div class="multi-row"><div class="label">Point inside circle of radius r, closer to centre than circumference</div>$P = \frac{\pi(r/2)^2}{\pi r^2} = \frac{1}{4}$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Point chosen uniformly in a region. Draw the favourable sub-region geometrically, compute its area.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">3D — Volume Ratio</span><span class="tag tag-core">Core</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P = \frac{\text{Favourable volume}}{\text{Total volume}}$$</span>
+          <div class="multi-row"><div class="label">Sphere (r) circumscribed about cube (side $2r/\sqrt{3}$)</div>$P(\text{in sphere, outside cube}) = 1 - \frac{(2r/\sqrt{3})^3}{(4\pi r^3/3)} = 1-\frac{2}{\sqrt{3}\pi}$</div>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Point chosen uniformly in 3D region. Cube inscribed in sphere: P(in sphere but outside cube) = $1 - V_\text{cube}/V_\text{sphere}$.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Stick broken into 3 — Triangle condition</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$\text{Stick of length }l:\; x,y>0,\; x+y<l$$</span>
+          <span class="math-block">$$\text{Triangle condition: } x<l/2,\; y<l/2,\; x+y>l/2$$</span>
+          <span class="math-block">$$P = \frac{\frac{1}{2}(l/2)^2}{\frac{1}{2}l^2} = \frac{1}{4}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Classic geometric probability. Total sample space is a right triangle; favourable is the inner triangle satisfying all three conditions.</span></div>
+        </div>
+      </div>
+
+      <div class="fcard">
+        <div class="fcard-head"><span class="fcard-title">Point in equilateral triangle — distance from corner</span><span class="tag tag-trick">Trick</span></div>
+        <div class="fcard-body">
+          <span class="math-block">$$P(\text{distance from all corners}>1) = 1 - \frac{3\cdot\frac{1}{2}(1)^2\cdot\frac{\pi}{3}}{\frac{\sqrt{3}}{4}\cdot s^2} = 1 - \frac{2\pi}{9\sqrt{3}}$$</span>
+          <div class="use-box"><span class="use-label">USE</span><span class="use-text">Subtract circular sectors at each corner (angle $\pi/3$ each) from total triangle area. Works for any polygon with sectors at vertices.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STRATEGY BOX PROB -->
+  <div class="strategy-box">
+    <h3>⚡ Problem-Solving Strategies for Probability</h3>
+    <div class="strategy-item"><span class="strategy-num">1</span><span class="strategy-text"><strong>Choose Complement First:</strong> Whenever the condition is "at least one," "not all," or describes multiple unfavorable scenarios, compute $1-P(\text{complement})$. This is almost always simpler.</span></div>
+    <div class="strategy-item"><span class="strategy-num">2</span><span class="strategy-text"><strong>Identify Independence Early:</strong> Check if draws are with/without replacement. With replacement → independent → multiply individual probabilities. Without replacement → multiply conditional probabilities step-by-step.</span></div>
+    <div class="strategy-item"><span class="strategy-num">3</span><span class="strategy-text"><strong>Partition Sample Space for Total Probability:</strong> When an event has multiple causes (machines, boxes, paths), define mutually exclusive causes $E_i$, apply $P(A)=\sum P(E_i)P(A/E_i)$. Then Bayes gives reverse direction.</span></div>
+    <div class="strategy-item"><span class="strategy-num">4</span><span class="strategy-text"><strong>Recognize Binomial Structure:</strong> "Same action repeated $n$ times" with fixed success probability → immediate binomial. At-least-one = $1-q^n$ is the most useful special case.</span></div>
+    <div class="strategy-item"><span class="strategy-num">5</span><span class="strategy-text"><strong>P&C Counting in Probability:</strong> Most JEE probability denominators are selection/arrangement counts. Use ${}^nC_r$ for unordered (card drawing, ball drawing simultaneously) and $n^r$ for ordered repeated trials.</span></div>
+    <div class="strategy-item"><span class="strategy-num">6</span><span class="strategy-text"><strong>Venn Diagram Bookkeeping:</strong> For three events with multiple overlap conditions, assign region variables (7 regions), write equations from given totals, solve for the required region. Prevents sign errors.</span></div>
+    <div class="strategy-item"><span class="strategy-num">7</span><span class="strategy-text"><strong>Geometric Probability:</strong> Always define total sample space as a simple geometric shape first. Translate the condition into a geometric inequality and sketch the favourable sub-region before computing areas.</span></div>
+    <div class="strategy-item"><span class="strategy-num">8</span><span class="strategy-text"><strong>Conditional vs Independent Check:</strong> $P(A/B)=P(A)$ iff A,B independent. In MCQs: if two events from the same experiment have non-zero intersection, don't assume independence — always verify $P(A\cap B)=P(A)P(B)$.</span></div>
+  </div>
+</div>
+
+
+<script>
+function showPanel(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  // Re-render MathJax
+  if(window.MathJax) MathJax.typesetPromise && MathJax.typesetPromise();
+}
+function toggleSection(id){
+  const sec=document.getElementById(id);
+  sec.classList.toggle('open');
+}
+// Open all sections on load for the active panel, others collapsed
+document.addEventListener('DOMContentLoaded',()=>{
+  document.querySelectorAll('#panel-prob .section').forEach(s=>s.classList.remove('open'));
+});
+</script>
+<div style="text-align:center ;position: relative; bottom: 10px; left: 50%; transform: translateX(-50%); color: var(--text2); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;">-Made by UnknownShadow08</div>
+</body>
+</html>

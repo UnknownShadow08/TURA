@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITF Formula Sheet</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:       #1a1f2e;
+  --surface:  #222840;
+  --card:     #2a3050;
+  --card2:    #252b42;
+  --border:   #354070;
+  --border2:  #3d4b75;
+  --text:     #e8edf8;
+  --muted:    #8a97bb;
+  --dim:      #6a75a0;
+  --blue:     #7eb3ff;
+  --blue-bg:  rgba(126,179,255,0.10);
+  --red:      #ff8a75;
+  --red-bg:   rgba(255,138,117,0.10);
+  --green:    #6ee8a8;
+  --green-bg: rgba(110,232,168,0.10);
+  --purple:   #c49dff;
+  --purple-bg:rgba(196,157,255,0.10);
+  --gold:     #ffd278;
+  --gold-bg:  rgba(255,210,120,0.10);
+  --teal:     #5dd8d8;
+  --teal-bg:  rgba(93,216,216,0.10);
+  --pink:     #ff9ec8;
+  --pink-bg:  rgba(255,158,200,0.10);
+  --formula-bg: #1e2438;
+  --use-bg:     #232940;
+  --radius: 10px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  padding: 2.5rem 1.5rem 5rem;
+  max-width: 980px;
+  margin: auto;
+  line-height: 1.5;
+}
+.page-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.page-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+.page-header p { color: var(--muted); font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem; }
+.badge-row { display: flex; gap: 0.5rem; margin-top: 0.8rem; flex-wrap: wrap; }
+.badge { font-size: 0.65rem; font-family: 'JetBrains Mono', monospace; padding: 3px 10px; border-radius: 20px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; }
+.b1 { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(126,179,255,0.25); }
+.b2 { background: var(--red-bg); color: var(--red); border: 1px solid rgba(255,138,117,0.25); }
+.b3 { background: var(--green-bg); color: var(--green); border: 1px solid rgba(110,232,168,0.25); }
+
+.section { margin-bottom: 1.8rem; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); overflow: hidden; }
+.section-header { display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 1.25rem; border-bottom: 1px solid var(--border); }
+.sec-num { width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; flex-shrink: 0; }
+.sec-title { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.5px; }
+.sec-desc { font-size: 0.72rem; color: var(--muted); margin-left: auto; font-family: 'JetBrains Mono', monospace; }
+
+.c-blue .section-header  { background: var(--blue-bg); }
+.c-blue .sec-num         { background: rgba(126,179,255,0.2); color: var(--blue); }
+.c-blue .sec-title       { color: var(--blue); }
+.c-red .section-header   { background: var(--red-bg); }
+.c-red .sec-num          { background: rgba(255,138,117,0.2); color: var(--red); }
+.c-red .sec-title        { color: var(--red); }
+.c-green .section-header { background: var(--green-bg); }
+.c-green .sec-num        { background: rgba(110,232,168,0.2); color: var(--green); }
+.c-green .sec-title      { color: var(--green); }
+.c-purple .section-header{ background: var(--purple-bg); }
+.c-purple .sec-num       { background: rgba(196,157,255,0.2); color: var(--purple); }
+.c-purple .sec-title     { color: var(--purple); }
+.c-gold .section-header  { background: var(--gold-bg); }
+.c-gold .sec-num         { background: rgba(255,210,120,0.2); color: var(--gold); }
+.c-gold .sec-title       { color: var(--gold); }
+.c-teal .section-header  { background: var(--teal-bg); }
+.c-teal .sec-num         { background: rgba(93,216,216,0.2); color: var(--teal); }
+.c-teal .sec-title       { color: var(--teal); }
+.c-pink .section-header  { background: var(--pink-bg); }
+.c-pink .sec-num         { background: rgba(255,158,200,0.2); color: var(--pink); }
+.c-pink .sec-title       { color: var(--pink); }
+
+.dom-table { width: 100%; border-collapse: collapse; }
+.dom-table th { background: rgba(255,255,255,0.04); color: var(--muted); font-size: 0.65rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; padding: 0.55rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+.dom-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.83rem; vertical-align: middle; }
+.dom-table tr:last-child td { border-bottom: none; }
+.dom-table .fn { font-family: 'JetBrains Mono', monospace; color: var(--blue); font-size: 0.82rem; font-weight: 600; }
+.dom-table .dom { color: var(--text); font-size: 0.82rem; }
+.dom-table .rng { color: var(--green); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+.dom-table .use { color: var(--muted); font-size: 0.75rem; }
+.dom-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.sub-head { padding: 0.4rem 1.25rem; font-size: 0.66rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--dim); background: rgba(0,0,0,0.15); border-bottom: 1px solid var(--border); border-top: 1px solid var(--border); }
+.sub-head:first-child { border-top: none; }
+
+.frow { display: grid; grid-template-columns: 1.1fr 1fr; border-bottom: 1px solid var(--border); }
+.frow:last-child { border-bottom: none; }
+.fcell { padding: 0.62rem 1.25rem; font-size: 0.82rem; line-height: 1.55; border-right: 1px solid var(--border); }
+.fcell:last-child { border-right: none; }
+.fcell.math { font-family: 'JetBrains Mono', monospace; font-size: 0.79rem; color: #d8e8ff; background: var(--formula-bg); }
+.fcell.math .cond { display: block; font-size: 0.67rem; color: var(--gold); margin-top: 2px; }
+.fcell.use { color: var(--muted); font-size: 0.77rem; background: var(--use-bg); display: flex; align-items: center; }
+
+.hl  { color: var(--blue); }
+.hlr { color: var(--red); }
+.hlg { color: var(--green); }
+.hlp { color: var(--purple); }
+.hly { color: var(--gold); }
+.hlt { color: var(--teal); }
+
+.notes { padding: 0.3rem 0; background: rgba(0,0,0,0.12); border-top: 1px solid var(--border); }
+.note { display: flex; align-items: flex-start; gap: 0.5rem; padding: 0.42rem 1.25rem; font-size: 0.75rem; color: var(--muted); border-bottom: 1px dashed rgba(255,255,255,0.05); }
+.note:last-child { border-bottom: none; }
+.note-icon { flex-shrink:0; font-size:0.7rem; margin-top:1px; }
+.note .em { color: var(--gold); font-weight: 600; }
+
+.val-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.val-cell { padding: 0.55rem 0.9rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); font-size: 0.76rem; }
+.val-cell:nth-child(4n) { border-right: none; }
+.val-cell .vf { font-family: 'JetBrains Mono', monospace; color: var(--teal); display: block; font-size:0.73rem; }
+.val-cell .vv { color: var(--gold); font-family: 'JetBrains Mono', monospace; font-size: 0.73rem; }
+
+.cross-wrap { display: grid; grid-template-columns: 1fr 1fr; }
+.cross-col { border-right: 1px solid var(--border); }
+.cross-col:last-child { border-right: none; }
+.cross-table { width: 100%; border-collapse: collapse; }
+.cross-table td { padding: 0.58rem 1.1rem; border-bottom: 1px solid var(--border); font-size: 0.81rem; vertical-align: middle; }
+.cross-table tr:last-child td { border-bottom: none; }
+.cross-table .cf { font-family: 'JetBrains Mono', monospace; color: #c8e0ff; font-size: 0.79rem; }
+.cross-table .cr { font-family: 'JetBrains Mono', monospace; color: var(--green); font-size: 0.79rem; }
+.cross-table tr:hover td { background: rgba(255,255,255,0.02); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Inverse Trig Functions</h1>
+  <p>// JEE (Main + Advanced) &middot; Complete Formula Reference</p>
+  <div class="badge-row">
+    <span class="badge b1">14 Sections</span>
+    <span class="badge b2">JEE Advanced</span>
+    <span class="badge b3">All Formulas</span>
+  </div>
+</div>
+
+<!-- 1 -->
+<div class="section c-blue">
+  <div class="section-header"><div class="sec-num">01</div><span class="sec-title">Domain &amp; Range</span><span class="sec-desc">all 6 functions</span></div>
+  <table class="dom-table">
+    <thead><tr><th>Function</th><th>Domain</th><th>Range (Principal)</th><th>One-liner use</th></tr></thead>
+    <tbody>
+      <tr><td class="fn">sin&#x207B;&#xB9;(x)</td><td class="dom">|x| &le; 1</td><td class="rng">[&minus;&pi;/2, &pi;/2]</td><td class="use">Smallest angle whose sin is x</td></tr>
+      <tr><td class="fn">cos&#x207B;&#xB9;(x)</td><td class="dom">|x| &le; 1</td><td class="rng">[0, &pi;]</td><td class="use">Non-negative angle whose cos is x</td></tr>
+      <tr><td class="fn">tan&#x207B;&#xB9;(x)</td><td class="dom">x &isin; &#x211D;</td><td class="rng">(&minus;&pi;/2, &pi;/2)</td><td class="use">Defined for all reals &mdash; open interval</td></tr>
+      <tr><td class="fn">cot&#x207B;&#xB9;(x)</td><td class="dom">x &isin; &#x211D;</td><td class="rng">(0, &pi;)</td><td class="use">Always gives angle in (0, &pi;)</td></tr>
+      <tr><td class="fn">sec&#x207B;&#xB9;(x)</td><td class="dom">|x| &ge; 1</td><td class="rng">[0, &pi;/2) &cup; (&pi;/2, &pi;]</td><td class="use">&pi;/2 excluded from range</td></tr>
+      <tr><td class="fn">cosec&#x207B;&#xB9;(x)</td><td class="dom">|x| &ge; 1</td><td class="rng">[&minus;&pi;/2, 0) &cup; (0, &pi;/2]</td><td class="use">0 excluded from range</td></tr>
+    </tbody>
+  </table>
+  <div class="notes">
+    <div class="note"><span class="note-icon">&#x1F4A1;</span><div>x &gt; 0 &rarr; <span class="em">all 6 ITFs give acute angles</span></div></div>
+    <div class="note"><span class="note-icon">&#x1F4A1;</span><div>x &lt; 0 &rarr; sin&#x207B;&#xB9;, tan&#x207B;&#xB9;, cosec&#x207B;&#xB9; &rarr; <span class="em">IVth quadrant (&minus;&pi;/2 to 0)</span></div></div>
+    <div class="note"><span class="note-icon">&#x1F4A1;</span><div>x &lt; 0 &rarr; cos&#x207B;&#xB9;, cot&#x207B;&#xB9;, sec&#x207B;&#xB9; &rarr; <span class="em">IInd quadrant (obtuse)</span></div></div>
+    <div class="note"><span class="note-icon">&#x1F6AB;</span><div><span class="em">IIIrd quadrant NEVER used</span> in range of any ITF</div></div>
+  </div>
+</div>
+
+<!-- 2 -->
+<div class="section c-red">
+  <div class="section-header"><div class="sec-num">02</div><span class="sec-title">Property 1 &mdash; f(f&#x207B;&#xB9;x) = x</span><span class="sec-desc">outer cancels inner &middot; aperiodic</span></div>
+  <div class="frow"><div class="fcell math"><span class="hlr">sin</span>(sin&#x207B;&#xB9; x) = x</div><div class="fcell use">x &isin; [&minus;1, 1] &middot; Direct simplification</div></div>
+  <div class="frow"><div class="fcell math"><span class="hlr">cos</span>(cos&#x207B;&#xB9; x) = x</div><div class="fcell use">x &isin; [&minus;1, 1] &middot; Direct simplification</div></div>
+  <div class="frow"><div class="fcell math"><span class="hlr">tan</span>(tan&#x207B;&#xB9; x) = x</div><div class="fcell use">x &isin; &#x211D; &middot; Most commonly used cancellation</div></div>
+  <div class="frow"><div class="fcell math"><span class="hlr">cot</span>(cot&#x207B;&#xB9; x) = x</div><div class="fcell use">x &isin; &#x211D;</div></div>
+  <div class="frow"><div class="fcell math"><span class="hlr">sec</span>(sec&#x207B;&#xB9; x) = x</div><div class="fcell use">|x| &ge; 1</div></div>
+  <div class="frow"><div class="fcell math"><span class="hlr">cosec</span>(cosec&#x207B;&#xB9; x) = x</div><div class="fcell use">|x| &ge; 1</div></div>
+  <div class="notes"><div class="note"><span class="note-icon">&#x26A1;</span><div>All 6 are <span class="em">aperiodic</span> &mdash; no periodic behaviour</div></div></div>
+</div>
+
+<!-- 3 -->
+<div class="section c-green">
+  <div class="section-header"><div class="sec-num">03</div><span class="sec-title">Property 2 &mdash; f&#x207B;&#xB9;(f(x)) &nbsp;[piecewise, periodic]</span><span class="sec-desc">inner cancels outer conditionally</span></div>
+  <div class="sub-head">sin&#x207B;&#xB9;(sin x) &mdash; period 2&pi;, ODD</div>
+  <div class="frow"><div class="fcell math">= x<span class="cond">x &isin; [&minus;&pi;/2, &pi;/2]</span></div><div class="fcell use">Principal branch &mdash; direct answer</div></div>
+  <div class="frow"><div class="fcell math">= &pi; &minus; x<span class="cond">x &isin; [&pi;/2, &pi;]</span></div><div class="fcell use">Reflect around &pi;/2</div></div>
+  <div class="frow"><div class="fcell math">= &minus;&pi; &minus; x<span class="cond">x &isin; [&minus;&pi;, &minus;&pi;/2]</span></div><div class="fcell use">Reflect around &minus;&pi;/2</div></div>
+  <div class="sub-head">cos&#x207B;&#xB9;(cos x) &mdash; period 2&pi;, EVEN</div>
+  <div class="frow"><div class="fcell math">= x<span class="cond">x &isin; [0, &pi;]</span></div><div class="fcell use">Principal branch</div></div>
+  <div class="frow"><div class="fcell math">= &minus;x<span class="cond">x &isin; [&minus;&pi;, 0]</span></div><div class="fcell use">Flip sign for negatives</div></div>
+  <div class="sub-head">tan&#x207B;&#xB9;(tan x) &mdash; period &pi;, ODD</div>
+  <div class="frow"><div class="fcell math">= x<span class="cond">x &isin; (&minus;&pi;/2, &pi;/2)</span></div><div class="fcell use">Principal branch</div></div>
+  <div class="frow"><div class="fcell math">= x &minus; &pi;<span class="cond">x &isin; (&pi;/2, 3&pi;/2)</span></div><div class="fcell use">Subtract one period</div></div>
+  <div class="frow"><div class="fcell math">= x + &pi;<span class="cond">x &isin; (&minus;3&pi;/2, &minus;&pi;/2)</span></div><div class="fcell use">Add one period</div></div>
+  <div class="sub-head">cot&#x207B;&#xB9;(cot x) &mdash; period &pi;, neither even nor odd</div>
+  <div class="frow"><div class="fcell math">= x<span class="cond">x &isin; (0, &pi;)</span></div><div class="fcell use">Principal branch</div></div>
+  <div class="frow"><div class="fcell math">= x + &pi;<span class="cond">x &isin; (&minus;&pi;, 0)</span></div><div class="fcell use">Add &pi; for negatives</div></div>
+  <div class="frow"><div class="fcell math">= x &minus; &pi;<span class="cond">x &isin; (&pi;, 2&pi;)</span></div><div class="fcell use">Subtract &pi; beyond &pi;</div></div>
+  <div class="notes">
+    <div class="note"><span class="note-icon">&#x26A1;</span><div>sec&#x207B;&#xB9;(sec x) &rarr; period <span class="em">2&pi;, EVEN</span> &nbsp;|&nbsp; cosec&#x207B;&#xB9;(cosec x) &rarr; period <span class="em">2&pi;, ODD</span></div></div>
+    <div class="note"><span class="note-icon">&#x1F511;</span><div><span class="em">KEY TRICK:</span> If x &notin; principal range, shift by period until it falls inside, then apply piecewise rule.</div></div>
+  </div>
+</div>
+
+<!-- 4 -->
+<div class="section c-purple">
+  <div class="section-header"><div class="sec-num">04</div><span class="sec-title">Property 3 &mdash; Complementary Pairs &nbsp;[Sum = &pi;/2]</span><span class="sec-desc">convert between paired functions</span></div>
+  <div class="frow"><div class="fcell math"><span class="hlp">sin&#x207B;&#xB9;x</span> + <span class="hlp">cos&#x207B;&#xB9;x</span> = &pi;/2</div><div class="fcell use">|x| &le; 1 &middot; Convert sin&#x207B;&#xB9; &harr; cos&#x207B;&#xB9;</div></div>
+  <div class="frow"><div class="fcell math"><span class="hlp">tan&#x207B;&#xB9;x</span> + <span class="hlp">cot&#x207B;&#xB9;x</span> = &pi;/2</div><div class="fcell use">x &isin; &#x211D; &middot; Very frequently used in JEE</div></div>
+  <div class="frow"><div class="fcell math"><span class="hlp">sec&#x207B;&#xB9;x</span> + <span class="hlp">cosec&#x207B;&#xB9;x</span> = &pi;/2</div><div class="fcell use">|x| &ge; 1 &middot; Less common but asked in Adv</div></div>
+</div>
+
+<!-- 5 -->
+<div class="section c-gold">
+  <div class="section-header"><div class="sec-num">05</div><span class="sec-title">Property 4 &mdash; Negative Argument</span><span class="sec-desc">odd vs &pi;-correction</span></div>
+  <div class="sub-head">ODD functions &rarr; negate</div>
+  <div class="frow"><div class="fcell math">sin&#x207B;&#xB9;(<span class="hlr">&minus;x</span>) = <span class="hlr">&minus;</span>sin&#x207B;&#xB9;(x)</div><div class="fcell use">|x| &le; 1 &middot; Flip sign directly</div></div>
+  <div class="frow"><div class="fcell math">tan&#x207B;&#xB9;(<span class="hlr">&minus;x</span>) = <span class="hlr">&minus;</span>tan&#x207B;&#xB9;(x)</div><div class="fcell use">x &isin; &#x211D; &middot; Most commonly used</div></div>
+  <div class="frow"><div class="fcell math">cosec&#x207B;&#xB9;(<span class="hlr">&minus;x</span>) = <span class="hlr">&minus;</span>cosec&#x207B;&#xB9;(x)</div><div class="fcell use">|x| &ge; 1</div></div>
+  <div class="sub-head">NOT odd &mdash; &pi; correction</div>
+  <div class="frow"><div class="fcell math">cos&#x207B;&#xB9;(<span class="hlr">&minus;x</span>) = <span class="hly">&pi;</span> &minus; cos&#x207B;&#xB9;(x)</div><div class="fcell use">|x| &le; 1 &middot; Adds &pi;, does NOT negate</div></div>
+  <div class="frow"><div class="fcell math">cot&#x207B;&#xB9;(<span class="hlr">&minus;x</span>) = <span class="hly">&pi;</span> &minus; cot&#x207B;&#xB9;(x)</div><div class="fcell use">x &isin; &#x211D;</div></div>
+  <div class="frow"><div class="fcell math">sec&#x207B;&#xB9;(<span class="hlr">&minus;x</span>) = <span class="hly">&pi;</span> &minus; sec&#x207B;&#xB9;(x)</div><div class="fcell use">|x| &ge; 1</div></div>
+  <div class="notes"><div class="note"><span class="note-icon">&#x1F511;</span><div><span class="em">Memory:</span> sin, tan, cosec &rarr; ODD (negate) &nbsp;|&nbsp; cos, cot, sec &rarr; add &pi;</div></div></div>
+</div>
+
+<!-- 6 -->
+<div class="section c-teal">
+  <div class="section-header"><div class="sec-num">06</div><span class="sec-title">Property 5 &mdash; Reciprocal Conversions</span><span class="sec-desc">cosec&#x207B;&#xB9;&rarr;sin&#x207B;&#xB9; &middot; sec&#x207B;&#xB9;&rarr;cos&#x207B;&#xB9;</span></div>
+  <div class="frow"><div class="fcell math">cosec&#x207B;&#xB9;(x) = sin&#x207B;&#xB9;<span class="hlt">(1/x)</span></div><div class="fcell use">|x| &ge; 1 &middot; Reduce cosec&#x207B;&#xB9; to sin&#x207B;&#xB9;</div></div>
+  <div class="frow"><div class="fcell math">sec&#x207B;&#xB9;(x) = cos&#x207B;&#xB9;<span class="hlt">(1/x)</span></div><div class="fcell use">|x| &ge; 1 &middot; Reduce sec&#x207B;&#xB9; to cos&#x207B;&#xB9;</div></div>
+  <div class="frow"><div class="fcell math">cot&#x207B;&#xB9;(x) = tan&#x207B;&#xB9;<span class="hlt">(1/x)</span><span class="cond">x &gt; 0</span></div><div class="fcell use">Direct reciprocal</div></div>
+  <div class="frow"><div class="fcell math">cot&#x207B;&#xB9;(x) = <span class="hly">&pi;</span> + tan&#x207B;&#xB9;<span class="hlt">(1/x)</span><span class="cond">x &lt; 0</span></div><div class="fcell use">Negative x &mdash; add &pi; correction</div></div>
+</div>
+
+<!-- 7 -->
+<div class="section c-pink">
+  <div class="section-header"><div class="sec-num">07</div><span class="sec-title">Property 6 &mdash; Addition &amp; Subtraction Formulas</span><span class="sec-desc">tan&#x207B;&#xB9; &middot; sin&#x207B;&#xB9; &middot; cos&#x207B;&#xB9;</span></div>
+  <div class="sub-head">tan&#x207B;&#xB9; addition</div>
+  <div class="frow"><div class="fcell math">tan&#x207B;&#xB9;x + tan&#x207B;&#xB9;y = tan&#x207B;&#xB9;<span class="hl">[(x+y)/(1&minus;xy)]</span><span class="cond">x&gt;0, y&gt;0, <span class="hlr">xy &lt; 1</span></span></div><div class="fcell use">Standard case &middot; most used</div></div>
+  <div class="frow"><div class="fcell math">tan&#x207B;&#xB9;x + tan&#x207B;&#xB9;y = <span class="hly">&pi;</span> + tan&#x207B;&#xB9;<span class="hl">[(x+y)/(1&minus;xy)]</span><span class="cond">x&gt;0, y&gt;0, <span class="hlr">xy &gt; 1</span></span></div><div class="fcell use">Add &pi; when xy &gt; 1</div></div>
+  <div class="frow"><div class="fcell math">tan&#x207B;&#xB9;x + tan&#x207B;&#xB9;y = <span class="hly">&pi;/2</span><span class="cond">x&gt;0, y&gt;0, xy = 1 (reciprocals)</span></div><div class="fcell use">x and y are reciprocals</div></div>
+  <div class="frow"><div class="fcell math">tan&#x207B;&#xB9;x &minus; tan&#x207B;&#xB9;y = tan&#x207B;&#xB9;<span class="hl">[(x&minus;y)/(1+xy)]</span><span class="cond">x&gt;0, y&gt;0</span></div><div class="fcell use">Subtraction &mdash; denominator +xy</div></div>
+  <div class="frow"><div class="fcell math">tan&#x207B;&#xB9;x + tan&#x207B;&#xB9;y + tan&#x207B;&#xB9;z<br>= tan&#x207B;&#xB9;<span class="hl">[(x+y+z&minus;xyz) / (1&minus;xy&minus;yz&minus;zx)]</span><span class="cond">x,y,z&gt;0 &amp; xy+yz+zx &lt; 1</span></div><div class="fcell use">Three-term sum formula</div></div>
+  <div class="sub-head">sin&#x207B;&#xB9; addition</div>
+  <div class="frow"><div class="fcell math">sin&#x207B;&#xB9;x + sin&#x207B;&#xB9;y = sin&#x207B;&#xB9;<span class="hlg">[x&radic;(1&minus;y&sup2;) + y&radic;(1&minus;x&sup2;)]</span><span class="cond">x&gt;0, y&gt;0, x&sup2;+y&sup2; &le; 1</span></div><div class="fcell use">Both inside unit circle</div></div>
+  <div class="frow"><div class="fcell math">sin&#x207B;&#xB9;x + sin&#x207B;&#xB9;y = <span class="hly">&pi;</span> &minus; sin&#x207B;&#xB9;<span class="hlg">[x&radic;(1&minus;y&sup2;) + y&radic;(1&minus;x&sup2;)]</span><span class="cond">x&gt;0, y&gt;0, x&sup2;+y&sup2; &gt; 1</span></div><div class="fcell use">Outside unit circle</div></div>
+  <div class="frow"><div class="fcell math">sin&#x207B;&#xB9;x &minus; sin&#x207B;&#xB9;y = sin&#x207B;&#xB9;<span class="hlg">[x&radic;(1&minus;y&sup2;) &minus; y&radic;(1&minus;x&sup2;)]</span><span class="cond">x&gt;0, y&gt;0</span></div><div class="fcell use">Subtraction form</div></div>
+  <div class="sub-head">cos&#x207B;&#xB9; addition</div>
+  <div class="frow"><div class="fcell math">cos&#x207B;&#xB9;x + cos&#x207B;&#xB9;y = cos&#x207B;&#xB9;<span class="hl">[xy &minus; &radic;(1&minus;x&sup2;)&middot;&radic;(1&minus;y&sup2;)]</span><span class="cond">x&gt;0, y&gt;0</span></div><div class="fcell use">Note the minus sign inside</div></div>
+  <div class="frow"><div class="fcell math">cos&#x207B;&#xB9;x &minus; cos&#x207B;&#xB9;y = cos&#x207B;&#xB9;<span class="hl">(xy + &radic;(1&minus;x&sup2;)&middot;&radic;(1&minus;y&sup2;))</span><span class="cond">x &le; y, x,y &gt; 0</span></div><div class="fcell use">Note PLUS sign &mdash; x &le; y case</div></div>
+  <div class="frow"><div class="fcell math">cos&#x207B;&#xB9;x &minus; cos&#x207B;&#xB9;y = <span class="hlr">&minus;</span>cos&#x207B;&#xB9;<span class="hl">(xy + &radic;(1&minus;x&sup2;)&middot;&radic;(1&minus;y&sup2;))</span><span class="cond">x &gt; y, x,y &gt; 0</span></div><div class="fcell use">x &gt; y case &mdash; negative</div></div>
+  <div class="notes"><div class="note"><span class="note-icon">&#x26A0;&#xFE0F;</span><div>For <span class="em">negative x or y</span> &mdash; apply Property 4 first, then use formulas above</div></div></div>
+</div>
+
+<!-- 8 -->
+<div class="section c-blue">
+  <div class="section-header"><div class="sec-num">08</div><span class="sec-title">Simplified ITF &mdash; Double &amp; Triple Angle Forms</span><span class="sec-desc">2tan&#x207B;&#xB9; substitution</span></div>
+  <div class="sub-head">sin&#x207B;&#xB9;(2x / 1+x&sup2;)</div>
+  <div class="frow"><div class="fcell math">= <span class="hl">2tan&#x207B;&#xB9;x</span><span class="cond">|x| &le; 1</span></div><div class="fcell use">Standard &mdash; sub x = tan&theta;</div></div>
+  <div class="frow"><div class="fcell math">= <span class="hly">&pi;</span> &minus; 2tan&#x207B;&#xB9;x<span class="cond">x &gt; 1</span></div><div class="fcell use">Angle exceeded &pi;/2</div></div>
+  <div class="frow"><div class="fcell math">= &minus;(<span class="hly">&pi;</span> + 2tan&#x207B;&#xB9;x)<span class="cond">x &lt; &minus;1</span></div><div class="fcell use">Negative side</div></div>
+  <div class="sub-head">cos&#x207B;&#xB9;((1&minus;x&sup2;) / (1+x&sup2;))</div>
+  <div class="frow"><div class="fcell math">= <span class="hl">2tan&#x207B;&#xB9;x</span><span class="cond">x &ge; 0</span></div><div class="fcell use">Non-negative x</div></div>
+  <div class="frow"><div class="fcell math">= <span class="hlr">&minus;</span>2tan&#x207B;&#xB9;x<span class="cond">x &lt; 0</span></div><div class="fcell use">Negate for negative x</div></div>
+  <div class="sub-head">tan&#x207B;&#xB9;(2x / (1&minus;x&sup2;))</div>
+  <div class="frow"><div class="fcell math">= <span class="hl">2tan&#x207B;&#xB9;x</span><span class="cond">|x| &lt; 1</span></div><div class="fcell use">Standard</div></div>
+  <div class="frow"><div class="fcell math">= <span class="hly">&pi;</span> + 2tan&#x207B;&#xB9;x<span class="cond">x &lt; &minus;1</span></div><div class="fcell use"></div></div>
+  <div class="frow"><div class="fcell math">= &minus;(<span class="hly">&pi;</span> &minus; 2tan&#x207B;&#xB9;x)<span class="cond">x &gt; 1</span></div><div class="fcell use"></div></div>
+  <div class="sub-head">sin&#x207B;&#xB9;(3x &minus; 4x&sup3;) &nbsp; [Triple angle]</div>
+  <div class="frow"><div class="fcell math">= <span class="hl">3sin&#x207B;&#xB9;x</span><span class="cond">|x| &le; 1/2</span></div><div class="fcell use">Central range &mdash; direct triple</div></div>
+  <div class="frow"><div class="fcell math">= <span class="hly">&pi;</span> &minus; 3sin&#x207B;&#xB9;x<span class="cond">1/2 &le; x &le; 1</span></div><div class="fcell use">Mirror from &pi;</div></div>
+  <div class="frow"><div class="fcell math">= &minus;(<span class="hly">&pi;</span> + 3sin&#x207B;&#xB9;x)<span class="cond">&minus;1 &le; x &le; &minus;1/2</span></div><div class="fcell use">Left side</div></div>
+  <div class="sub-head">cos&#x207B;&#xB9;(4x&sup3; &minus; 3x) &nbsp; [Triple angle]</div>
+  <div class="frow"><div class="fcell math">= <span class="hl">3cos&#x207B;&#xB9;x</span><span class="cond">1/2 &le; x &le; 1</span></div><div class="fcell use"></div></div>
+  <div class="frow"><div class="fcell math">= 2<span class="hly">&pi;</span> &minus; 3cos&#x207B;&#xB9;x<span class="cond">&minus;1 &le; x &le; &minus;1/2</span></div><div class="fcell use"></div></div>
+  <div class="frow"><div class="fcell math">= 2<span class="hly">&pi;</span> &minus; 3cos&#x207B;&#xB9;x<span class="cond">&minus;1/2 &le; x &le; 1/2</span></div><div class="fcell use">Middle zone</div></div>
+  <div class="sub-head">sin&#x207B;&#xB9;(2x&radic;(1&minus;x&sup2;)) &nbsp; [Double angle]</div>
+  <div class="frow"><div class="fcell math">= <span class="hl">2sin&#x207B;&#xB9;x</span><span class="cond">|x| &le; 1/&radic;2</span></div><div class="fcell use">Sub x = sin&theta;</div></div>
+  <div class="frow"><div class="fcell math">= <span class="hly">&pi;</span> &minus; 2sin&#x207B;&#xB9;x<span class="cond">1/&radic;2 &le; x &le; 1</span></div><div class="fcell use"></div></div>
+  <div class="frow"><div class="fcell math">= &minus;(<span class="hly">&pi;</span> + 2sin&#x207B;&#xB9;x)<span class="cond">&minus;1 &le; x &le; &minus;1/&radic;2</span></div><div class="fcell use"></div></div>
+  <div class="sub-head">cos&#x207B;&#xB9;(2x&sup2;&minus;1) &nbsp; [Double angle]</div>
+  <div class="frow"><div class="fcell math">= <span class="hl">2cos&#x207B;&#xB9;x</span><span class="cond">0 &le; x &le; 1</span></div><div class="fcell use">Sub x = cos&theta;</div></div>
+  <div class="frow"><div class="fcell math">= 2<span class="hly">&pi;</span> &minus; 2cos&#x207B;&#xB9;x<span class="cond">&minus;1 &le; x &le; 0</span></div><div class="fcell use"></div></div>
+</div>
+
+<!-- 9 -->
+<div class="section c-green">
+  <div class="section-header"><div class="sec-num">09</div><span class="sec-title">Half-Angle ITF Identities</span><span class="sec-desc">&theta;/2 forms</span></div>
+  <div class="frow"><div class="fcell math">cos&#x207B;&#xB9;&radic;((1+x)/2) = sin&#x207B;&#xB9;&radic;((1&minus;x)/2)</div><div class="fcell use">&forall; x &isin; [&minus;1,1] &middot; via cos(&theta;/2) identity</div></div>
+  <div class="frow"><div class="fcell math">cos&#x207B;&#xB9;&radic;((1+x)/2) = <span class="hlg">(1/2)cos&#x207B;&#xB9;x</span></div><div class="fcell use">Half-angle compression</div></div>
+  <div class="frow"><div class="fcell math">sin&#x207B;&#xB9;&radic;((1&minus;x)/2) = <span class="hlg">(1/2)cos&#x207B;&#xB9;x</span></div><div class="fcell use">Alternative form of same identity</div></div>
+  <div class="frow"><div class="fcell math">tan&#x207B;&#xB9;&radic;x = <span class="hlg">(1/2)cos&#x207B;&#xB9;((1&minus;x)/(1+x))</span><span class="cond">x &isin; [0, 1]</span></div><div class="fcell use">Useful in domain-range finding problems</div></div>
+</div>
+
+<!-- 10 -->
+<div class="section c-purple">
+  <div class="section-header"><div class="sec-num">10</div><span class="sec-title">Equation Solving Tricks</span><span class="sec-desc">quick shortcuts</span></div>
+  <div class="frow"><div class="fcell math">sin&#x207B;&#xB9;f(x) + cos&#x207B;&#xB9;g(x) = &pi;/2 &rArr; <span class="hlp">f(x) = g(x)</span></div><div class="fcell use">Then check domain |f|, |g| &le; 1</div></div>
+  <div class="frow"><div class="fcell math">sin&#x207B;&#xB9;(f) + cos&#x207B;&#xB9;(f) = <span class="hlp">&pi;/2</span> &nbsp;always</div><div class="fcell use">Direct use of Property 3</div></div>
+  <div class="frow"><div class="fcell math">2tan&#x207B;&#xB9;x = sin&#x207B;&#xB9;<span class="hlp">(2x/(1+x&sup2;))</span><span class="cond">|x| &le; 1</span></div><div class="fcell use">Convert 2tan&#x207B;&#xB9; to single ITF</div></div>
+  <div class="frow"><div class="fcell math">tan&#x207B;&#xB9;(tan x) = x &minus; n<span class="hlp">&pi;</span><span class="cond">shift x into (&minus;&pi;/2, &pi;/2)</span></div><div class="fcell use">Evaluate out-of-range tan&#x207B;&#xB9;(tan x)</div></div>
+  <div class="frow"><div class="fcell math">cot&#x207B;&#xB9;(cot x) = x &minus; n<span class="hlp">&pi;</span><span class="cond">shift x into (0, &pi;)</span></div><div class="fcell use">Evaluate cot&#x207B;&#xB9;(cot x)</div></div>
+  <div class="frow"><div class="fcell math">cos&#x207B;&#xB9;(cos x) = 2n&pi; &plusmn; x<span class="cond">bring into [0, &pi;]</span></div><div class="fcell use">Reduce using symmetry of cosine</div></div>
+</div>
+
+<!-- 11 -->
+<div class="section c-gold">
+  <div class="section-header"><div class="sec-num">11</div><span class="sec-title">Inequation Rules &mdash; Monotonicity</span><span class="sec-desc">direction of inequality</span></div>
+  <div class="frow"><div class="fcell math">x &gt; y &hArr; sin&#x207B;&#xB9;x <span class="hlg">&gt;</span> sin&#x207B;&#xB9;y</div><div class="fcell use">|x|,|y| &le; 1 &middot; INCREASING &mdash; preserved</div></div>
+  <div class="frow"><div class="fcell math">x &gt; y &hArr; cos&#x207B;&#xB9;x <span class="hlr">&lt;</span> cos&#x207B;&#xB9;y</div><div class="fcell use">|x|,|y| &le; 1 &middot; DECREASING &mdash; FLIPS</div></div>
+  <div class="frow"><div class="fcell math">x &gt; y &hArr; tan&#x207B;&#xB9;x <span class="hlg">&gt;</span> tan&#x207B;&#xB9;y</div><div class="fcell use">x,y &isin; &#x211D; &middot; INCREASING &mdash; preserved</div></div>
+  <div class="frow"><div class="fcell math">x &gt; y &hArr; cot&#x207B;&#xB9;x <span class="hlr">&lt;</span> cot&#x207B;&#xB9;y</div><div class="fcell use">x,y &isin; &#x211D; &middot; DECREASING &mdash; FLIPS</div></div>
+  <div class="notes"><div class="note"><span class="note-icon">&#x1F511;</span><div><span class="em">cos&#x207B;&#xB9; and cot&#x207B;&#xB9; are decreasing</span> &rarr; flip the inequality sign when comparing values</div></div></div>
+</div>
+
+<!-- 12 -->
+<div class="section c-teal">
+  <div class="section-header"><div class="sec-num">12</div><span class="sec-title">Series Summation &mdash; Telescoping via tan&#x207B;&#xB9;</span><span class="sec-desc">tan&#x207B;&#xB9;x &minus; tan&#x207B;&#xB9;y form</span></div>
+  <div class="frow"><div class="fcell math">tan&#x207B;&#xB9;<span class="hlt">[(x&minus;y)/(1+xy)]</span> = tan&#x207B;&#xB9;x &minus; tan&#x207B;&#xB9;y</div><div class="fcell use">Core identity &mdash; split into telescoping difference</div></div>
+  <div class="frow"><div class="fcell math">&Sigma; tan&#x207B;&#xB9;(1/(n&sup2;&minus;n+1))<span class="cond">T_n = tan&#x207B;&#xB9;(n) &minus; tan&#x207B;&#xB9;(n&minus;1)</span></div><div class="fcell use">Telescopes to S&infin; = &pi;/2</div></div>
+  <div class="frow"><div class="fcell math">&Sigma; tan&#x207B;&#xB9;(2/n&sup2;)<span class="cond">T_n = tan&#x207B;&#xB9;(n+1) &minus; tan&#x207B;&#xB9;(n&minus;1)</span></div><div class="fcell use">Two-step telescope &mdash; careful boundary</div></div>
+  <div class="frow"><div class="fcell math">&Sigma; cot&#x207B;&#xB9;(2ⁿ⁺&#xB9; + 2&#x207B;ⁿ) = <span class="hlt">&pi;/4</span></div><div class="fcell use">Convert cot&#x207B;&#xB9; &rarr; tan&#x207B;&#xB9;, then telescope</div></div>
+  <div class="notes">
+    <div class="note"><span class="note-icon">&#x1F511;</span><div><span class="em">TRICK:</span> Write T_n = tan&#x207B;&#xB9;(f(n)) &minus; tan&#x207B;&#xB9;(f(n&minus;1)) &rarr; S_n = tan&#x207B;&#xB9;(f(n)) &minus; tan&#x207B;&#xB9;(f(0))</div></div>
+    <div class="note"><span class="note-icon">&#x1F4A1;</span><div>To split: express numerator as <span class="em">A &minus; B</span>, denominator as <span class="em">1 + AB</span>, match tan&#x207B;&#xB9;A &minus; tan&#x207B;&#xB9;B form</div></div>
+  </div>
+</div>
+
+<!-- 13 -->
+<div class="section c-pink">
+  <div class="section-header"><div class="sec-num">13</div><span class="sec-title">Standard Values &mdash; Must Know</span><span class="sec-desc">memorise all</span></div>
+  <div class="val-grid">
+    <div class="val-cell"><span class="vf">sin&#x207B;&#xB9;(0)</span><span class="vv">= 0</span></div>
+    <div class="val-cell"><span class="vf">sin&#x207B;&#xB9;(1/2)</span><span class="vv">= &pi;/6</span></div>
+    <div class="val-cell"><span class="vf">sin&#x207B;&#xB9;(1/&radic;2)</span><span class="vv">= &pi;/4</span></div>
+    <div class="val-cell"><span class="vf">sin&#x207B;&#xB9;(&radic;3/2)</span><span class="vv">= &pi;/3</span></div>
+    <div class="val-cell"><span class="vf">sin&#x207B;&#xB9;(1)</span><span class="vv">= &pi;/2</span></div>
+    <div class="val-cell"><span class="vf">sin&#x207B;&#xB9;(&minus;1/2)</span><span class="vv">= &minus;&pi;/6</span></div>
+    <div class="val-cell"><span class="vf">sin&#x207B;&#xB9;(&minus;1/&radic;2)</span><span class="vv">= &minus;&pi;/4</span></div>
+    <div class="val-cell"><span class="vf">sin&#x207B;&#xB9;(&minus;1)</span><span class="vv">= &minus;&pi;/2</span></div>
+    <div class="val-cell"><span class="vf">cos&#x207B;&#xB9;(1)</span><span class="vv">= 0</span></div>
+    <div class="val-cell"><span class="vf">cos&#x207B;&#xB9;(&radic;3/2)</span><span class="vv">= &pi;/6</span></div>
+    <div class="val-cell"><span class="vf">cos&#x207B;&#xB9;(1/&radic;2)</span><span class="vv">= &pi;/4</span></div>
+    <div class="val-cell"><span class="vf">cos&#x207B;&#xB9;(1/2)</span><span class="vv">= &pi;/3</span></div>
+    <div class="val-cell"><span class="vf">cos&#x207B;&#xB9;(0)</span><span class="vv">= &pi;/2</span></div>
+    <div class="val-cell"><span class="vf">cos&#x207B;&#xB9;(&minus;1/2)</span><span class="vv">= 2&pi;/3</span></div>
+    <div class="val-cell"><span class="vf">cos&#x207B;&#xB9;(&minus;1/&radic;2)</span><span class="vv">= 3&pi;/4</span></div>
+    <div class="val-cell"><span class="vf">cos&#x207B;&#xB9;(&minus;1)</span><span class="vv">= &pi;</span></div>
+    <div class="val-cell"><span class="vf">tan&#x207B;&#xB9;(0)</span><span class="vv">= 0</span></div>
+    <div class="val-cell"><span class="vf">tan&#x207B;&#xB9;(1/&radic;3)</span><span class="vv">= &pi;/6</span></div>
+    <div class="val-cell"><span class="vf">tan&#x207B;&#xB9;(1)</span><span class="vv">= &pi;/4</span></div>
+    <div class="val-cell"><span class="vf">tan&#x207B;&#xB9;(&radic;3)</span><span class="vv">= &pi;/3</span></div>
+    <div class="val-cell"><span class="vf">tan&#x207B;&#xB9;(&infin;)</span><span class="vv">= &pi;/2</span></div>
+    <div class="val-cell"><span class="vf">sec&#x207B;&#xB9;(1)</span><span class="vv">= 0</span></div>
+    <div class="val-cell"><span class="vf">sec&#x207B;&#xB9;(&radic;2)</span><span class="vv">= &pi;/4</span></div>
+    <div class="val-cell"><span class="vf">sec&#x207B;&#xB9;(2)</span><span class="vv">= &pi;/3</span></div>
+  </div>
+</div>
+
+<!-- 14 -->
+<div class="section c-blue">
+  <div class="section-header"><div class="sec-num">14</div><span class="sec-title">Cross-Conversion &mdash; sin/cos/tan of Inverse Functions</span><span class="sec-desc">right triangle method</span></div>
+  <div class="cross-wrap">
+    <div class="cross-col">
+      <table class="cross-table">
+        <tr><td class="cf">sin(cos&#x207B;&#xB9; x)</td><td class="cr">= &radic;(1&minus;x&sup2;)</td></tr>
+        <tr><td class="cf">cos(sin&#x207B;&#xB9; x)</td><td class="cr">= &radic;(1&minus;x&sup2;)</td></tr>
+        <tr><td class="cf">tan(sin&#x207B;&#xB9; x)</td><td class="cr">= x / &radic;(1&minus;x&sup2;)</td></tr>
+        <tr><td class="cf">tan(cos&#x207B;&#xB9; x)</td><td class="cr">= &radic;(1&minus;x&sup2;) / x</td></tr>
+        <tr><td class="cf">sin(tan&#x207B;&#xB9; x)</td><td class="cr">= x / &radic;(1+x&sup2;)</td></tr>
+      </table>
+    </div>
+    <div class="cross-col">
+      <table class="cross-table">
+        <tr><td class="cf">cos(tan&#x207B;&#xB9; x)</td><td class="cr">= 1 / &radic;(1+x&sup2;)</td></tr>
+        <tr><td class="cf">sec(tan&#x207B;&#xB9; x)</td><td class="cr">= &radic;(1+x&sup2;)</td></tr>
+        <tr><td class="cf">cosec(cot&#x207B;&#xB9; x)</td><td class="cr">= &radic;(1+x&sup2;)</td></tr>
+        <tr><td class="cf">sin&#x207B;&#xB9;(a/b)</td><td class="cr">= tan&#x207B;&#xB9;(a / &radic;(b&sup2;&minus;a&sup2;))</td></tr>
+        <tr><td class="cf">cos&#x207B;&#xB9;(a/b)</td><td class="cr">= tan&#x207B;&#xB9;(&radic;(b&sup2;&minus;a&sup2;) / a)</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="notes">
+    <div class="note"><span class="note-icon">&#x1F511;</span><div><span class="em">Method:</span> Set f&#x207B;&#xB9;(x) = &theta;, draw right triangle, use Pythagoras for the needed trig ratio</div></div>
+    <div class="note"><span class="note-icon">&#x1F4A1;</span><div>Classic: sec&sup2;(tan&#x207B;&#xB9;2) + cosec&sup2;(cot&#x207B;&#xB9;3) = (1+4) + (1+9) = <span class="em">15</span></div></div>
+  </div>
+</div>
+
+<div style="text-align:center; color:var(--dim); font-size:0.68rem; font-family:'JetBrains Mono',monospace; margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid var(--border);">
+  ITF &middot; JEE Main + Advanced &middot; All formulas &middot; Made by UnknownShadow08 
+</div>
+</body>
+</html>

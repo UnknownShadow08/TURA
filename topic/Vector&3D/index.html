@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JEE Formula Sheet — Vectors & 3D Geometry</title>
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['\\(','\\)']],
+      displayMath: [['\\[','\\]']],
+      tags: 'none'
+    },
+    options: { skipHtmlTags: ['script','noscript','style','textarea'] },
+    startup: {
+      ready() { MathJax.startup.defaultReady(); }
+    }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600&display=swap');
+  
+  :root {
+    --bg: #06060f;
+    --bg2: #0b0b1a;
+    --bg3: #0f0f22;
+    --card: #121226;
+    --border: #1e1e40;
+    --v-accent: #00f5d4;
+    --v-glow: rgba(0,245,212,0.15);
+    --v-dim: rgba(0,245,212,0.06);
+    --v-mid: #00c9ae;
+    --d-accent: #f72585;
+    --d-glow: rgba(247,37,133,0.15);
+    --d-dim: rgba(247,37,133,0.06);
+    --d-mid: #c41a6d;
+    --text: #d4d8f0;
+    --text-dim: #7a7fa8;
+    --text-bright: #eef0ff;
+    --formula-color: #a5f3fc;
+    --use-color: #94a3b8;
+    --tag-bg: rgba(255,255,255,0.05);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    overflow-y: auto;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    background-image:
+      linear-gradient(rgba(0,245,212,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,212,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  html::-webkit-scrollbar {
+    width: 6px;
+}
+html::-webkit-scrollbar-thumb {
+    background: var(--border); /* Or your preferred theme color */
+    border-radius: 10px;
+}
+  /* ── HEADER ─────────────────────────────── */
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background: linear-gradient(180deg, #0a0a1e 0%, #06060f 100%);
+    border-bottom: 1px solid #1a1a38;
+    position: relative;
+    z-index: 10;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--v-accent), var(--d-accent), transparent);
+    opacity: 0.5;
+  }
+  .header-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -.02em;
+    margin-bottom: 1px;
+    background: linear-gradient(90deg, var(--v-accent), #7c3aed, var(--d-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header-badge {
+    display: flex;
+    flex-direction: row;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 5px;
+    letter-spacing: 2px;
+  }
+  
+  .author {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    border-radius: 5px;
+    letter-spacing: 2px;
+  }
+  
+  .row {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    padding: 20px 5px;
+  }
+
+  
+  /* ── PANELS ──────────────────────────────── */
+  .panels-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+  }
+  .panel:first-child { border-right: 1px solid var(--border); }
+
+  .panel-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    flex-shrink: 0;
+  }
+  .panel-icon { font-size: 20px; }
+  .panel-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .panel-count {
+    margin-left: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .vectors-panel .panel-header { border-bottom-color: rgba(0,245,212,0.3); }
+  .vectors-panel .panel-title { color: var(--v-accent); }
+  .vectors-panel .panel-count { background: var(--v-dim); color: var(--v-accent); border: 1px solid rgba(0,245,212,0.2); }
+
+  .geo3d-panel .panel-header { border-bottom-color: rgba(247,37,133,0.3); }
+  .geo3d-panel .panel-title { color: var(--d-accent); }
+  .geo3d-panel .panel-count { background: var(--d-dim); color: var(--d-accent); border: 1px solid rgba(247,37,133,0.2); }
+
+  .panel-body {
+    padding: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+.panel-body::-webkit-scrollbar { width: 2px; }
+  .panel-body::-webkit-scrollbar-track { background: transparent; }
+  .panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 200px; }
+  
+  /* ── ACCORDION ───────────────────────────── */
+  details {
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .vectors-panel details:hover { border-color: rgba(0,245,212,0.25); }
+  .geo3d-panel details:hover { border-color: rgba(247,37,133,0.25); }
+  .vectors-panel details[open] { border-color: rgba(0,245,212,0.4); }
+  .geo3d-panel details[open] { border-color: rgba(247,37,133,0.4); }
+
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .vectors-panel summary { color: var(--v-accent); }
+  .vectors-panel summary:hover { background: var(--v-dim); }
+  .vectors-panel details[open] summary { background: var(--v-dim); }
+  .geo3d-panel summary { color: var(--d-accent); }
+  .geo3d-panel summary:hover { background: var(--d-dim); }
+  .geo3d-panel details[open] summary { background: var(--d-dim); }
+
+  .summary-icon { font-size: 14px; }
+  .summary-arrow {
+    margin-left: auto;
+    font-size: 10px;
+    transition: transform 0.2s;
+    opacity: 0.6;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  details[open] .summary-arrow { transform: rotate(90deg); }
+  .formula-count-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    opacity: 0.7;
+  }
+  .vectors-panel .formula-count-badge { background: var(--v-dim); color: var(--v-accent); }
+  .geo3d-panel .formula-count-badge { background: var(--d-dim); color: var(--d-accent); }
+
+  .section-content { padding: 8px 10px 12px; }
+
+  /* ── FORMULA CARD ────────────────────────── */
+  .formula-card {
+    background: var(--card);
+    border-radius: 6px;
+    padding: 11px 14px;
+    margin-bottom: 7px;
+    border-left: 3px solid transparent;
+    position: relative;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .formula-card:hover { transform: translateX(3px); }
+  .vectors-panel .formula-card { border-left-color: rgba(0,245,212,0.4); }
+  .vectors-panel .formula-card:hover { box-shadow: 0 0 12px rgba(0,245,212,0.08); }
+  .geo3d-panel .formula-card { border-left-color: rgba(247,37,133,0.4); }
+  .geo3d-panel .formula-card:hover { box-shadow: 0 0 12px rgba(247,37,133,0.08); }
+
+  .formula-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+  .vectors-panel .formula-name { color: var(--v-accent); }
+  .geo3d-panel .formula-name { color: var(--d-accent); }
+
+  .formula-math {
+    color: var(--formula-color);
+    font-size: 13.5px;
+    line-height: 1.7;
+    margin-bottom: 5px;
+  }
+  .formula-math mjx-container { max-width: 100%; overflow-x: auto; }
+
+  .use-case {
+    font-size: 11px;
+    color: var(--use-color);
+    line-height: 1.4;
+    padding-top: 5px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 5px;
+  }
+  .use-case::before { content: '📌 '; font-size: 10px; }
+
+  /* ── FORMULA GROUP (compact multi-formula block) ─── */
+  .formula-group {
+    background: var(--card);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 7px;
+  }
+  .formula-group .formula-name { margin-bottom: 8px; }
+  .formula-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    margin-bottom: 4px;
+  }
+  .formula-item { color: var(--formula-color); font-size: 12.5px; }
+
+  /* ── SPECIAL CARDS ───────────────────────── */
+  .important-card {
+    background: linear-gradient(135deg, rgba(0,245,212,0.04), rgba(124,58,237,0.04));
+    border: 1px solid rgba(0,245,212,0.2);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 7px;
+  }
+  .geo3d-panel .important-card {
+    background: linear-gradient(135deg, rgba(247,37,133,0.04), rgba(124,58,237,0.04));
+    border-color: rgba(247,37,133,0.2);
+  }
+  .important-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+  .vectors-panel .important-label { background: var(--v-dim); color: var(--v-accent); }
+  .geo3d-panel .important-label { background: var(--d-dim); color: var(--d-accent); }
+
+  /* Divider within sections */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 10px 0;
+  }
+
+  mjx-container[display="true"] { margin: 4px 0 !important; overflow-x: auto; }
+</style>
+</head>
+<body>
+
+<header>
+  
+  <h1 class="header-title">Vector & 3D Formula Compendium</h1>
+  
+  <div class="row">
+    <div class="header-badge">
+      <h4> JEE ADV </h4>
+    </div>
+    
+    <div class="author">
+      <h4> Made by -UnknownShadow08 </h4>
+    </div>
+  </div>
+    
+  
+</header>
+
+<div class="panels-container">
+
+  <!-- ╔══════════════════════════════════╗ -->
+  <!-- ║      VECTOR ALGEBRA PANEL        ║ -->
+  <!-- ╚══════════════════════════════════╝ -->
+  <div class="panel vectors-panel">
+    <div class="panel-header">
+      <span class="panel-icon">⟶</span>
+      <span class="panel-title">Vector Algebra</span>
+      <span class="panel-count">11 SECTIONS</span>
+    </div>
+    <div class="panel-body">
+
+      <!-- ─── SECTION 1: Basics & Magnitude ─── -->
+      <details open>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Basics, Magnitude & Unit Vectors
+          <span class="formula-count-badge">6</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Magnitude of Vector</div>
+            <div class="formula-math">\[\left|\vec{A}\right| = \sqrt{a_1^2 + a_2^2 + a_3^2}\]</div>
+            <div class="use-case">Find the length/modulus of any vector given in component form.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Unit Vector</div>
+            <div class="formula-math">\[\hat{a} = \frac{\vec{a}}{|\vec{a}|}\]</div>
+            <div class="use-case">Get direction of a vector with magnitude 1; used in projections, perpendicular vectors.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Vector in Space</div>
+            <div class="formula-math">\[\vec{r} = x\hat{i} + y\hat{j} + z\hat{k},\quad |\vec{r}| = \sqrt{x^2+y^2+z^2}\]</div>
+            <div class="use-case">Standard component form of a 3D vector from origin to point P(x,y,z).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Position Vector of AB</div>
+            <div class="formula-math">\[\overrightarrow{AB} = \vec{b} - \vec{a} = \text{PV of } B - \text{PV of } A\]</div>
+            <div class="use-case">Express a vector between two points using their position vectors.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Vector of Given Magnitude in Direction d̂</div>
+            <div class="formula-math">\[\vec{B} = |\vec{B}| \times \hat{d} = |\vec{B}| \cdot \frac{\vec{d}}{|\vec{d}|}\]</div>
+            <div class="use-case">Construct a vector of given magnitude in a specified direction.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Scalar Multiplication Properties</div>
+            <div class="formula-math">\[m(\vec{a}) = \vec{a}m = m\vec{a}\]</div>
+            <div class="formula-math">\[m(n\vec{a}) = n(m\vec{a}) = (mn)\vec{a}\]</div>
+            <div class="formula-math">\[(m+n)\vec{a} = m\vec{a} + n\vec{a},\quad m(\vec{a}+\vec{b}) = m\vec{a}+m\vec{b}\]</div>
+            <div class="use-case">Distribute/factor scalars in vector expressions.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 2: Vector Addition & Subtraction ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Addition, Subtraction & Laws
+          <span class="formula-count-badge">7</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Triangle Law of Addition</div>
+            <div class="formula-math">\[\overrightarrow{OB} = \overrightarrow{OA} + \overrightarrow{AB} = \vec{a} + \vec{b}\]</div>
+            <div class="use-case">Add two vectors placed head-to-tail; resultant is closing side.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Parallelogram Law</div>
+            <div class="formula-math">\[\overrightarrow{OP} + \overrightarrow{OQ} = \overrightarrow{OR} \implies \vec{a}+\vec{b} = \overrightarrow{OR}\]</div>
+            <div class="use-case">Add two co-initial vectors; resultant is the diagonal through that point.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Polygon Law</div>
+            <div class="formula-math">\[\vec{a}+\vec{b}+\vec{c}+\vec{d}+\vec{e} = \overrightarrow{OE}\]</div>
+            <div class="formula-math">\[\text{If polygon is closed} \Rightarrow \sum\vec{a} = \vec{0}\]</div>
+            <div class="use-case">Sum of vectors forming a closed polygon is zero (e.g. regular hexagon opposite vectors).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Properties of Vector Addition</div>
+            <div class="formula-math">\[\vec{a}+\vec{b} = \vec{b}+\vec{a} \quad\text{(commutative)}\]</div>
+            <div class="formula-math">\[(\vec{a}+\vec{b})+\vec{c} = \vec{a}+(\vec{b}+\vec{c}) \quad\text{(associative)}\]</div>
+            <div class="formula-math">\[\vec{a}+\vec{0} = \vec{a} \quad\text{(additive identity)}\]</div>
+            <div class="formula-math">\[\vec{a}+(-\vec{a}) = \vec{0} \quad\text{(additive inverse)}\]</div>
+            <div class="use-case">Rearranging sums of multiple vectors; proving vector identities.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Vector Subtraction</div>
+            <div class="formula-math">\[\vec{a} - \vec{b} = \vec{a} + (-\vec{b})\]</div>
+            <div class="use-case">Subtraction is addition of negative; does NOT satisfy commutative or associative law.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Geometric Interpretation: |a+b| = |a−b|</div>
+            <div class="formula-math">\[|\vec{a}+\vec{b}| = |\vec{a}-\vec{b}| \iff \vec{a} \perp \vec{b}\]</div>
+            <div class="use-case">Diagonals of a parallelogram are equal iff it is a rectangle; test perpendicularity.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Midpoint of Median via Triangle Law</div>
+            <div class="formula-math">\[\overrightarrow{DE} = \frac{1}{2}\overrightarrow{BC} \implies DE \parallel BC,\ DE = \frac{BC}{2}\]</div>
+            <div class="use-case">Prove midpoint theorem: line joining midpoints of two sides is half and parallel to third.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 3: Section Formula, Centroid & Collinearity ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Section Formula, Centroid & Collinearity
+          <span class="formula-count-badge">9</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Internal Division</div>
+            <div class="formula-math">\[\overrightarrow{OC} = \vec{r} = \frac{m\vec{b} + n\vec{a}}{m+n}\]</div>
+            <div class="use-case">Find position vector of point dividing AB in ratio m:n internally.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">External Division</div>
+            <div class="formula-math">\[\overrightarrow{OC} = \vec{r} = \frac{m\vec{b} - n\vec{a}}{m-n}\]</div>
+            <div class="use-case">Find position vector of point dividing AB in ratio m:n externally.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Midpoint Formula</div>
+            <div class="formula-math">\[\text{Midpoint of } AB = \frac{\vec{a}+\vec{b}}{2}\]</div>
+            <div class="use-case">Used constantly in geometry proofs (medians, diagonals bisecting).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Centroid of Triangle</div>
+            <div class="formula-math">\[G = \frac{\vec{a}+\vec{b}+\vec{c}}{3}\]</div>
+            <div class="use-case">Point where three medians meet; divides each median in 2:1 from vertex.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Centroid of Tetrahedron</div>
+            <div class="formula-math">\[\vec{g} = \frac{\vec{a}+\vec{b}+\vec{c}+\vec{d}}{4}\]</div>
+            <div class="use-case">Centre where vertex-to-opposite-face-centroid lines concur; also centre of parallelepiped.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Collinear Vectors (Symbolic Condition)</div>
+            <div class="formula-math">\[\vec{a} \text{ and } \vec{b} \text{ collinear} \iff \vec{a} = K\vec{b},\ K \in \mathbb{R}\]</div>
+            <div class="use-case">Test or prove two vectors are parallel/collinear using a single scalar.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Collinear Points (3 Points)</div>
+            <div class="formula-math">\[A,B,C \text{ collinear} \iff \overrightarrow{AB} = \lambda\overrightarrow{BC}\]</div>
+            <div class="formula-math">\[\iff \exists\ x,y,z \text{ (not all zero): } x\vec{a}+y\vec{b}+z\vec{c}=\vec{0},\ x+y+z=0\]</div>
+            <div class="use-case">Necessary & sufficient condition for three points to be collinear.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Euler Line (Circumcenter S, Orthocenter O)</div>
+            <div class="formula-math">\[\vec{G} = \frac{\vec{O}+2\vec{S}}{3}\]</div>
+            <div class="formula-math">\[\overrightarrow{SA}+\overrightarrow{SB}+\overrightarrow{SC} = \overrightarrow{SO}\]</div>
+            <div class="use-case">Relate circumcenter S, centroid G, and orthocenter O of a triangle.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">4 Points Coplanar (N&S Condition)</div>
+            <div class="formula-math">\[x\vec{a}+y\vec{b}+z\vec{c}+t\vec{d}=\vec{0},\quad x+y+z+t=0\]</div>
+            <div class="use-case">Check if four position vectors lie in one plane.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 4: Lines ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Vector Equation of Lines & Bisectors
+          <span class="formula-count-badge">5</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Line Through Point Parallel to Vector</div>
+            <div class="formula-math">\[\vec{r} = \vec{a} + t\vec{b}, \quad t \in \mathbb{R}\]</div>
+            <div class="use-case">Write equation of a line when one point and direction are known.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Line Through Two Points</div>
+            <div class="formula-math">\[\vec{r} = \vec{a} + t(\vec{b}-\vec{a}) = (1-t)\vec{a} + t\vec{b}\]</div>
+            <div class="use-case">Parametric equation of line joining points with PV's a⃗ and b⃗.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Angle Bisector Direction</div>
+            <div class="formula-math">\[\text{Bisector direction}: \hat{a}+\hat{b} \quad (\lambda>0)\]</div>
+            <div class="use-case">Direction of the bisector between two vectors (from their unit vectors).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Two Angle Bisectors of Two Lines</div>
+            <div class="formula-math">\[\vec{r} = \vec{a} + t(\hat{b}+\hat{c}) \quad\text{(one bisector)}\]</div>
+            <div class="formula-math">\[\vec{r} = \vec{a} + s(\hat{c}-\hat{b}) \quad\text{(other bisector)}\]</div>
+            <div class="use-case">Find equations of both angle bisector lines at a given point between two lines.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Skew / Parallel / Intersecting Lines</div>
+            <div class="formula-math">\[\text{SD}=0 \Rightarrow \text{intersecting (coplanar)}\]</div>
+            <div class="formula-math">\[\text{Two lines intersect OR parallel} \Rightarrow \text{coplanar}\]</div>
+            <div class="formula-math">\[\text{Parallel with common point} \Rightarrow \text{coincident}\]</div>
+            <div class="use-case">Classify spatial lines before computing intersection or shortest distance.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 5: Dot Product ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Dot Product (Scalar Product)
+          <span class="formula-count-badge">12</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Definition</div>
+            <div class="formula-math">\[\vec{a}\cdot\vec{b} = |\vec{a}||\vec{b}|\cos\theta, \quad 0 \le \theta \le \pi\]</div>
+            <div class="use-case">Fundamental formula; gives a scalar; positive for acute, negative for obtuse angle.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Self Dot Product</div>
+            <div class="formula-math">\[\vec{a}\cdot\vec{a} = |\vec{a}|^2 = a^2\]</div>
+            <div class="use-case">Find squared magnitude of a vector from its dot product with itself.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Properties</div>
+            <div class="formula-math">\[\vec{a}\cdot\vec{b} = \vec{b}\cdot\vec{a} \quad\text{(commutative)}\]</div>
+            <div class="formula-math">\[\vec{a}\cdot(\vec{b}+\vec{c}) = \vec{a}\cdot\vec{b}+\vec{a}\cdot\vec{c} \quad\text{(distributive)}\]</div>
+            <div class="use-case">Simplify complex dot product expressions by distributing.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Perpendicularity Condition</div>
+            <div class="formula-math">\[\vec{a}\cdot\vec{b} = 0 \iff \vec{a}\perp\vec{b} \quad (\vec{a},\vec{b}\ne\vec{0})\]</div>
+            <div class="use-case">Prove or test orthogonality of two vectors (altitudes, normals, etc.).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Standard Basis Results</div>
+            <div class="formula-math">\[\hat{i}\cdot\hat{i}=\hat{j}\cdot\hat{j}=\hat{k}\cdot\hat{k}=1\]</div>
+            <div class="formula-math">\[\hat{i}\cdot\hat{j}=\hat{j}\cdot\hat{k}=\hat{k}\cdot\hat{i}=0\]</div>
+            <div class="use-case">Evaluate component-wise dot products; foundation for the general formula.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">General Formula & Angle</div>
+            <div class="formula-math">\[\vec{a}\cdot\vec{b} = a_1b_1+a_2b_2+a_3b_3\]</div>
+            <div class="formula-math">\[\cos\theta = \frac{a_1b_1+a_2b_2+a_3b_3}{\sqrt{a_1^2+a_2^2+a_3^2}\cdot\sqrt{b_1^2+b_2^2+b_3^2}}\]</div>
+            <div class="use-case">Compute angle between vectors given components; workhorse formula for JEE.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Key Algebraic Identities (6)</div>
+            <div class="formula-math">\[(\vec{a}+\vec{b})\cdot(\vec{a}-\vec{b}) = a^2-b^2\]</div>
+            <div class="formula-math">\[(\vec{a}+\vec{b})^2 = a^2+2\vec{a}\cdot\vec{b}+b^2\]</div>
+            <div class="formula-math">\[(\vec{a}-\vec{b})^2 = a^2-2\vec{a}\cdot\vec{b}+b^2\]</div>
+            <div class="formula-math">\[(\vec{a}+\vec{b})^2 = (\vec{a}-\vec{b})^2 + 4\vec{a}\cdot\vec{b}\]</div>
+            <div class="formula-math">\[(\vec{a}+\vec{b}+\vec{c})^2 = a^2+b^2+c^2+2\textstyle\sum\vec{a}\cdot\vec{b}\]</div>
+            <div class="formula-math">\[\vec{a}\cdot\vec{b} = \tfrac{1}{4}\!\left[(\vec{a}+\vec{b})^2-(\vec{a}-\vec{b})^2\right]\]</div>
+            <div class="use-case">Expand/simplify magnitude expressions; get dot product from sum/difference magnitudes.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Projection of a⃗ on b⃗</div>
+            <div class="formula-math">\[\text{Scalar projection} = \frac{\vec{a}\cdot\vec{b}}{|\vec{b}|} = \vec{a}\cdot\hat{b}\]</div>
+            <div class="formula-math">\[\text{Vector component along }\vec{b} = \left(\frac{\vec{a}\cdot\vec{b}}{|\vec{b}|^2}\right)\vec{b} = (\vec{a}\cdot\hat{b})\hat{b}\]</div>
+            <div class="formula-math">\[\text{Component}\perp\vec{b} = \vec{a} - \left(\frac{\vec{a}\cdot\vec{b}}{|\vec{b}|^2}\right)\vec{b}\]</div>
+            <div class="use-case">Resolve a vector along and perpendicular to a given direction; foot of perpendicular.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Minimum Value / Cauchy-Schwarz Application</div>
+            <div class="formula-math">\[(3\hat{i}+4\hat{j}+12\hat{k})\cdot(a\hat{i}+b\hat{j}+c\hat{k}) \le 13\sqrt{a^2+b^2+c^2}\]</div>
+            <div class="formula-math">\[\Rightarrow \max(pa+qb+rc) = \sqrt{p^2+q^2+r^2}\cdot\sqrt{a^2+b^2+c^2}\]</div>
+            <div class="use-case">Maximise linear expressions subject to constraint on magnitude (optimisation problems).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Fundamental Theorem in Plane</div>
+            <div class="formula-math">\[\vec{a},\vec{b}\ \text{non-collinear} \Rightarrow \vec{r} = x\vec{a}+y\vec{b}\ \text{(unique)}\]</div>
+            <div class="use-case">Any coplanar vector can be uniquely expressed in terms of two non-collinear base vectors.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Fundamental Theorem in Space</div>
+            <div class="formula-math">\[\vec{a},\vec{b},\vec{c}\ \text{non-coplanar} \Rightarrow \vec{r}=x\vec{a}+y\vec{b}+z\vec{c}\ \text{(unique)}\]</div>
+            <div class="use-case">Basis of 3D space; every vector is a unique linear combination of three non-coplanar vectors.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Minimum of |â+b̂+ĉ|²</div>
+            <div class="formula-math">\[\hat{a}\cdot\hat{b}+\hat{b}\cdot\hat{c}+\hat{c}\cdot\hat{a} \ge -\tfrac{3}{2}\]</div>
+            <div class="formula-math">\[|\hat{a}+\hat{b}+\hat{c}|^2 \ge 0 \Rightarrow \min|\hat{a}+\hat{b}+\hat{c}|^2 = 3\]</div>
+            <div class="use-case">Find least value of sum of squared magnitudes for unit vectors.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 6: Cross Product ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Cross Product (Vector Product)
+          <span class="formula-count-badge">11</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Definition</div>
+            <div class="formula-math">\[\vec{a}\times\vec{b} = |\vec{a}||\vec{b}|\sin\theta\,\hat{n}\]</div>
+            <div class="use-case">n̂ is perpendicular to both via right-hand screw rule; result is a vector.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Unit Vector ⊥ to Plane of a⃗, b⃗</div>
+            <div class="formula-math">\[\hat{n} = \pm\frac{\vec{a}\times\vec{b}}{|\vec{a}\times\vec{b}|}\]</div>
+            <div class="use-case">Find normal to a plane defined by two vectors; used in plane equations.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Vector of Magnitude r ⊥ to Plane</div>
+            <div class="formula-math">\[\vec{v} = \pm\frac{r(\vec{a}\times\vec{b})}{|\vec{a}\times\vec{b}|}\]</div>
+            <div class="use-case">Construct a vector of specific magnitude perpendicular to a given plane.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Sine of Angle Between Vectors</div>
+            <div class="formula-math">\[\sin\theta = \frac{|\vec{a}\times\vec{b}|}{|\vec{a}||\vec{b}|}\]</div>
+            <div class="use-case">Find angle between vectors when cross product is known; complement to cosθ via dot product.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Lagrange's Identity</div>
+            <div class="formula-math">\[|\vec{a}\times\vec{b}|^2 = a^2b^2-(\vec{a}\cdot\vec{b})^2 = \begin{vmatrix}\vec{a}\cdot\vec{a} & \vec{a}\cdot\vec{b}\\\vec{b}\cdot\vec{a} & \vec{b}\cdot\vec{b}\end{vmatrix}\]</div>
+            <div class="use-case">Compute |a×b| from dot products alone; avoids computing the cross product explicitly.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Properties</div>
+            <div class="formula-math">\[\vec{a}\times\vec{b}=\vec{0} \iff \vec{a}=\lambda\vec{b}\ \text{(parallel/collinear)}\]</div>
+            <div class="formula-math">\[\vec{a}\times\vec{b} \ne \vec{b}\times\vec{a}\ \text{(not commutative)}\]</div>
+            <div class="formula-math">\[\vec{a}\times(\vec{b}+\vec{c}) = \vec{a}\times\vec{b}+\vec{a}\times\vec{c}\ \text{(distributive)}\]</div>
+            <div class="formula-math">\[(\vec{a}\times\vec{b})\cdot\vec{a}=0,\quad (\vec{a}\times\vec{b})\cdot\vec{b}=0\]</div>
+            <div class="use-case">Simplify cross product expressions; confirm perpendicularity of result.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Standard Basis Cross Products</div>
+            <div class="formula-math">\[\hat{i}\times\hat{i}=\hat{j}\times\hat{j}=\hat{k}\times\hat{k}=\vec{0}\]</div>
+            <div class="formula-math">\[\hat{i}\times\hat{j}=\hat{k},\quad \hat{j}\times\hat{k}=\hat{i},\quad \hat{k}\times\hat{i}=\hat{j}\]</div>
+            <div class="use-case">Evaluate cross products of unit vectors; cyclic order i→j→k→i gives +, reverse gives −.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Determinant Formula</div>
+            <div class="formula-math">\[\vec{a}\times\vec{b} = \begin{vmatrix}\hat{i}&\hat{j}&\hat{k}\\a_1&a_2&a_3\\b_1&b_2&b_3\end{vmatrix}\]</div>
+            <div class="use-case">Compute cross product in component form; standard method for JEE calculations.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Area of Parallelogram</div>
+            <div class="formula-math">\[\text{Area} = |\vec{a}\times\vec{b}|\]</div>
+            <div class="formula-math">\[\text{Using diagonals } \vec{d}_1, \vec{d}_2: \text{Area} = \tfrac{1}{2}|\vec{d}_1\times\vec{d}_2|\]</div>
+            <div class="use-case">Area of parallelogram with adjacent sides a⃗, b⃗ or known diagonals.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Area of Triangle</div>
+            <div class="formula-math">\[\text{Area} = \frac{1}{2}|\vec{a}\times\vec{b}| = \frac{1}{2}|\overrightarrow{BA}\times\overrightarrow{BC}| = \frac{1}{2}|\overrightarrow{AB}\times\overrightarrow{AC}|\]</div>
+            <div class="use-case">Direct formula for area given two sides as vectors.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Vector Area of △ABC (Position Vectors)</div>
+            <div class="formula-math">\[\vec{\Delta} = \frac{1}{2}\left[(\vec{c}-\vec{b})\times(\vec{a}-\vec{b})\right] = \frac{1}{2}[(\vec{a}\times\vec{b})+(\vec{b}\times\vec{c})+(\vec{c}\times\vec{a})]\]</div>
+            <div class="formula-math">\[\text{If collinear: } \vec{a}\times\vec{b}+\vec{b}\times\vec{c}+\vec{c}\times\vec{a}=\vec{0}\]</div>
+            <div class="use-case">Area using position vectors of vertices; collinearity test using cross products.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 7: Shortest Distance ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Shortest Distance Between Lines
+          <span class="formula-count-badge">3</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">SD Between Two Skew Lines</div>
+            <div class="formula-math">\[d = \frac{|(\vec{a}_2-\vec{a}_1)\cdot(\vec{b}_1\times\vec{b}_2)|}{|\vec{b}_1\times\vec{b}_2|}\]</div>
+            <div class="use-case">Minimum distance between non-parallel, non-intersecting (skew) lines in 3D.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">SD Between Two Parallel Lines</div>
+            <div class="formula-math">\[d = \frac{|\vec{b}\times(\vec{a}_2-\vec{a}_1)|}{|\vec{b}|}\]</div>
+            <div class="use-case">Distance between two parallel lines with common direction b⃗, through points a⃗₁ and a⃗₂.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">SD = 0 Interpretation</div>
+            <div class="formula-math">\[d = 0 \Rightarrow \text{Lines intersect (coplanar)}\]</div>
+            <div class="formula-math">\[\text{Coplanarity test: } (\vec{a}_2-\vec{a}_1)\cdot(\vec{b}_1\times\vec{b}_2) = 0\]</div>
+            <div class="use-case">Check if two lines intersect before finding their point of intersection.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 8: Scalar Triple Product ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Scalar Triple Product (Box Product)
+          <span class="formula-count-badge">10</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Definition</div>
+            <div class="formula-math">\[[\vec{a}\ \vec{b}\ \vec{c}] = \vec{a}\cdot(\vec{b}\times\vec{c}) = (\vec{a}\times\vec{b})\cdot\vec{c} = |\vec{a}||\vec{b}||\vec{c}|\sin\theta\cos\phi\]</div>
+            <div class="use-case">Scalar result of a dot product followed by a cross product; gives signed volume.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Determinant Formula</div>
+            <div class="formula-math">\[[\vec{a}\ \vec{b}\ \vec{c}] = \begin{vmatrix}a_1&a_2&a_3\\b_1&b_2&b_3\\c_1&c_2&c_3\end{vmatrix}\]</div>
+            <div class="use-case">Compute box product from components; standard computational method.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Cyclic Property</div>
+            <div class="formula-math">\[[\vec{a}\ \vec{b}\ \vec{c}] = [\vec{b}\ \vec{c}\ \vec{a}] = [\vec{c}\ \vec{a}\ \vec{b}]\]</div>
+            <div class="formula-math">\[[\vec{a}\ \vec{b}\ \vec{c}] = -[\vec{a}\ \vec{c}\ \vec{b}]\quad\text{(swap reverses sign)}\]</div>
+            <div class="use-case">Rearrange vectors in box product; swapping any two changes sign.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Special Values</div>
+            <div class="formula-math">\[[\hat{i}\ \hat{j}\ \hat{k}] = 1\]</div>
+            <div class="formula-math">\[[K\vec{a}\ \vec{b}\ \vec{c}] = K[\vec{a}\ \vec{b}\ \vec{c}]\]</div>
+            <div class="formula-math">\[[(\vec{a}+\vec{b})\ \vec{c}\ \vec{d}] = [\vec{a}\ \vec{c}\ \vec{d}] + [\vec{b}\ \vec{c}\ \vec{d}]\]</div>
+            <div class="use-case">Scale and linearity properties; simplify box products with sums of vectors.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Volume of Parallelepiped</div>
+            <div class="formula-math">\[V = |[\vec{a}\ \vec{b}\ \vec{c}]|\]</div>
+            <div class="use-case">Volume of the parallelepiped formed by three coterminous edge vectors.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Volume of Tetrahedron</div>
+            <div class="formula-math">\[V = \frac{1}{6}|[\vec{a}\ \vec{b}\ \vec{c}]|\]</div>
+            <div class="use-case">Volume of tetrahedron OABC where a⃗,b⃗,c⃗ are PV's of A,B,C from O.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Coplanarity Condition</div>
+            <div class="formula-math">\[\vec{a},\vec{b},\vec{c}\ \text{coplanar} \iff [\vec{a}\ \vec{b}\ \vec{c}] = 0\]</div>
+            <div class="use-case">Test if three vectors are linearly dependent / lie in the same plane.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Important Identity 1</div>
+            <div class="formula-math">\[[\vec{a}-\vec{b}\ \ \vec{b}-\vec{c}\ \ \vec{c}-\vec{a}] = 0\]</div>
+            <div class="use-case">Vectors formed by cyclic differences of three vectors are always coplanar.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Important Identity 2</div>
+            <div class="formula-math">\[[\vec{a}+\vec{b}\ \ \vec{b}+\vec{c}\ \ \vec{c}+\vec{a}] = 2[\vec{a}\ \vec{b}\ \vec{c}]\]</div>
+            <div class="use-case">Box product of pairwise sums equals twice the original; used in geometry proofs.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Reciprocal System Result</div>
+            <div class="formula-math">\[[\vec{a}\times\vec{b}\ \ \vec{b}\times\vec{c}\ \ \vec{c}\times\vec{a}] = [\vec{a}\ \vec{b}\ \vec{c}]^2\]</div>
+            <div class="use-case">Box product of cross products equals square of original box product; used in reciprocal bases.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 9: Vector Triple Product ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Vector Triple Product
+          <span class="formula-count-badge">3</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">BAC–CAB Rule</div>
+            <div class="formula-math">\[\vec{a}\times(\vec{b}\times\vec{c}) = (\vec{a}\cdot\vec{c})\vec{b} - (\vec{a}\cdot\vec{b})\vec{c}\]</div>
+            <div class="use-case">Expand a nested cross product into a linear combination; key manipulation tool.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Reversed Order</div>
+            <div class="formula-math">\[(\vec{a}\times\vec{b})\times\vec{c} = (\vec{a}\cdot\vec{c})\vec{b} - (\vec{b}\cdot\vec{c})\vec{a}\]</div>
+            <div class="use-case">Note: a×(b×c) ≠ (a×b)×c in general; parentheses matter.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Geometric Interpretation</div>
+            <div class="formula-math">\[\vec{a}\times(\vec{b}\times\vec{c}) \text{ lies in the plane of } \vec{b},\vec{c}\text{ and }\perp\vec{a}\]</div>
+            <div class="formula-math">\[(\vec{a}\times\vec{b})\times\vec{c} \text{ lies in the plane of } \vec{a},\vec{b}\text{ and }\perp\vec{c}\]</div>
+            <div class="use-case">Understand the geometric direction of the result; helps in checking answers.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 10: Four-Vector Products ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Products of Four Vectors
+          <span class="formula-count-badge">3</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Scalar Product of Four Vectors</div>
+            <div class="formula-math">\[(\vec{a}\times\vec{b})\cdot(\vec{c}\times\vec{d}) = (\vec{a}\cdot\vec{c})(\vec{b}\cdot\vec{d}) - (\vec{a}\cdot\vec{d})(\vec{b}\cdot\vec{c}) = \begin{vmatrix}\vec{a}\cdot\vec{c}&\vec{a}\cdot\vec{d}\\\vec{b}\cdot\vec{c}&\vec{b}\cdot\vec{d}\end{vmatrix}\]</div>
+            <div class="use-case">Convert product of cross products to dot products; avoids explicit cross product computation.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Vector Product of Four Vectors</div>
+            <div class="formula-math">\[(\vec{a}\times\vec{b})\times(\vec{c}\times\vec{d}) = [\vec{a}\vec{b}\vec{d}]\vec{c} - [\vec{a}\vec{b}\vec{c}]\vec{d}\]</div>
+            <div class="formula-math">\[\phantom{(\vec{a}\times\vec{b})\times(\vec{c}\times\vec{d})} = [\vec{a}\vec{c}\vec{d}]\vec{b} - [\vec{b}\vec{c}\vec{d}]\vec{a}\]</div>
+            <div class="use-case">Express cross product of two cross products in terms of box products; linear combinations of original vectors.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Linear Dependence of 4 Vectors</div>
+            <div class="formula-math">\[[\vec{a}\vec{b}\vec{d}]\vec{c} - [\vec{a}\vec{b}\vec{c}]\vec{d} = [\vec{a}\vec{c}\vec{d}]\vec{b} - [\vec{b}\vec{c}\vec{d}]\vec{a}\]</div>
+            <div class="use-case">Any 4 vectors in 3D — if no 3 are coplanar — can express one as linear combo of the other 3.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 11: Special Geometry ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Special Geometry (Tetrahedron, Hexagon, etc.)
+          <span class="formula-count-badge">5</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Regular Hexagon — Diagonal Sum</div>
+            <div class="formula-math">\[\overrightarrow{OA}+\overrightarrow{OB}+\overrightarrow{OC}+\overrightarrow{OD}+\overrightarrow{OE}+\overrightarrow{OF} = \vec{0}\]</div>
+            <div class="use-case">Opposite vertices of regular hexagon give equal and opposite vectors; their sum is zero.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Tetrahedron Centre</div>
+            <div class="formula-math">\[\vec{g} = \frac{\vec{a}+\vec{b}+\vec{c}+\vec{d}}{4}\]</div>
+            <div class="use-case">Point where vertex-to-opposite-centroid lines concur; lines joining midpoints of opposite edges also concur here.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Parallelepiped Centre</div>
+            <div class="formula-math">\[\text{Centre} = \frac{\overrightarrow{OA}+\overrightarrow{OB}+\overrightarrow{OC}}{2}\]</div>
+            <div class="use-case">Intersection point of 4 diagonals of a parallelepiped; they bisect each other.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Parallelepiped = Tetrahedron Centre</div>
+            <div class="formula-math">\[\text{Centre of } \|^{piped} = \text{Centre of inscribed tetrahedron}\]</div>
+            <div class="use-case">Distance between centres of the parallelepiped ABCDEFGH and tetrahedron FAHC is zero.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Solving Vector Equations</div>
+            <div class="formula-math">\[\vec{r}\times\vec{b} = \vec{a} \Rightarrow \vec{r} = y\vec{b} - \frac{\vec{a}\times\vec{b}}{|\vec{b}|^2}\]</div>
+            <div class="formula-math">\[\vec{A}\cdot\vec{x} = c,\ \vec{A}\times\vec{x} = \vec{B} \Rightarrow \vec{x} = \frac{c\vec{A}-(\vec{A}\times\vec{B})}{|\vec{A}|^2}\]</div>
+            <div class="use-case">Isolate unknown vector when both dot and cross product constraints are given.</div>
+          </div>
+
+        </div>
+      </details>
+
+    </div><!-- end panel-body -->
+  </div><!-- end vectors-panel -->
+
+
+  <!-- ╔══════════════════════════════════╗ -->
+  <!-- ║   THREE-DIMENSIONAL GEOMETRY     ║ -->
+  <!-- ╚══════════════════════════════════╝ -->
+  <div class="panel geo3d-panel">
+    <div class="panel-header">
+      <span class="panel-icon">📐</span>
+      <span class="panel-title">3D Geometry</span>
+      <span class="panel-count">10 SECTIONS</span>
+    </div>
+    <div class="panel-body">
+
+      <!-- ─── SECTION 1: Distance & Section ─── -->
+      <details open>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Distance, Section & Centroid
+          <span class="formula-count-badge">7</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Distance Between Two Points</div>
+            <div class="formula-math">\[AB = \sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}\]</div>
+            <div class="use-case">Foundation of all 3D geometry; test collinearity, find side lengths, check right angles.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Distance from Origin</div>
+            <div class="formula-math">\[OP = \sqrt{x^2+y^2+z^2}\]</div>
+            <div class="use-case">Find distance of any point P(x,y,z) from the origin.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Distance from Coordinate Axes</div>
+            <div class="formula-math">\[PA = \sqrt{y^2+z^2},\quad PB = \sqrt{z^2+x^2},\quad PC = \sqrt{x^2+y^2}\]</div>
+            <div class="use-case">Shortest distances from P to x-axis (PA), y-axis (PB), z-axis (PC) respectively.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Section Formula — Internal</div>
+            <div class="formula-math">\[R = \left(\frac{m_1x_2+m_2x_1}{m_1+m_2},\ \frac{m_1y_2+m_2y_1}{m_1+m_2},\ \frac{m_1z_2+m_2z_1}{m_1+m_2}\right)\]</div>
+            <div class="use-case">Point dividing PQ internally in ratio m₁:m₂; use to find where a plane cuts a line.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Midpoint</div>
+            <div class="formula-math">\[M = \left(\frac{x_1+x_2}{2},\frac{y_1+y_2}{2},\frac{z_1+z_2}{2}\right)\]</div>
+            <div class="use-case">Centre of an edge; circumcenter of a right-angled triangle is midpoint of hypotenuse.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Centroid of Triangle</div>
+            <div class="formula-math">\[G = \left(\frac{x_1+x_2+x_3}{3},\frac{y_1+y_2+y_3}{3},\frac{z_1+z_2+z_3}{3}\right)\]</div>
+            <div class="use-case">Centroid divides each median in 2:1; equidistant from vertices in equilateral triangle.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Centroid of Tetrahedron</div>
+            <div class="formula-math">\[G = \left(\frac{\Sigma x_i}{4},\frac{\Sigma y_i}{4},\frac{\Sigma z_i}{4}\right)\]</div>
+            <div class="use-case">Point where vertex-to-opposite-face-centroid lines concur; equidistant from all faces in regular tetrahedron.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 2: Direction Cosines & Ratios ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Direction Cosines & Ratios
+          <span class="formula-count-badge">10</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Direction Cosines (DC's) Definition</div>
+            <div class="formula-math">\[\ell = \cos\alpha,\quad m=\cos\beta,\quad n=\cos\gamma\]</div>
+            <div class="use-case">α,β,γ = angles line makes with x,y,z axes; DC's uniquely characterise direction (up to sign).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Fundamental Identity</div>
+            <div class="formula-math">\[\ell^2+m^2+n^2 = 1 \iff \cos^2\alpha+\cos^2\beta+\cos^2\gamma = 1\]</div>
+            <div class="formula-math">\[\sin^2\alpha+\sin^2\beta+\sin^2\gamma = 2\]</div>
+            <div class="use-case">Always use to find missing DC; sum of squares always equals 1. Sin version = 3 − 1 = 2.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">DC's of Coordinate Axes</div>
+            <div class="formula-math">\[x\text{-axis}: (1,0,0),\quad y\text{-axis}: (0,1,0),\quad z\text{-axis}: (0,0,1)\]</div>
+            <div class="use-case">Reference DC's; used to find angles a line makes with each axis.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Relation: DC's from DR's</div>
+            <div class="formula-math">\[\ell = \frac{\pm a}{\sqrt{a^2+b^2+c^2}},\quad m = \frac{\pm b}{\sqrt{a^2+b^2+c^2}},\quad n = \frac{\pm c}{\sqrt{a^2+b^2+c^2}}\]</div>
+            <div class="use-case">Convert direction ratios a,b,c to actual direction cosines (normalise by magnitude).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">DR's of Line Joining Two Points</div>
+            <div class="formula-math">\[a = x_2-x_1,\quad b = y_2-y_1,\quad c = z_2-z_1\]</div>
+            <div class="use-case">Direction ratios of AB; directly usable in symmetric line equation.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Point on Line at Distance r from (x₁,y₁,z₁)</div>
+            <div class="formula-math">\[P = (x_1+\ell r,\ y_1+mr,\ z_1+nr)\]</div>
+            <div class="formula-math">\[\ell,m,n \text{ must be DC's (not DR's) for } AP=r\]</div>
+            <div class="use-case">Find specific points on a line at given distance; only works with actual DC's.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Projection of Line Segment on Another Line</div>
+            <div class="formula-math">\[\text{Proj of }AB \text{ on line with DC's }(\ell,m,n):\]</div>
+            <div class="formula-math">\[= |\ell(x_2-x_1)+m(y_2-y_1)+n(z_2-z_1)|\]</div>
+            <div class="use-case">Length of shadow of AB onto a given line; used in distance-related problems.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">DC's of Line ⊥ to Two Given Lines</div>
+            <div class="formula-math">\[\frac{\ell}{m_1n_2-m_2n_1} = \frac{m}{n_1\ell_2-n_2\ell_1} = \frac{n}{\ell_1m_2-\ell_2m_1}\]</div>
+            <div class="use-case">DC's of the cross product of two direction vectors; normal to the plane containing them.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Angle with 4 Diagonals of Cube</div>
+            <div class="formula-math">\[\cos^2\alpha+\cos^2\beta+\cos^2\gamma+\cos^2\delta = \frac{4}{3}\]</div>
+            <div class="use-case">A line making angles α,β,γ,δ with the four space diagonals of a unit cube satisfies this.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">DC's Uniqueness</div>
+            <div class="formula-math">\[\text{A line has exactly 2 sets of DC's: } (\ell,m,n) \text{ and } (-\ell,-m,-n)\]</div>
+            <div class="formula-math">\[\text{DR's are infinite (any scalar multiples)}\]</div>
+            <div class="use-case">Direction ratios are not unique; DC's are unique up to overall sign reversal.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 3: Plane Equations ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Equations of a Plane
+          <span class="formula-count-badge">9</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">General Equation</div>
+            <div class="formula-math">\[ax + by + cz + d = 0\]</div>
+            <div class="use-case">Normal vector is (a,b,c); every first-degree equation in x,y,z represents a plane.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Vector Form</div>
+            <div class="formula-math">\[(\vec{r}-\vec{a})\cdot\vec{n} = 0 \implies \vec{r}\cdot\vec{n} = d, \quad d = \vec{a}\cdot\vec{n}\]</div>
+            <div class="use-case">Plane through point a⃗ with normal n⃗; compact form for distance and angle calculations.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Plane Through a Given Point</div>
+            <div class="formula-math">\[a(x-x_1)+b(y-y_1)+c(z-z_1) = 0\]</div>
+            <div class="use-case">Write plane equation when a point on it and its normal direction are known.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Coordinate Planes & Parallel Planes</div>
+            <div class="formula-math">\[xy\text{-plane}: z=0,\quad yz\text{-plane}: x=0,\quad zx\text{-plane}: y=0\]</div>
+            <div class="formula-math">\[\text{Parallel to }xy: z=c,\quad \text{to }yz: x=c,\quad \text{to }zx: y=c\]</div>
+            <div class="use-case">Find where a plane cuts axes; write equation of plane parallel to a coordinate plane.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Planes Parallel to an Axis</div>
+            <div class="formula-math">\[\text{Parallel to }x: by+cz+d=0\]</div>
+            <div class="formula-math">\[\text{Parallel to }y: ax+cz+d=0\]</div>
+            <div class="formula-math">\[\text{Parallel to }z: ax+by+d=0\]</div>
+            <div class="use-case">When plane contains one axis direction; coefficient of that variable is zero.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Intercept Form</div>
+            <div class="formula-math">\[\frac{x}{a}+\frac{y}{b}+\frac{z}{c} = 1\]</div>
+            <div class="use-case">Plane cutting axes at A(a,0,0), B(0,b,0), C(0,0,c); useful for centroid/area problems.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Normal Form (Cartesian)</div>
+            <div class="formula-math">\[\ell x + my + nz = p\]</div>
+            <div class="use-case">ℓ,m,n are DC's of normal from origin; p = perpendicular distance from origin.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Normal Form (Vector)</div>
+            <div class="formula-math">\[\vec{r}\cdot\hat{n} = d\]</div>
+            <div class="use-case">n̂ = unit normal; d = signed distance from origin; immediate perpendicular-distance form.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Plane Through Three Points</div>
+            <div class="formula-math">\[\begin{vmatrix}x-x_1 & y-y_1 & z-z_1\\x_2-x_1 & y_2-y_1 & z_2-z_1\\x_3-x_1 & y_3-y_1 & z_3-z_1\end{vmatrix} = 0\]</div>
+            <div class="use-case">Unique plane through three non-collinear points; expand the 3×3 determinant.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 4: Plane Distances & Angles ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Distance, Angle & Bisectors of Planes
+          <span class="formula-count-badge">9</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Perpendicular Distance from Point to Plane</div>
+            <div class="formula-math">\[p = \frac{|ax_1+by_1+cz_1+d|}{\sqrt{a^2+b^2+c^2}}\]</div>
+            <div class="use-case">Most-used formula; plug coordinates into plane equation and normalise.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Vector Distance from Point to Plane</div>
+            <div class="formula-math">\[p = \frac{|\vec{a}\cdot\hat{n}-d|}{|\vec{n}|}\]</div>
+            <div class="use-case">Vector form of perpendicular distance; useful when plane is given in r⃗·n⃗=d form.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Distance Between Parallel Planes</div>
+            <div class="formula-math">\[d = \frac{|d_1-d_2|}{\sqrt{a^2+b^2+c^2}}\]</div>
+            <div class="use-case">Distance between ax+by+cz+d₁=0 and ax+by+cz+d₂=0 (same normal, different constants).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Angle Between Two Planes</div>
+            <div class="formula-math">\[\cos\theta = \frac{|aa'+bb'+cc'|}{\sqrt{a^2+b^2+c^2}\cdot\sqrt{a'^2+b'^2+c'^2}}\]</div>
+            <div class="use-case">Angle between planes = angle between their normals; absolute value gives acute angle.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Perpendicular Planes</div>
+            <div class="formula-math">\[aa'+bb'+cc' = 0\]</div>
+            <div class="use-case">Dot product of normals is zero iff planes are perpendicular.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Parallel Planes</div>
+            <div class="formula-math">\[\frac{a}{a'} = \frac{b}{b'} = \frac{c}{c'}\]</div>
+            <div class="use-case">Normals are proportional iff planes are parallel; to find parallel plane, change only constant d.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Angle Bisector Planes</div>
+            <div class="formula-math">\[\frac{ax+by+cz+d}{\sqrt{a^2+b^2+c^2}} = \pm\frac{a_1x+b_1y+c_1z+d_1}{\sqrt{a_1^2+b_1^2+c_1^2}}\]</div>
+            <div class="use-case">Locus of points equidistant from two planes; gives two bisector planes (+ and −).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Acute vs Obtuse Bisector (Origin Test)</div>
+            <div class="formula-math">\[aa_1+bb_1+cc_1 > 0 \Rightarrow \text{origin in obtuse angle (use − sign for acute bisector)}\]</div>
+            <div class="formula-math">\[aa_1+bb_1+cc_1 < 0 \Rightarrow \text{origin in acute angle (use + sign for acute bisector)}\]</div>
+            <div class="use-case">Identify which bisector plane is for the acute and which for the obtuse angle.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Family of Planes (Through Line of Intersection)</div>
+            <div class="formula-math">\[P_1 + \lambda P_2 = 0\]</div>
+            <div class="formula-math">\[(a_1x+b_1y+c_1z+d_1) + \lambda(a_2x+b_2y+c_2z+d_2) = 0\]</div>
+            <div class="use-case">All planes through the line of intersection of P₁=0 and P₂=0; find λ using extra condition.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 5: Line Equations ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Equations of Straight Lines
+          <span class="formula-count-badge">7</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Symmetric / Parametric Form</div>
+            <div class="formula-math">\[\frac{x-x_1}{\ell} = \frac{y-y_1}{m} = \frac{z-z_1}{n} = r\]</div>
+            <div class="use-case">Standard form; ℓ,m,n are DC's (or DR's); r gives distance along line if DC's used.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Any Point on the Line at Parameter r</div>
+            <div class="formula-math">\[P = (x_1+\ell r,\ y_1+mr,\ z_1+nr)\]</div>
+            <div class="use-case">Substitute into plane equations to find intersection point of line and plane.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Line Through Two Points</div>
+            <div class="formula-math">\[\frac{x-x_1}{x_2-x_1} = \frac{y-y_1}{y_2-y_1} = \frac{z-z_1}{z_2-z_1}\]</div>
+            <div class="use-case">Passes through A(x₁,y₁,z₁) and B(x₂,y₂,z₂); DR's are differences of coordinates.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Unsymmetrical Form</div>
+            <div class="formula-math">\[a_1x+b_1y+c_1z+d_1=0\quad\text{AND}\quad a_2x+b_2y+c_2z+d_2=0\]</div>
+            <div class="use-case">Intersection of two non-parallel planes defines a line; convert to symmetric form when needed.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Converting Unsymmetric → Symmetric</div>
+            <div class="formula-math">\[\text{Step 1: DR's } \vec{b} = \vec{n}_1\times\vec{n}_2\]</div>
+            <div class="formula-math">\[\text{Step 2: Find point (set }z=0\text{, solve 2×2 system)}\]</div>
+            <div class="formula-math">\[\text{Step 3: Write symmetric form through that point with DR's }\vec{b}\]</div>
+            <div class="use-case">Convert intersection of two planes to a usable line equation.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Particular Lines</div>
+            <div class="formula-math">\[x\text{-axis}: \frac{x}{1}=\frac{y}{0}=\frac{z}{0},\quad y\text{-axis}: \frac{x}{0}=\frac{y}{1}=\frac{z}{0},\quad z\text{-axis}: \frac{x}{0}=\frac{y}{0}=\frac{z}{1}\]</div>
+            <div class="formula-math">\[\parallel x: y=p, z=q;\quad \parallel y: x=h, z=q;\quad \parallel z: x=h, y=p\]</div>
+            <div class="use-case">Reference forms for standard axes and lines parallel to them.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">3 Planes — System Classification</div>
+            <div class="formula-math">\[\text{Unique solution} \Rightarrow \text{lines intersect at a point}\]</div>
+            <div class="formula-math">\[\text{Infinite solutions} \Rightarrow \text{planes intersect coaxially}\]</div>
+            <div class="formula-math">\[\text{No solution} \Rightarrow \text{no common point}\]</div>
+            <div class="use-case">Use Cramer's rule or row reduction to classify three-plane system.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 6: Angles & Conditions ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Line–Line & Line–Plane Angles
+          <span class="formula-count-badge">8</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Angle Between Two Lines</div>
+            <div class="formula-math">\[\cos\theta = |\ell_1\ell_2+m_1m_2+n_1n_2|\]</div>
+            <div class="formula-math">\[\cos\theta = \frac{|a_1a_2+b_1b_2+c_1c_2|}{\sqrt{a_1^2+b_1^2+c_1^2}\cdot\sqrt{a_2^2+b_2^2+c_2^2}}\]</div>
+            <div class="use-case">Angle between directions of two lines in 3D; gives acute angle (absolute value).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Perpendicular Lines</div>
+            <div class="formula-math">\[\ell_1\ell_2+m_1m_2+n_1n_2=0 \iff a_1a_2+b_1b_2+c_1c_2=0\]</div>
+            <div class="use-case">Dot product of direction vectors is zero; test for perpendicular lines or faces.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Parallel Lines</div>
+            <div class="formula-math">\[\frac{\ell_1}{\ell_2}=\frac{m_1}{m_2}=\frac{n_1}{n_2} \iff \frac{a_1}{a_2}=\frac{b_1}{b_2}=\frac{c_1}{c_2}\]</div>
+            <div class="use-case">Direction ratios proportional; used to write parallel line through a given point.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Angle Between Line and Plane</div>
+            <div class="formula-math">\[\sin\theta = \frac{|a\ell+bm+cn|}{\sqrt{a^2+b^2+c^2}\cdot\sqrt{\ell^2+m^2+n^2}}\]</div>
+            <div class="use-case">Complement of angle between line and normal to plane; sin (not cos) because line is in plane when θ=0.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Line Parallel to Plane</div>
+            <div class="formula-math">\[\theta=0 \iff a\ell+bm+cn = 0\]</div>
+            <div class="use-case">Direction of line perpendicular to normal of plane; line does not intersect plane.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Line Perpendicular to Plane</div>
+            <div class="formula-math">\[\frac{a}{\ell}=\frac{b}{m}=\frac{c}{n}\]</div>
+            <div class="use-case">Line direction proportional to plane normal; the line is perpendicular (passes through plane).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Conditions for Line to Lie in Plane</div>
+            <div class="formula-math">\[\text{(i) } A\ell+Bm+Cn = 0 \quad\text{(direction }\perp\text{ normal)}\]</div>
+            <div class="formula-math">\[\text{(ii) } Ax_1+By_1+Cz_1+D = 0 \quad\text{(point on plane)}\]</div>
+            <div class="use-case">Both conditions must hold; used to find unknown constants in mixed problems.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Position of Two Points w.r.t. Plane</div>
+            <div class="formula-math">\[\text{Same side} \iff (ax_1+by_1+cz_1+d)(ax_2+by_2+cz_2+d) > 0\]</div>
+            <div class="formula-math">\[\text{Opposite sides} \iff \text{product} < 0\]</div>
+            <div class="use-case">Test whether two points lie on the same or opposite sides of a given plane.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 7: Foot, Image & Perpendicular ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Foot, Image & Perpendicular
+          <span class="formula-count-badge">6</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Foot of Perpendicular from Point to Line</div>
+            <div class="formula-math">\[\text{Line: } \frac{x-x_1}{\ell}=\frac{y-y_1}{m}=\frac{z-z_1}{n}\]</div>
+            <div class="formula-math">\[r = (\alpha-x_1)\ell+(\beta-y_1)m+(\gamma-z_1)n\]</div>
+            <div class="formula-math">\[\text{Foot } P = (x_1+\ell r,\ y_1+mr,\ z_1+nr)\]</div>
+            <div class="use-case">Find the closest point on a line to a given external point A(α,β,γ).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Length of Perpendicular from Point to Line</div>
+            <div class="formula-math">\[AP = \sqrt{(\ell r+x_1-\alpha)^2+(mr+y_1-\beta)^2+(nr+z_1-\gamma)^2}\]</div>
+            <div class="use-case">Shortest distance from external point A to a line; substitute foot coordinates.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Image of Point P in a Plane</div>
+            <div class="formula-math">\[\frac{x_2-x_1}{a}=\frac{y_2-y_1}{b}=\frac{z_2-z_1}{c} = \frac{-2(ax_1+by_1+cz_1+d)}{a^2+b^2+c^2}\]</div>
+            <div class="use-case">Reflect point (x₁,y₁,z₁) in the plane ax+by+cz+d=0 to get image (x₂,y₂,z₂).</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Image Method: Step by Step</div>
+            <div class="formula-math">\[\text{1. Line PQ: }\frac{x-x_1}{a}=\frac{y-y_1}{b}=\frac{z-z_1}{c}=r\]</div>
+            <div class="formula-math">\[\text{2. Midpoint R of PQ lies on plane: substitute mid-coords}\]</div>
+            <div class="formula-math">\[\text{3. Solve for }r, \text{ then } Q=(x_1+2ar,\ y_1+2br,\ z_1+2cr)\]</div>
+            <div class="use-case">Systematic approach to find image when the formula is not memorised.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Foot of Perpendicular from Point to Plane</div>
+            <div class="formula-math">\[\text{Foot} = (x_1-a\lambda,\ y_1-b\lambda,\ z_1-c\lambda)\]</div>
+            <div class="formula-math">\[\lambda = \frac{ax_1+by_1+cz_1+d}{a^2+b^2+c^2}\]</div>
+            <div class="use-case">Closest point on plane to P(x₁,y₁,z₁); foot lies on perpendicular from P to plane.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Equation of Plane Through a Point ⊥ to OP</div>
+            <div class="formula-math">\[hx+ky+\ell z = h^2+k^2+\ell^2 = p^2\]</div>
+            <div class="use-case">Plane perpendicular to OP at P(h,k,ℓ) from origin; normal form with p=|OP|.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 8: Coplanarity & Shortest Distance ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Coplanarity & Shortest Distance (Lines)
+          <span class="formula-count-badge">6</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Coplanarity of Two Lines (Determinant)</div>
+            <div class="formula-math">\[\begin{vmatrix}x_1-x_2 & y_1-y_2 & z_1-z_2\\\ell_1 & m_1 & n_1\\\ell_2 & m_2 & n_2\end{vmatrix} = 0\]</div>
+            <div class="use-case">Lines L₁ and L₂ are coplanar (intersecting or parallel) iff this determinant is zero.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Equation of Plane Containing Two Coplanar Lines</div>
+            <div class="formula-math">\[\begin{vmatrix}x-x_1 & y-y_1 & z-z_1\\\ell_1 & m_1 & n_1\\\ell_2 & m_2 & n_2\end{vmatrix} = 0\]</div>
+            <div class="use-case">Write equation of plane containing both lines once coplanarity is confirmed.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">SD Between Skew Lines (Cartesian)</div>
+            <div class="formula-math">\[\text{SD} = \frac{\left|\begin{vmatrix}x_2-x_1 & y_2-y_1 & z_2-z_1\\\ell_1 & m_1 & n_1\\\ell_2 & m_2 & n_2\end{vmatrix}\right|}{\sqrt{\Sigma(m_1n_2-m_2n_1)^2}}\]</div>
+            <div class="use-case">Shortest distance in component form; denominator = |b⃗₁×b⃗₂|.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">SD Between Skew Lines (Vector)</div>
+            <div class="formula-math">\[\text{SD} = \frac{|(\vec{a}_2-\vec{a}_1)\cdot(\vec{b}_1\times\vec{b}_2)|}{|\vec{b}_1\times\vec{b}_2|}\]</div>
+            <div class="use-case">Compact vector form; project the connecting vector onto the common perpendicular direction.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">SD Between Parallel Lines</div>
+            <div class="formula-math">\[d = \frac{|\vec{b}\times(\vec{a}_2-\vec{a}_1)|}{|\vec{b}|}\]</div>
+            <div class="use-case">Both lines have same direction b⃗; distance is perpendicular separation between them.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Coplanarity of 4 Points</div>
+            <div class="formula-math">\[[\overrightarrow{AB}\ \overrightarrow{AC}\ \overrightarrow{AD}] = 0\]</div>
+            <div class="formula-math">\[\iff \begin{vmatrix}x_2-x_1&y_2-y_1&z_2-z_1\\x_3-x_1&y_3-y_1&z_3-z_1\\x_4-x_1&y_4-y_1&z_4-z_1\end{vmatrix}=0\]</div>
+            <div class="use-case">Test whether four points lie in a single plane; box product of three edge vectors is zero.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 9: Area & Special ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Area of Triangle & Special Formulas
+          <span class="formula-count-badge">6</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Area of Triangle (Cross Product)</div>
+            <div class="formula-math">\[\Delta = \frac{1}{2}|\overrightarrow{AB}\times\overrightarrow{AC}|\]</div>
+            <div class="use-case">Direct formula using two edge vectors from same vertex; most efficient method.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Area via Projections</div>
+            <div class="formula-math">\[\Delta_x = \frac{1}{2}\begin{vmatrix}y_1&z_1&1\\y_2&z_2&1\\y_3&z_3&1\end{vmatrix},\quad \Delta_y = \frac{1}{2}\begin{vmatrix}x_1&z_1&1\\x_2&z_2&1\\x_3&z_3&1\end{vmatrix},\quad \Delta_z = \frac{1}{2}\begin{vmatrix}x_1&y_1&1\\x_2&y_2&1\\x_3&y_3&1\end{vmatrix}\]</div>
+            <div class="formula-math">\[\Delta = \sqrt{\Delta_x^2+\Delta_y^2+\Delta_z^2}\]</div>
+            <div class="use-case">Area from coordinate projections; Δx, Δy, Δz are areas of triangle's projections on coordinate planes.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Line of Greatest Slope</div>
+            <div class="formula-math">\[\text{Line in G-plane, } \perp \text{ to } (G\cap H)\text{-line, through a given point}\]</div>
+            <div class="use-case">Steepest line on a given plane (G-plane) relative to horizontal plane H; find by: direction ⊥ to line of intersection.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Length PQ Between Two Parallel Planes</div>
+            <div class="formula-math">\[\text{Line with DR's } (a,b,c) \text{ cuts planes } P_1, P_2\text{ at angle }\theta:\]</div>
+            <div class="formula-math">\[PQ = \frac{\text{dist between planes}}{\sin\theta} = \frac{|d_1-d_2|}{\sqrt{a^2+b^2+c^2}\cdot\sin\theta}\]</div>
+            <div class="use-case">Length intercepted on an oblique line between two parallel planes.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Locus: Sum of Distances from Two Points = k</div>
+            <div class="formula-math">\[\text{PA}+\text{PB}=k \Rightarrow \text{Ellipsoid (degenerate cases: sphere or plane)}\]</div>
+            <div class="formula-math">\[\text{Equal dist from two pts} \Rightarrow \text{a plane (perpendicular bisector plane)}\]</div>
+            <div class="use-case">Locus problems in 3D; equal distance gives plane, sum of distances gives ellipsoid.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Variable Plane at Constant Distance p</div>
+            <div class="formula-math">\[\frac{1}{a^2}+\frac{1}{b^2}+\frac{1}{c^2} = \frac{1}{p^2}\]</div>
+            <div class="formula-math">\[\text{Locus of centroid of }\triangle ABC: \frac{1}{x^2}+\frac{1}{y^2}+\frac{1}{z^2} = \frac{9}{p^2}\]</div>
+            <div class="use-case">Plane at constant distance p from origin cutting axes at A,B,C; locus of centroid of △ABC.</div>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ─── SECTION 10: Vector-Form 3D ─── -->
+      <details>
+        <summary>
+          <span class="summary-icon">◈</span>
+          Vector-Form 3D (Quick Reference)
+          <span class="formula-count-badge">6</span>
+          <span class="summary-arrow">▶</span>
+        </summary>
+        <div class="section-content">
+
+          <div class="formula-card">
+            <div class="formula-name">Vector Along Line of Intersection of Two Planes</div>
+            <div class="formula-math">\[\vec{b} = \vec{n}_1 \times \vec{n}_2\]</div>
+            <div class="use-case">Direction of the line formed by intersecting planes with normals n⃗₁ and n⃗₂.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Plane Containing Line of Intersection of P₁, P₂</div>
+            <div class="formula-math">\[P_1 + \lambda P_2 = 0\]</div>
+            <div class="formula-math">\[(\vec{r}\cdot\vec{n}_1-d_1)+\lambda(\vec{r}\cdot\vec{n}_2-d_2)=0\]</div>
+            <div class="use-case">One-parameter family; substitute extra condition (passes through a point, ⊥ to a vector, etc.) to find λ.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Distance from Origin to Plane r·n̂ = d</div>
+            <div class="formula-math">\[p = \frac{|d|}{|\vec{n}|} = d \quad \text{(if }\hat{n}\text{ is unit vector)}\]</div>
+            <div class="use-case">When plane is given in normal form, d directly equals perpendicular distance from origin.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Angle Between Line r=a+tb and Plane r·n=d</div>
+            <div class="formula-math">\[\sin\theta = \frac{|\vec{b}\cdot\vec{n}|}{|\vec{b}||\vec{n}|}\]</div>
+            <div class="use-case">Vector-form angle formula; b⃗ = direction of line, n⃗ = normal to plane.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Angle Between Planes r·n₁=d₁ and r·n₂=d₂</div>
+            <div class="formula-math">\[\cos\theta = \frac{|\vec{n}_1\cdot\vec{n}_2|}{|\vec{n}_1||\vec{n}_2|}\]</div>
+            <div class="use-case">Vector form; n₁·n₂=0 for perpendicular planes; n₁∥n₂ for parallel planes.</div>
+          </div>
+
+          <div class="formula-card">
+            <div class="formula-name">Foot of ⊥ from a⃗ to Plane r·n̂=d</div>
+            <div class="formula-math">\[\text{Foot} = \vec{a} - (\vec{a}\cdot\hat{n}-d)\hat{n}\]</div>
+            <div class="formula-math">\[\text{Image} = \vec{a} - 2(\vec{a}\cdot\hat{n}-d)\hat{n}\]</div>
+            <div class="use-case">Vector formula for foot and image of a point in a plane given in normal form.</div>
+          </div>
+
+        </div>
+      </details>
+
+    </div><!-- end panel-body -->
+  </div><!-- end geo3d-panel -->
+
+</div><!-- end panels-container -->
+
+<script>
+  // Trigger MathJax typeset when a details element is opened
+  document.querySelectorAll('details').forEach(det => {
+    det.addEventListener('toggle', () => {
+      if (det.open && typeof MathJax !== 'undefined') {
+        MathJax.typesetPromise([det]).catch(err => console.log(err));
+      }
+    });
+  });
+  
+  // Initial typeset of open sections on page load
+  window.addEventListener('load', () => {
+    if (typeof MathJax !== 'undefined') {
+      MathJax.startup.promise.then(() => {
+        MathJax.typesetPromise();
+      });
+    }
+  });
+</script>
+</body>
+</html>
